@@ -70,6 +70,7 @@ public class GameRunner
         final List<MoveableObject> objects = new ArrayList<>();
         objects.add(new Rocket());
         objects.add(new Asteroid());
+        objects.add(new Saucer());
 
         final GameRunner game = new GameRunner(objects);
         game.show();
