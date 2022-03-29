@@ -13,6 +13,10 @@ public class Asteroid implements EnemyObject
 
     }
 
+    @Override public int getAngle() {
+        return 0;
+    }
+
     @Override public int getSize() {
         return 0;
     }
@@ -29,7 +33,7 @@ public class Asteroid implements EnemyObject
         return 0;
     }
 
-    @Override public int[][] getMatrix() {
-        return new int[0][];
+    @Override public double[][] getMatrix() {
+        return new double[0][];
     }
 }
