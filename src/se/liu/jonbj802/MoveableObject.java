@@ -5,10 +5,10 @@ import java.awt.*;
 
 public interface MoveableObject
 {
-
-    public Point getPos();
-    public void setPos();
-    public void setX();
-    public void setY();
+    public int getSize();
+    public void setPos(int x, int y);
+    public int getX();
+    public int getY();
+    public int[][] getMatrix();
 
 }

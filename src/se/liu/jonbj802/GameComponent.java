@@ -3,10 +3,14 @@ package se.liu.jonbj802;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameComponent extends JComponent
 {
-    public GameComponent() {
+    final List<MoveableObject> objects;
+
+    public GameComponent(final List<MoveableObject> objects) {
+        this.objects = objects;
     }
 
     private int[][] multiplyMatrix(final int[][] matrix1, final int[][] matrix2){
@@ -37,6 +41,20 @@ public class GameComponent extends JComponent
         return result;
     }
 
+    private void drawLines(final int[][] matrix, final int xOffset, final int yOffset, final Graphics2D g2d) {
+        g2d.setColor(Color.WHITE);
+        g2d.setStroke(new BasicStroke(1));
+
+        final int height = getSize().height;
+
+        final int columns = matrix[0].length;
+        for (int i = 0; i < columns; i += 2) {
+            final int x1 = matrix[0][i], y1 = matrix[1][i];
+            final int x2 = matrix[0][i + 1], y2 = matrix[1][i + 1];
+            g2d.drawLine(x1 + xOffset, height - (y1 + yOffset), x2 + xOffset, height - (y2 + yOffset));
+        }
+    }
+
     @Override public Dimension getPreferredSize() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -50,9 +68,21 @@ public class GameComponent extends JComponent
     @Override protected void paintComponent(final Graphics g) {
         final Graphics2D g2d = (Graphics2D) g;
 
-        Dimension size = getSize();
+        final Dimension size = getSize();
+
+        // Draw a black background.
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0, 0, size.width, size.height);
+
+        for (final MoveableObject object : objects) {
+            final int[][] matrix = multiplyMatrix(object.getMatrix(), object.getSize());
+            final int x = object.getX(), y = object.getY();
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            drawLines(matrix, x, y, g2d);
+
+        }
+
         super.paintComponent(g);
     }
 }

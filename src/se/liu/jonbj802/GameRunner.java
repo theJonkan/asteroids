@@ -9,16 +9,15 @@ public class GameRunner
 {
 
     public static void main(String[] args) {
-        List<MoveableObject> objects = new ArrayList<>();
+        final List<MoveableObject> objects = new ArrayList<>();
+        objects.add(new Rocket());
 
         final JFrame frame = new JFrame("Asteroids");
-
-        GameComponent gameWindow = new GameComponent();
-
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
 
-        frame.add(gameWindow, BorderLayout.CENTER);
+        GameComponent gameWindow = new GameComponent(objects);
+        frame.add(gameWindow);
+
         frame.pack();
         frame.setVisible(true);
     }
