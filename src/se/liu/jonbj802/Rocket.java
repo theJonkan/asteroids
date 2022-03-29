@@ -4,28 +4,29 @@ import java.awt.*;
 
 public class Rocket implements MoveableObject
 {
-    private boolean flying;
+    private boolean flying = true;
     private final static int SIZE = 5;
     private int speed = 5;
     private int x = 200, y = 200;
-    private int angle;
+    private double angle;
+    private final static double ANGEL_CHANGE = 0.2;
 
     public void rotate(Direction direction){
 
         if (direction == Direction.RIGHT) {
-            if (angle >= 360) {
-                angle = 0;
+            if (angle >= 2*Math.PI) {
+                angle -= 2*Math.PI;
             }
-            angle += 1;
+            angle -= ANGEL_CHANGE;
         } else {
             if (angle <= 0) {
-                angle = 360;
+                angle = 2*Math.PI + angle;
             }
-            angle -= 1;
+            angle += ANGEL_CHANGE;
         }
     }
 
-    public int getAngle(){
+    public double getAngle(){
         return angle;
     }
     

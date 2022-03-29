@@ -5,7 +5,7 @@ import java.awt.*;
 
 public interface MoveableObject
 {
-    public int getAngle();
+    public double getAngle();
     public int getSize();
     public void setPos(int x, int y);
     public int getX();

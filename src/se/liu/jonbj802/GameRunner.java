@@ -16,7 +16,8 @@ public class GameRunner
             final Rocket rocket = (Rocket) objects.get(0);
             final int x = rocket.getX();
             final int y = rocket.getY();
-            rocket.setPos(x, y + rocket.getSize());
+            rocket.setPos(x - (int)Math.round(Math.sin(rocket.getAngle()) * rocket.getSize()), y + (int)Math.round(Math.cos(rocket.getAngle()) * rocket.getSize()));
+            System.out.println("no type casting = " + Math.sin(rocket.getAngle()) * rocket.getSize() + " , type casting = " + (int)(Math.sin(rocket.getAngle()) * rocket.getSize()));
             renderer.repaint();
         }
     }
@@ -31,6 +32,7 @@ public class GameRunner
 
         @Override public void actionPerformed(final ActionEvent e) {
             rocket.rotate(direction);
+            renderer.repaint();
         }
     }
 
@@ -58,8 +60,8 @@ public class GameRunner
         in.put(KeyStroke.getKeyStroke("UP"), "UP");
 
         final ActionMap act = pane.getActionMap();
-        //act.put("LEFT", new RotateAction(Direction.LEFT));
-        //act.put("RIGHT", new RotateAction(Direction.RIGHT));
+        act.put("LEFT", new RotateAction(Direction.LEFT));
+        act.put("RIGHT", new RotateAction(Direction.RIGHT));
         act.put("UP", new MoveAction());
     }
 
@@ -67,6 +69,7 @@ public class GameRunner
     public static void main(String[] args) {
         final List<MoveableObject> objects = new ArrayList<>();
         objects.add(new Rocket());
+        objects.add(new Asteroid());
 
         final GameRunner game = new GameRunner(objects);
         game.show();

@@ -76,13 +76,13 @@ public class GameComponent extends JComponent
 
         for (final MoveableObject object : objects) {
             final int scale =  object.getSize();
-            final double radians = Math.toRadians(object.getAngle());
+            final double angle = object.getAngle();
             final double[][] scaler = {
-                    {scale * Math.cos(radians), -scale * Math.sin(radians)},
-                    {scale * Math.sin(radians), scale * Math.cos(radians)}
+                    {scale * Math.cos(angle), -scale * Math.sin(angle)},
+                    {scale * Math.sin(angle), scale * Math.cos(angle)}
             };
 
-            final double[][] matrix = multiplyMatrix(object.getMatrix(), object.getSize());
+            final double[][] matrix = multiplyMatrix(scaler, object.getMatrix());
             final int x = object.getX(), y = object.getY();
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
