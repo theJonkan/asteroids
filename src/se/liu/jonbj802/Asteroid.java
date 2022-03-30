@@ -1,10 +1,34 @@
 package se.liu.jonbj802;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Asteroid implements EnemyObject
 {
-    private int size = 10;
+    private final static Random RND = new Random();
+    private int size;
+    private double angle;
+    private int x, y;
+
+    public Asteroid(final Dimension screenSize) {
+        this.size = RND.nextInt(2, 15);
+
+        final int sector = RND.nextInt(4);
+        switch (sector) {
+            case 0, 1 -> {
+                this.x = screenSize.width * sector;
+                this.y = RND.nextInt(screenSize.height);
+            }
+            case 2, 3 -> {
+                this.x = RND.nextInt(screenSize.width);
+                this.y = screenSize.height * (sector - 2);
+            }
+        }
+
+        // TODO: Fix swing crash and angle (also position and other stuff).
+        this.angle = RND.nextDouble(0, Math.PI) + (Math.PI / 2) * sector;
+        System.out.println(angle / Math.PI + "\n" + x + "," + y + " " + sector);
+    }
 
     @Override public int getHealth() {
         return 0;
@@ -15,7 +39,7 @@ public class Asteroid implements EnemyObject
     }
 
     @Override public double getAngle() {
-        return 0;
+        return angle;
     }
 
     @Override public int getSize() {
@@ -27,11 +51,11 @@ public class Asteroid implements EnemyObject
     }
 
     @Override public int getX() {
-        return 150;
+        return x;
     }
 
     @Override public int getY() {
-        return 150;
+        return y;
     }
 
     @Override public double[][] getMatrix() {

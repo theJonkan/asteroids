@@ -50,6 +50,9 @@ public class GameRunner
 
         frame.pack();
         frame.setVisible(true);
+
+        objects.add(new Asteroid(frame.getBounds().getSize()));
+        objects.add(new Saucer());
     }
 
     private void setUpKeyMap(final JFrame frame) {
@@ -69,8 +72,6 @@ public class GameRunner
     public static void main(String[] args) {
         final List<MoveableObject> objects = new ArrayList<>();
         objects.add(new Rocket());
-        objects.add(new Asteroid());
-        objects.add(new Saucer());
 
         final GameRunner game = new GameRunner(objects);
         game.show();
