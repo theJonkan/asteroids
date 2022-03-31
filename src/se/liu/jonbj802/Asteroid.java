@@ -11,23 +11,32 @@ public class Asteroid implements EnemyObject
     private int x, y;
 
     public Asteroid(final Dimension screenSize) {
-        this.size = RND.nextInt(2, 15);
+        this.size = RND.nextInt(3, 15);
+        this.size = 20;
 
         final int sector = RND.nextInt(4);
         switch (sector) {
-            case 0, 1 -> {
-                this.x = screenSize.width * sector;
+            case 0 -> {
+                this.x = 0;
                 this.y = RND.nextInt(screenSize.height);
+                this.angle = RND.nextDouble(0, Math.PI);
             }
-            case 2, 3 -> {
+            case  1 -> {
+                this.x = screenSize.width;
+                this.y = RND.nextInt(screenSize.height);
+                this.angle = RND.nextDouble(Math.PI, 2 * Math.PI);
+            }
+            case 2 -> {
                 this.x = RND.nextInt(screenSize.width);
-                this.y = screenSize.height * (sector - 2);
+                this.y = 0;
+                this.angle = RND.nextDouble(Math.PI / 2, 3.0/2 * Math.PI);
+            }
+            case 3 -> {
+                this.x = RND.nextInt(screenSize.width);
+                this.y = screenSize.height;
+                this.angle = RND.nextDouble(3.0/2 * Math.PI, 5.0/2 * Math.PI);
             }
         }
-
-        // TODO: Fix swing crash and angle (also position and other stuff).
-        this.angle = RND.nextDouble(0, Math.PI) + (Math.PI / 2) * sector;
-        System.out.println(angle / Math.PI + "\n" + x + "," + y + " " + sector);
     }
 
     @Override public int getHealth() {
