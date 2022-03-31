@@ -11,5 +11,6 @@ public interface MoveableObject
     public int getX();
     public int getY();
     public double[][] getMatrix();
+    public void update();
 
 }

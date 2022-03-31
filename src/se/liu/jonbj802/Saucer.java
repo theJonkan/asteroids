@@ -37,8 +37,13 @@ public class Saucer implements EnemyObject
 	    }
 	}
 
-	x = 250;
-	y = 250;
+    }
+
+    private void move(){
+	// Should be inverted x + and y -.
+	// System.out.println("moved asteroid: " + x + " " + y);
+	x += (int)Math.round(Math.sin(angle) * 5);
+	y -= (int)Math.round(Math.cos(angle) * 5);
     }
 
     @Override public int getHealth() {
@@ -74,5 +79,9 @@ public class Saucer implements EnemyObject
 		{-2, 2, -3, 3, -6, 6, -4, 4, -2, -3, 2, 3, -3, -6, 3, 6, -6, -4, 6, 4},
 		{4, 4, 2, 2, 0, 0, -2, -2, 4, 2, 4, 2, 2, 0, 2, 0, 0, -2, 0, -2}
 	};
+    }
+
+    @Override public void update() {
+	move();
     }
 }

@@ -14,30 +14,45 @@ public class GameRunner
     private JFrame frame = null;
 
     private final static Random RND = new Random();
-    private static final int DEFAULT_TIMER_DELAY = 2000;
+    private static final int DEFAULT_TIMER_DELAY = 1500;
     private static final int FRAME_TIME = 20; // 50 FPS => 20ms for each draw.
 
     private int saucerDelay;
 
-    private class MoveAction extends AbstractAction {
+    private class UpPressAction extends AbstractAction {
         @Override public void actionPerformed(final ActionEvent e) {
             final Rocket rocket = (Rocket) objects.get(0);
-            final int x = rocket.getX();
-            final int y = rocket.getY();
-            rocket.setPos(x - (int)Math.round(Math.sin(rocket.getAngle()) * rocket.getSize()), y + (int)Math.round(Math.cos(rocket.getAngle()) * rocket.getSize()));
+
+            rocket.upPress();
         }
     }
 
-    private class RotateAction extends AbstractAction {
+    private class LeftRightPressAction extends AbstractAction {
         private final Direction direction;
         final Rocket rocket = (Rocket) objects.get(0);
 
-        private RotateAction(final Direction direction) {
+        private LeftRightPressAction(final Direction direction) {
             this.direction = direction;
         }
 
         @Override public void actionPerformed(final ActionEvent e) {
-            rocket.rotate(direction);
+            rocket.leftRightPress(direction);
+        }
+    }
+
+    private class LeftRightReleaseAction extends AbstractAction{
+        final Rocket rocket = (Rocket) objects.get(0);
+
+        @Override public void actionPerformed(final ActionEvent e){
+            rocket.leftRightRelease();
+        }
+    }
+
+    private class UpReleaseAction extends AbstractAction{
+        final Rocket rocket = (Rocket) objects.get(0);
+
+        @Override public void actionPerformed(final ActionEvent e){
+            rocket.upRelease();
         }
     }
 
@@ -66,16 +81,25 @@ public class GameRunner
         in.put(KeyStroke.getKeyStroke("RIGHT"), "RIGHT");
         in.put(KeyStroke.getKeyStroke("UP"), "UP");
 
+        //See link for keycode list https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list
+        in.put(KeyStroke.getKeyStroke(37, 0, true), "LEFT_RIGHT_RELEASE");
+        in.put(KeyStroke.getKeyStroke(38, 0, true), "UP_RELEASE");
+        in.put(KeyStroke.getKeyStroke(39, 0, true), "LEFT_RIGHT_RELEASE");
+
+
         final ActionMap act = pane.getActionMap();
-        act.put("LEFT", new RotateAction(Direction.LEFT));
-        act.put("RIGHT", new RotateAction(Direction.RIGHT));
-        act.put("UP", new MoveAction());
+        act.put("LEFT", new LeftRightPressAction(Direction.LEFT));
+        act.put("RIGHT", new LeftRightPressAction(Direction.RIGHT));
+        act.put("UP", new UpPressAction());
+        act.put("LEFT_RIGHT_RELEASE", new LeftRightReleaseAction());
+        act.put("UP_RELEASE", new UpReleaseAction());
     }
 
     private void startSpawner() {
         final Timer timer = new Timer(DEFAULT_TIMER_DELAY, e -> {
             final Dimension windowSize = frame.getBounds().getSize();
 
+            objects.add(new Asteroid(windowSize));
             objects.add(new Asteroid(windowSize));
 
             if (RND.nextBoolean() && saucerDelay >= 10) {
@@ -85,14 +109,29 @@ public class GameRunner
 
             saucerDelay++;
         });
+
         timer.setCoalesce(true);
         timer.start();
     }
 
     private void startRunner() {
         final Timer timer = new Timer(FRAME_TIME, e -> {
+            for (final MoveableObject object : objects) {
+                object.update();
+
+                final int x = object.getX();
+                final int y = object.getY();
+                final Dimension windowSize = frame.getBounds().getSize();
+
+
+                /*if (object.getClass() == Asteroid.class && (x > windowSize.width || y > windowSize.height)){
+                    objects.remove(object);
+                }*/
+            }
+
             renderer.repaint();
         });
+
         timer.setCoalesce(true);
         timer.start();
     }

@@ -28,18 +28,6 @@ public class GameComponent extends JComponent
         return result;
     }
 
-    private double[][] multiplyMatrix(final double[][] matrix, final double a){
-        final int rows = matrix.length, columns = matrix[0].length;
-        final double[][] result = new double[rows][columns];
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                result[i][j] = a * matrix[i][j];
-            }
-        }
-
-        return result;
-    }
 
     private void drawLines(final double[][] matrix, final int xOffset, final int yOffset, final Graphics2D g2d) {
         g2d.setColor(Color.WHITE);

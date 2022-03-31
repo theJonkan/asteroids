@@ -66,10 +66,22 @@ public class Asteroid implements EnemyObject
         return y;
     }
 
+    //Maybe make abstract class
+    private void move(){
+        // Should be inverted x + and y -.
+        // System.out.println("moved asteroid: " + x + " " + y);
+        x += (int)Math.round(Math.sin(angle) * 50.0 / size);
+        y -= (int)Math.round(Math.cos(angle) * 50.0 / size);
+    }
+
     @Override public double[][] getMatrix() {
         return new double[][] {
                 { -1, 0, 0, 2, 2, 4, 4, 4, 4, 3, 3, 1, 1, 1, 1, -1, -1, -4, -4, -4, -4, -3, -3, -4, -4, -4, -4, -2, -2, -1},
                 { 5, 4, 4, 4, 4, 2, 2, 0, 0, -3, -3, -2, -2, -4, -4, -4, -4, -2, -2, -1, -1, 0, 0, 1, 1, 2, 2, 2, 2, 5},
         };
+    }
+
+    @Override public void update() {
+        move();
     }
 }

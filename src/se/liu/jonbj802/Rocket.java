@@ -4,14 +4,15 @@ import java.awt.*;
 
 public class Rocket implements MoveableObject
 {
-    private boolean flying = true;
+    private boolean flying, rotating;
+    private Direction direction = null;
     private final static int SIZE = 5;
-    private int speed = 5;
+    private int speed = 8;
     private int x = 200, y = 200;
     private double angle;
-    private final static double ANGEL_CHANGE = 0.2;
+    private final static double ANGEL_CHANGE = 0.1;
 
-    public void rotate(Direction direction){
+    private void rotate(){
 
         if (direction == Direction.RIGHT) {
             if (angle >= 2*Math.PI) {
@@ -20,10 +21,15 @@ public class Rocket implements MoveableObject
             angle -= ANGEL_CHANGE;
         } else {
             if (angle <= 0) {
-                angle = 2*Math.PI + angle;
+                angle += 2*Math.PI;
             }
             angle += ANGEL_CHANGE;
         }
+    }
+
+    private void move(){
+        x -= (int)Math.round(Math.sin(angle) * SIZE);
+        y += (int)Math.round(Math.cos(angle) * SIZE);
     }
 
     public double getAngle(){
@@ -56,5 +62,33 @@ public class Rocket implements MoveableObject
         }
 
         return new double[][] { { -3, 0, 3, 0, -2, 2 }, { -3, 5, -3, 5, -1, -1 }, };
+    }
+
+    @Override public void update() {
+        if (rotating){
+            rotate();
+        }
+
+        if (flying){
+            move();
+        }
+    }
+
+    public void upRelease() {
+        flying = false;
+    }
+
+    public void leftRightRelease() {
+        rotating = false;
+        direction = null;
+    }
+
+    public void leftRightPress(final Direction direction) {
+        rotating = true;
+        this.direction = direction;
+    }
+
+    public void upPress() {
+        flying = true;
     }
 }
