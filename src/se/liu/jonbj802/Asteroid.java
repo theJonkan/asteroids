@@ -12,7 +12,6 @@ public class Asteroid implements EnemyObject
 
     public Asteroid(final Dimension screenSize) {
         this.size = RND.nextInt(3, 15);
-        this.size = 20;
 
         final int sector = RND.nextInt(4);
         switch (sector) {
