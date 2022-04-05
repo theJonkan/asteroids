@@ -9,7 +9,7 @@ public class Rocket implements MoveableObject
     private final static int SIZE = 5;
     private int speed = 8;
     private int x = 200, y = 200;
-    private double angle;
+    private double angle = Math.PI / 2;
     private final static double ANGEL_CHANGE = 0.1;
 
     private void rotate(){
@@ -28,8 +28,8 @@ public class Rocket implements MoveableObject
     }
 
     private void move(){
-        x -= (int)Math.round(Math.sin(angle) * SIZE);
-        y += (int)Math.round(Math.cos(angle) * SIZE);
+        x += (int)Math.round(Math.cos(angle) * SIZE);
+        y += (int)Math.round(Math.sin(angle) * SIZE);
     }
 
     public double getAngle(){
@@ -51,12 +51,15 @@ public class Rocket implements MoveableObject
     @Override public double[][] getMatrix() {
         if (flying) {
             return new double[][] {
-                    { -3, 0, 3, 0, -2, 2, 0, -1, 0, 1},
                     { -3, 5, -3, 5, -1, -1, -4, -1, -4, -1},
+                    { -3, 0, 3, 0, -2, 2, 0, -1, 0, 1},
             };
         }
 
-        return new double[][] { { -3, 0, 3, 0, -2, 2 }, { -3, 5, -3, 5, -1, -1 }, };
+        return new double[][] {
+                { -3, 5, -3, 5, -1, -1 },
+                { -3, 0, 3, 0, -2, 2 },
+        };
     }
 
     @Override public void update() {

@@ -14,45 +14,40 @@ public class GameRunner
     private JFrame frame = null;
 
     private final static Random RND = new Random();
-    private static final int DEFAULT_TIMER_DELAY = 10000;
+    private static final int DEFAULT_TIMER_DELAY = 1500;
     private static final int FRAME_TIME = 20; // 50 FPS => 20ms for each draw.
 
     private int saucerDelay;
+    private int frameCalls;
+    private Rocket rocketPointer;
 
     private class UpPressAction extends AbstractAction {
         @Override public void actionPerformed(final ActionEvent e) {
-            final Rocket rocket = (Rocket) objects.get(0);
-
-            rocket.upPress();
+            rocketPointer.upPress();
         }
     }
 
     private class LeftRightPressAction extends AbstractAction {
         private final Direction direction;
-        final Rocket rocket = (Rocket) objects.get(0);
 
         private LeftRightPressAction(final Direction direction) {
             this.direction = direction;
         }
 
         @Override public void actionPerformed(final ActionEvent e) {
-            rocket.leftRightPress(direction);
+            rocketPointer.leftRightPress(direction);
         }
     }
 
     private class LeftRightReleaseAction extends AbstractAction{
-        final Rocket rocket = (Rocket) objects.get(0);
-
         @Override public void actionPerformed(final ActionEvent e){
-            rocket.leftRightRelease();
+            rocketPointer.leftRightRelease();
         }
     }
 
     private class UpReleaseAction extends AbstractAction{
-        final Rocket rocket = (Rocket) objects.get(0);
-
         @Override public void actionPerformed(final ActionEvent e){
-            rocket.upRelease();
+            rocketPointer.upRelease();
         }
     }
 
@@ -70,8 +65,6 @@ public class GameRunner
 
         frame.pack();
         frame.setVisible(true);
-
-        objects.add(new Asteroid(frame.getBounds().getSize()));
     }
 
     private void setUpKeyMap(final JFrame frame) {
@@ -81,7 +74,7 @@ public class GameRunner
         in.put(KeyStroke.getKeyStroke("RIGHT"), "RIGHT");
         in.put(KeyStroke.getKeyStroke("UP"), "UP");
 
-        //See link for keycode list https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list
+        // See link for keycode list https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list
         in.put(KeyStroke.getKeyStroke(37, 0, true), "LEFT_RIGHT_RELEASE");
         in.put(KeyStroke.getKeyStroke(38, 0, true), "UP_RELEASE");
         in.put(KeyStroke.getKeyStroke(39, 0, true), "LEFT_RIGHT_RELEASE");
@@ -95,40 +88,51 @@ public class GameRunner
         act.put("UP_RELEASE", new UpReleaseAction());
     }
 
-    private void startSpawner() {
-        final Timer timer = new Timer(DEFAULT_TIMER_DELAY, e -> {
-            final Dimension windowSize = frame.getBounds().getSize();
+    private void spawnObjects() {
+        final Dimension windowSize = frame.getBounds().getSize();
 
+        double seconds = frameCalls/(1000.0/FRAME_TIME);
+
+        if (seconds%3 == 0){
             objects.add(new Asteroid(windowSize));
-           // objects.add(new Asteroid(windowSize));
+            objects.add(new Asteroid(windowSize));
+        }
 
-            if (RND.nextBoolean() && saucerDelay >= 10) {
-                objects.add(new Saucer(windowSize));
-                saucerDelay = 0;
+        if (seconds%10 == 0 && seconds != 0){
+            objects.add(new Saucer(windowSize));
+            frameCalls = 0; // Reset timer at longest duration.
+        }
+
+        frameCalls++;
+    }
+
+    private void updateObjects() {
+        final int offset = 100;
+        final List<MoveableObject> unwantedObjects = new ArrayList<>();
+        final Dimension windowSize = frame.getBounds().getSize();
+
+        for (final MoveableObject object : objects) {
+            object.update();
+
+            final int x = object.getX(), y = object.getY();
+
+            if ((object.getClass() == Asteroid.class || object.getClass() == Saucer.class) &&
+                (x > windowSize.width + offset || y > windowSize.height + offset || x < -offset || y < -offset)) {
+                unwantedObjects.add(object);
             }
 
-            saucerDelay++;
-        });
+        }
 
-        timer.setCoalesce(true);
-        timer.start();
+        // Remove objects that were found outside of bounds.
+        for (final MoveableObject object: unwantedObjects){
+            objects.remove(object);
+        }
     }
 
     private void startRunner() {
         final Timer timer = new Timer(FRAME_TIME, e -> {
-            for (final MoveableObject object : objects) {
-                object.update();
-
-                final int x = object.getX();
-                final int y = object.getY();
-                final Dimension windowSize = frame.getBounds().getSize();
-
-
-                /*if (object.getClass() == Asteroid.class && (x > windowSize.width || y > windowSize.height)){
-                    objects.remove(object);
-                }*/
-            }
-
+            spawnObjects();
+            updateObjects();
             renderer.repaint();
         });
 
@@ -138,13 +142,13 @@ public class GameRunner
 
     public static void main(String[] args) {
         final List<MoveableObject> objects = new ArrayList<>();
-        objects.add(new Rocket());
 
         final GameRunner game = new GameRunner(objects);
+        game.rocketPointer = new Rocket();
+        objects.add(game.rocketPointer);
         game.show();
 
         game.startRunner();
-        game.startSpawner();
     }
 }
 

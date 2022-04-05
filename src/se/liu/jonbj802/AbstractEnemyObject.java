@@ -29,7 +29,7 @@ public abstract class AbstractEnemyObject implements EnemyObject
 
     protected void move(final double speed){
         x += (int)Math.round(Math.cos(angle) * speed);
-        y -= (int)Math.round(Math.sin(angle) * speed);
+        y += (int)Math.round(Math.sin(angle) * speed);
     }
 
     protected void generateRandomPosition(final Dimension screenSize) {
@@ -38,26 +38,26 @@ public abstract class AbstractEnemyObject implements EnemyObject
             case 0 -> {
                 this.x = 0;
                 this.y = RND.nextInt(screenSize.height);
-                this.angle = RND.nextDouble(0, 1);
+                this.angle = RND.nextDouble(-1.0 / 2, 1.0/2);
             }
             case  1 -> {
                 this.x = screenSize.width;
                 this.y = RND.nextInt(screenSize.height);
-                this.angle = RND.nextDouble(1, 2);
+                this.angle = RND.nextDouble(1.0/2, 3.0/2);
             }
             case 2 -> {
                 this.x = RND.nextInt(screenSize.width);
                 this.y = 0;
-                this.angle = RND.nextDouble(1.0 / 2, 3.0/2);
+                this.angle = RND.nextDouble(1);
             }
             case 3 -> {
                 this.x = RND.nextInt(screenSize.width);
                 this.y = screenSize.height;
-                this.angle = RND.nextDouble(3.0/2, 5.0/2);
+                this.angle = RND.nextDouble(1, 2);
             }
         }
         this.angle *= Math.PI;
 
-        System.out.printf("Sector %d: (%d, %d) at %f degrees\n", sector, x, y, angle/Math.PI);
+        //System.out.printf("Sector %d: (%d, %d) at %f degrees\n", sector, x, y, angle/Math.PI);
     }
 }
