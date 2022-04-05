@@ -2,13 +2,18 @@ package se.liu.jonbj802;
 
 public class Rocket implements MoveableObject
 {
+    private final static int SIZE = 5;
+    private final static double ANGEL_CHANGE = 0.1;
+    private final static int DEFAULT_SHOOTING_DELAY = 10;
+
+    private int speed = 8;
+    private int x = 200, y = 200; // Middle of space (center of screen)?
+    private double angle = Math.PI / 2;
+
     private boolean flying, rotating;
     private Direction direction = null;
-    private final static int SIZE = 5;
-    private int speed = 8;
-    private int x = 200, y = 200;
-    private double angle = Math.PI / 2;
-    private final static double ANGEL_CHANGE = 0.1;
+
+    private int shootingDelay;
 
     private void rotate(){
         if (direction == Direction.RIGHT) {
@@ -41,6 +46,11 @@ public class Rocket implements MoveableObject
         return y;
     }
 
+    @Override public void setPos(final int x, final int y) {
+        this.x = x;
+        this.y = y;
+    }
+
     @Override public double[][] getMatrix() {
         if (flying) {
             return new double[][] {
@@ -63,6 +73,17 @@ public class Rocket implements MoveableObject
         if (flying){
             move();
         }
+
+        shootingDelay--;
+    }
+
+    public Bullet shoot() {
+        if (shootingDelay <= 0) {
+            shootingDelay = DEFAULT_SHOOTING_DELAY;
+            return new Bullet(angle, x, y);
+        }
+
+        return null;
     }
 
     public void upRelease() {

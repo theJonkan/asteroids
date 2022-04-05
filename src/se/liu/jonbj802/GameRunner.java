@@ -16,6 +16,8 @@ public class GameRunner
     private final static Random RND = new Random();
     private static final int DEFAULT_TIMER_DELAY = 1500;
     private static final int FRAME_TIME = 20; // 50 FPS => 20ms for each draw.
+    private static final int OFFSET_WRAP = 20;
+    private static final int OFFSET_DELETE = 100;
 
     private int saucerDelay;
     private int frameCalls;
@@ -51,6 +53,15 @@ public class GameRunner
         }
     }
 
+    private class SpacePressAction extends AbstractAction {
+        @Override public void actionPerformed(final ActionEvent e) {
+            final Bullet bullet = rocketPointer.shoot();
+            if (bullet != null){
+                objects.add(bullet);
+            }
+        }
+    }
+
     public GameRunner(final List<MoveableObject> objects) {
         this.objects = objects;
     }
@@ -73,6 +84,7 @@ public class GameRunner
         in.put(KeyStroke.getKeyStroke("LEFT"), "LEFT");
         in.put(KeyStroke.getKeyStroke("RIGHT"), "RIGHT");
         in.put(KeyStroke.getKeyStroke("UP"), "UP");
+        in.put(KeyStroke.getKeyStroke("SPACE"), "SPACE");
 
         // See link for keycode list https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list
         in.put(KeyStroke.getKeyStroke(37, 0, true), "LEFT_RIGHT_RELEASE");
@@ -84,6 +96,7 @@ public class GameRunner
         act.put("LEFT", new LeftRightPressAction(Direction.LEFT));
         act.put("RIGHT", new LeftRightPressAction(Direction.RIGHT));
         act.put("UP", new UpPressAction());
+        act.put("SPACE", new SpacePressAction());
         act.put("LEFT_RIGHT_RELEASE", new LeftRightReleaseAction());
         act.put("UP_RELEASE", new UpReleaseAction());
     }
@@ -107,7 +120,6 @@ public class GameRunner
     }
 
     private void updateObjects() {
-        final int offset = 100;
         final List<MoveableObject> unwantedObjects = new ArrayList<>();
         final Dimension windowSize = frame.getBounds().getSize();
 
@@ -116,11 +128,22 @@ public class GameRunner
 
             final int x = object.getX(), y = object.getY();
 
-            if ((object.getClass() == Asteroid.class || object.getClass() == Saucer.class) &&
-                (x > windowSize.width + offset || y > windowSize.height + offset || x < -offset || y < -offset)) {
+            if ((object.getClass() != Rocket.class) &&
+                (x > windowSize.width + OFFSET_DELETE || y > windowSize.height + OFFSET_DELETE || x < -OFFSET_DELETE || y < -OFFSET_DELETE)) {
                 unwantedObjects.add(object);
             }
 
+            if (object.getClass() == Rocket.class) {
+                if (x > windowSize.width + OFFSET_WRAP) {
+                    rocketPointer.setPos(-OFFSET_WRAP, y);
+                } else if (y > windowSize.height + OFFSET_WRAP) {
+                    rocketPointer.setPos(x, -OFFSET_WRAP);
+                } else if (x < -OFFSET_WRAP) {
+                    rocketPointer.setPos(windowSize.width + OFFSET_WRAP, y);
+                } else if (y < -OFFSET_WRAP) {
+                    rocketPointer.setPos(x, windowSize.height + OFFSET_WRAP);
+                }
+            }
         }
 
         // Remove objects that were found outside of bounds.

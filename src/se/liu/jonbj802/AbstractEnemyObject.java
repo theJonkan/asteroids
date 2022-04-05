@@ -55,7 +55,10 @@ public abstract class AbstractEnemyObject implements EnemyObject
             }
         }
         this.angle *= Math.PI;
+    }
 
-        //System.out.printf("Sector %d: (%d, %d) at %f degrees\n", sector, x, y, angle/Math.PI);
+    @Override public void setPos(final int x, final int y) {
+        this.x = x;
+        this.y = y;
     }
 }
