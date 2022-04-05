@@ -3,39 +3,16 @@ package se.liu.jonbj802;
 import java.awt.*;
 import java.util.Random;
 
-public class Asteroid implements EnemyObject
+public class Asteroid extends AbstractEnemyObject
 {
     private final static Random RND = new Random();
     private int size;
-    private double angle;
-    private int x, y;
+    private double speed;
 
     public Asteroid(final Dimension screenSize) {
-        this.size = RND.nextInt(3, 15);
-
-        final int sector = RND.nextInt(4);
-        switch (sector) {
-            case 0 -> {
-                this.x = 0;
-                this.y = RND.nextInt(screenSize.height);
-                this.angle = RND.nextDouble(0, Math.PI);
-            }
-            case  1 -> {
-                this.x = screenSize.width;
-                this.y = RND.nextInt(screenSize.height);
-                this.angle = RND.nextDouble(Math.PI, 2 * Math.PI);
-            }
-            case 2 -> {
-                this.x = RND.nextInt(screenSize.width);
-                this.y = 0;
-                this.angle = RND.nextDouble(Math.PI / 2, 3.0/2 * Math.PI);
-            }
-            case 3 -> {
-                this.x = RND.nextInt(screenSize.width);
-                this.y = screenSize.height;
-                this.angle = RND.nextDouble(3.0/2 * Math.PI, 5.0/2 * Math.PI);
-            }
-        }
+        super(screenSize);
+        this.size = RND.nextInt(4, 15);
+        this.speed = 45.0 / size;
     }
 
     @Override public int getHealth() {
@@ -46,32 +23,8 @@ public class Asteroid implements EnemyObject
 
     }
 
-    @Override public double getAngle() {
-        return angle;
-    }
-
     @Override public int getSize() {
         return size;
-    }
-
-    @Override public void setPos(final int x, final int y) {
-
-    }
-
-    @Override public int getX() {
-        return x;
-    }
-
-    @Override public int getY() {
-        return y;
-    }
-
-    //Maybe make abstract class
-    private void move(){
-        // Should be inverted x + and y -.
-        // System.out.println("moved asteroid: " + x + " " + y);
-        x += (int)Math.round(Math.sin(angle) * 50.0 / size);
-        y -= (int)Math.round(Math.cos(angle) * 50.0 / size);
     }
 
     @Override public double[][] getMatrix() {
@@ -82,6 +35,6 @@ public class Asteroid implements EnemyObject
     }
 
     @Override public void update() {
-        move();
+        move(speed);
     }
 }

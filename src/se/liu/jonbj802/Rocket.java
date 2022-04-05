@@ -40,11 +40,6 @@ public class Rocket implements MoveableObject
         return SIZE;
     }
 
-    @Override public void setPos(final int x, final int y) {
-        this.x = x;
-        this.y = y;
-    }
-
     @Override public int getX() {
         return x;
     }

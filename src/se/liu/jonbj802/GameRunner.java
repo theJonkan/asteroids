@@ -14,7 +14,7 @@ public class GameRunner
     private JFrame frame = null;
 
     private final static Random RND = new Random();
-    private static final int DEFAULT_TIMER_DELAY = 1500;
+    private static final int DEFAULT_TIMER_DELAY = 10000;
     private static final int FRAME_TIME = 20; // 50 FPS => 20ms for each draw.
 
     private int saucerDelay;
@@ -100,7 +100,7 @@ public class GameRunner
             final Dimension windowSize = frame.getBounds().getSize();
 
             objects.add(new Asteroid(windowSize));
-            objects.add(new Asteroid(windowSize));
+           // objects.add(new Asteroid(windowSize));
 
             if (RND.nextBoolean() && saucerDelay >= 10) {
                 objects.add(new Saucer(windowSize));

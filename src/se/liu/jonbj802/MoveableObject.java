@@ -7,7 +7,6 @@ public interface MoveableObject
 {
     public double getAngle();
     public int getSize();
-    public void setPos(int x, int y);
     public int getX();
     public int getY();
     public double[][] getMatrix();
