@@ -2,7 +2,6 @@ package se.liu.jonbj802;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameComponent extends JComponent

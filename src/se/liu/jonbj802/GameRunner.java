@@ -19,7 +19,7 @@ public class GameRunner
 
     private int saucerDelay;
     private int frameCalls;
-    private Rocket rocketPointer;
+    private Rocket rocketPointer = null;
 
     private class UpPressAction extends AbstractAction {
         @Override public void actionPerformed(final ActionEvent e) {

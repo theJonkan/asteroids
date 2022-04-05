@@ -1,7 +1,5 @@
 package se.liu.jonbj802;
 
-import java.awt.*;
-
 public class Rocket implements MoveableObject
 {
     private boolean flying, rotating;
@@ -13,18 +11,13 @@ public class Rocket implements MoveableObject
     private final static double ANGEL_CHANGE = 0.1;
 
     private void rotate(){
-
         if (direction == Direction.RIGHT) {
-            if (angle >= 2*Math.PI) {
-                angle -= 2*Math.PI;
-            }
             angle -= ANGEL_CHANGE;
         } else {
-            if (angle <= 0) {
-                angle += 2*Math.PI;
-            }
             angle += ANGEL_CHANGE;
         }
+
+        angle %= 2*Math.PI;
     }
 
     private void move(){
