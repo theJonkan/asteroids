@@ -7,11 +7,15 @@ public class Rocket implements MoveableObject
 {
     private final static int SIZE = 5;
     private final static double ANGEL_CHANGE = 0.1;
+    private final static double ACCELERATION_INERTIA = 0.2;
+    private final static double RETARDATION_INERTIA = 0.07;
     private final static int DEFAULT_SHOOTING_DELAY = 10;
+    private final static int MAX_SPEED = 12;
 
-    private int speed = 5;
+    private double speed = 5;
     private int x = 200, y = 200; // Middle of space (center of screen)?
     private double angle = Math.PI / 2;
+    private double movementAngle = angle;
 
     private boolean flying, rotating;
     private Direction direction = null;
@@ -29,8 +33,22 @@ public class Rocket implements MoveableObject
     }
 
     private void move(){
-        x += (int)Math.round(Math.cos(angle) * speed);
-        y += (int)Math.round(Math.sin(angle) * speed);
+        x += (int)Math.round(Math.cos(movementAngle) * speed);
+        y += (int)Math.round(Math.sin(movementAngle) * speed);
+    }
+
+    private void updateSpeed() {
+        if (flying) {
+            speed = Math.min(MAX_SPEED, speed + ACCELERATION_INERTIA);
+        } else {
+            speed = Math.max(0, speed - RETARDATION_INERTIA);
+        }
+    }
+
+    private void updateAngle() {
+        if (flying) {
+            movementAngle = angle;
+        }
     }
 
     public double getAngle(){
@@ -69,13 +87,14 @@ public class Rocket implements MoveableObject
     }
 
     @Override public void update() {
+        updateAngle();
+        updateSpeed();
+
         if (rotating){
             rotate();
         }
 
-        if (flying){
-            move();
-        }
+        move();
 
         shootingDelay--;
     }
