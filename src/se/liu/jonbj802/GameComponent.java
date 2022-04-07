@@ -4,9 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * GameComponent renders lines between the points inside the matricies.
+ */
 public class GameComponent extends JComponent
 {
-    final List<MoveableObject> objects;
+    private final List<MoveableObject> objects;
 
     public GameComponent(final List<MoveableObject> objects) {
         this.objects = objects;

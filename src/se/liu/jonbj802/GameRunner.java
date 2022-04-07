@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * GameRunner handles the window creation and game logic.
+ */
 public class GameRunner
 {
     private final List<MoveableObject> objects;

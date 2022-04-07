@@ -1,5 +1,8 @@
 package se.liu.jonbj802;
 
+/**
+ * Rocket is the player controlled object. It can shoot, fly and rotate in space.
+ */
 public class Rocket implements MoveableObject
 {
     private final static int SIZE = 5;

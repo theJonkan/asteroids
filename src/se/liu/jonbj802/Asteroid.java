@@ -3,6 +3,9 @@ package se.liu.jonbj802;
 import java.awt.*;
 import java.util.Random;
 
+/**
+ * Asteroid is an enemy that breaks into smaller chunks when hit.
+ */
 public class Asteroid extends AbstractEnemyObject
 {
     private final static Random RND = new Random();

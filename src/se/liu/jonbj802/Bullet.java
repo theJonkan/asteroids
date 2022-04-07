@@ -1,5 +1,8 @@
 package se.liu.jonbj802;
 
+/**
+ * Bullets cause damage to enemies.
+ */
 public class Bullet implements MoveableObject
 {
     private final static int SIZE = 2;

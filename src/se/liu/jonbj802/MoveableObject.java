@@ -1,8 +1,8 @@
 package se.liu.jonbj802;
 
-import javax.swing.*;
-import java.awt.*;
-
+/**
+ * MoveableObject defines an object that can move.
+ */
 public interface MoveableObject
 {
     public double getAngle();
@@ -12,5 +12,4 @@ public interface MoveableObject
     public void setPos(final int x, final int y);
     public double[][] getMatrix();
     public void update();
-
 }
