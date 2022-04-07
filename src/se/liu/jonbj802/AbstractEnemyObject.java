@@ -29,30 +29,31 @@ public abstract class AbstractEnemyObject implements EnemyObject
         return angle;
     }
 
-    protected void move(final double speed){
-        x += (int)Math.round(Math.cos(angle) * speed);
-        y += (int)Math.round(Math.sin(angle) * speed);
+    protected void move(final double distance){
+        x += (int)Math.round(Math.cos(angle) * distance);
+        y += (int)Math.round(Math.sin(angle) * distance);
     }
 
     protected void generateRandomPosition(final Dimension screenSize) {
-        final int sector = RND.nextInt(4);
+        final Edge sector = Edge.get(RND.nextInt(Edge.size()));
+
         switch (sector) {
-            case 0 -> {
+            case LEFT -> {
                 this.x = 0;
                 this.y = RND.nextInt(screenSize.height);
                 this.angle = RND.nextDouble(-1.0 / 2, 1.0/2);
             }
-            case  1 -> {
+            case  RIGHT -> {
                 this.x = screenSize.width;
                 this.y = RND.nextInt(screenSize.height);
                 this.angle = RND.nextDouble(1.0/2, 3.0/2);
             }
-            case 2 -> {
+            case BOTTOM -> {
                 this.x = RND.nextInt(screenSize.width);
                 this.y = 0;
                 this.angle = RND.nextDouble(1);
             }
-            case 3 -> {
+            case TOP -> {
                 this.x = RND.nextInt(screenSize.width);
                 this.y = screenSize.height;
                 this.angle = RND.nextDouble(1, 2);

@@ -12,17 +12,19 @@ import java.util.Random;
  */
 public class GameRunner
 {
+    //TODO: File logging with java.logging for higher grade.
+
     private final List<MoveableObject> objects;
     private GameComponent renderer = null;
     private JFrame frame = null;
 
     private final static Random RND = new Random();
-    private static final int DEFAULT_TIMER_DELAY = 1500;
     private static final int FRAME_TIME = 20; // 50 FPS => 20ms for each draw.
     private static final int OFFSET_WRAP = 20;
     private static final int OFFSET_DELETE = 100;
+    private static final int SAUCER_DELAY = 10;
+    private static final int ASTEROID_DELAY = 3;
 
-    private int saucerDelay;
     private int frameCalls;
     private Rocket rocketPointer = null;
 
@@ -116,12 +118,14 @@ public class GameRunner
 
         double seconds = frameCalls/(1000.0/FRAME_TIME);
 
-        if (seconds%3 == 0){
+        if (seconds % ASTEROID_DELAY == 0){
             objects.add(new Asteroid(windowSize));
             objects.add(new Asteroid(windowSize));
         }
 
-        if (seconds%10 == 0 && seconds != 0){
+        // has a 50/50 chance to spawn a saucer each 10 seconds.
+        if (seconds % SAUCER_DELAY == 0 && seconds != 0 && RND.nextBoolean()){
+
             objects.add(new Saucer(windowSize));
             frameCalls = 0; // Reset timer at longest duration.
         }
@@ -133,16 +137,20 @@ public class GameRunner
         final List<MoveableObject> unwantedObjects = new ArrayList<>();
         final Dimension windowSize = frame.getBounds().getSize();
 
+
         for (final MoveableObject object : objects) {
             object.update();
 
+
             final int x = object.getX(), y = object.getY();
 
+            // Deletes objects outside of bounds.
             if ((object.getClass() != Rocket.class) &&
                 (x > windowSize.width + OFFSET_DELETE || y > windowSize.height + OFFSET_DELETE || x < -OFFSET_DELETE || y < -OFFSET_DELETE)) {
                 unwantedObjects.add(object);
             }
 
+            // Wraps around the rocket.
             if (object.getClass() == Rocket.class) {
                 if (x > windowSize.width + OFFSET_WRAP) {
                     rocketPointer.setPos(-OFFSET_WRAP, y);
@@ -160,6 +168,8 @@ public class GameRunner
         for (final MoveableObject object: unwantedObjects){
             objects.remove(object);
         }
+
+
     }
 
     private void startRunner() {

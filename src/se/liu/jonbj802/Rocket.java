@@ -9,7 +9,7 @@ public class Rocket implements MoveableObject
     private final static double ANGEL_CHANGE = 0.1;
     private final static int DEFAULT_SHOOTING_DELAY = 10;
 
-    private int speed = 8;
+    private int speed = 5;
     private int x = 200, y = 200; // Middle of space (center of screen)?
     private double angle = Math.PI / 2;
 
@@ -29,8 +29,8 @@ public class Rocket implements MoveableObject
     }
 
     private void move(){
-        x += (int)Math.round(Math.cos(angle) * SIZE);
-        y += (int)Math.round(Math.sin(angle) * SIZE);
+        x += (int)Math.round(Math.cos(angle) * speed);
+        y += (int)Math.round(Math.sin(angle) * speed);
     }
 
     public double getAngle(){

@@ -11,6 +11,8 @@ public class GameComponent extends JComponent
 {
     private final List<MoveableObject> objects;
 
+    private final static int LINE_WIDTH = 1;
+
     public GameComponent(final List<MoveableObject> objects) {
         this.objects = objects;
     }
@@ -33,7 +35,7 @@ public class GameComponent extends JComponent
 
     private void drawLines(final double[][] matrix, final int xOffset, final int yOffset, final Graphics2D g2d) {
         g2d.setColor(Color.WHITE);
-        g2d.setStroke(new BasicStroke(1));
+        g2d.setStroke(new BasicStroke(LINE_WIDTH));
 
         final int height = getSize().height;
 
@@ -64,17 +66,27 @@ public class GameComponent extends JComponent
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0, 0, size.width, size.height);
 
+        // Change rendering hints for better line quality.
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_NORMALIZE);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+
+
         for (final MoveableObject object : objects) {
             final int scale =  object.getSize();
             final double angle = object.getAngle();
+
+            final double scaledSinus = scale * Math.sin(angle);
+            final double scaledCosinus = scale * Math.cos(angle);
+
+            // See link for formula https://en.wikipedia.org/wiki/Rotation_matrix#In_two_dimensions.
             final double[][] scaler = {
-                    {scale * Math.cos(angle), -scale * Math.sin(angle)},
-                    {scale * Math.sin(angle), scale * Math.cos(angle)}
+                    {scaledCosinus, -scaledSinus},
+                    {scaledSinus, scaledCosinus}
             };
 
             final double[][] matrix = multiplyMatrix(scaler, object.getMatrix());
             final int x = object.getX(), y = object.getY();
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             drawLines(matrix, x, y, g2d);
 

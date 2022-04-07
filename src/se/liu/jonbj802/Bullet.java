@@ -10,13 +10,15 @@ public class Bullet implements MoveableObject
     private final double angle;
     private int x, y;
 
-    // TODO: Wrap around at the edge and remove with timer.
+    private final static int START_DISTANCE = 20;
+
+    // TODO: Remove with timer.
 
     public Bullet(final double angle, final int x, final int y) {
 	this.angle = angle;
 	this.x = x;
 	this.y = y;
-	move(20);
+	move(START_DISTANCE);
     }
 
     @Override public double getAngle() {
