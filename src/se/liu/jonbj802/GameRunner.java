@@ -26,40 +26,47 @@ public class GameRunner
     private int frameCalls;
     private Rocket rocketPointer = null;
 
-    private class UpPressAction extends AbstractAction {
+    private class UpAction extends AbstractAction {
+        private final boolean release;
+
+        private UpAction(final boolean release) {
+            this.release = release;
+        }
+
         @Override public void actionPerformed(final ActionEvent e) {
+            if (release) {
+                rocketPointer.upRelease();
+                return;
+            }
+
             rocketPointer.upPress();
         }
     }
 
-    private class LeftRightPressAction extends AbstractAction {
+    private class LeftRightAction extends AbstractAction {
         private final Direction direction;
+        private final boolean release;
 
-        private LeftRightPressAction(final Direction direction) {
+
+        private LeftRightAction(final Direction direction, final boolean release) {
             this.direction = direction;
+            this.release = release;
         }
 
         @Override public void actionPerformed(final ActionEvent e) {
+            if (release) {
+                rocketPointer.leftRightRelease();
+                return;
+            }
+
             rocketPointer.leftRightPress(direction);
         }
     }
 
-    private class LeftRightReleaseAction extends AbstractAction{
-        @Override public void actionPerformed(final ActionEvent e){
-            rocketPointer.leftRightRelease();
-        }
-    }
-
-    private class UpReleaseAction extends AbstractAction{
-        @Override public void actionPerformed(final ActionEvent e){
-            rocketPointer.upRelease();
-        }
-    }
-
-    private class SpacePressAction extends AbstractAction {
+    private class SpacebarAction extends AbstractAction {
         @Override public void actionPerformed(final ActionEvent e) {
             final Bullet bullet = rocketPointer.shoot();
-            if (bullet != null){
+            if (bullet != null) {
                 objects.add(bullet);
             }
         }
@@ -96,12 +103,12 @@ public class GameRunner
 
 
         final ActionMap act = pane.getActionMap();
-        act.put("LEFT", new LeftRightPressAction(Direction.LEFT));
-        act.put("RIGHT", new LeftRightPressAction(Direction.RIGHT));
-        act.put("UP", new UpPressAction());
-        act.put("SPACE", new SpacePressAction());
-        act.put("LEFT_RIGHT_RELEASE", new LeftRightReleaseAction());
-        act.put("UP_RELEASE", new UpReleaseAction());
+        act.put("LEFT", new LeftRightAction(Direction.LEFT, false));
+        act.put("RIGHT", new LeftRightAction(Direction.RIGHT, false));
+        act.put("UP", new UpAction(false));
+        act.put("SPACE", new SpacebarAction());
+        act.put("LEFT_RIGHT_RELEASE", new LeftRightAction(null,true));
+        act.put("UP_RELEASE", new UpAction(true));
     }
 
     private void spawnObjects() {
