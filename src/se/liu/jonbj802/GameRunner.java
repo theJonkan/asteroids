@@ -98,10 +98,14 @@ public class GameRunner
         in.put(KeyStroke.getKeyStroke("UP"), "UP");
         in.put(KeyStroke.getKeyStroke("SPACE"), "SPACE");
 
-        // See link for keycode list https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list
-        in.put(KeyStroke.getKeyStroke(37, 0, true), "LEFT_RIGHT_RELEASE");
-        in.put(KeyStroke.getKeyStroke(38, 0, true), "UP_RELEASE");
-        in.put(KeyStroke.getKeyStroke(39, 0, true), "LEFT_RIGHT_RELEASE");
+        // See link for keycode list https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list.
+        final int leftKey = 37;
+        final int spacebarKey = 38;
+        final int rightKey = 39;
+
+        in.put(KeyStroke.getKeyStroke(leftKey, 0, true), "LEFT_RIGHT_RELEASE");
+        in.put(KeyStroke.getKeyStroke(spacebarKey, 0, true), "UP_RELEASE");
+        in.put(KeyStroke.getKeyStroke(rightKey, 0, true), "LEFT_RIGHT_RELEASE");
 
 
         final ActionMap act = pane.getActionMap();
