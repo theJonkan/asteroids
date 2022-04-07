@@ -12,7 +12,7 @@ public class Rocket implements MoveableObject
     private final static int DEFAULT_SHOOTING_DELAY = 10;
     private final static int MAX_SPEED = 12;
 
-    private double speed = 5;
+    private double speed;
     private int x = 200, y = 200; // Middle of space (center of screen)?
     private double angle = Math.PI / 2;
     private double movementAngle = angle;
