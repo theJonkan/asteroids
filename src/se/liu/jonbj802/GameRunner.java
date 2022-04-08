@@ -28,10 +28,10 @@ public class GameRunner
     private int frameCalls;
     private Rocket rocketPointer = null;
 
-    private class FarwardAction extends AbstractAction {
+    private class ForwardAction extends AbstractAction {
         private final boolean release;
 
-        private FarwardAction(final boolean release) {
+        private ForwardAction(final boolean release) {
             this.release = release;
         }
 
@@ -101,10 +101,10 @@ public class GameRunner
         final ActionMap act = pane.getActionMap();
         act.put("LEFT", new RotateAction(Direction.LEFT, false));
         act.put("RIGHT", new RotateAction(Direction.RIGHT, false));
-        act.put("UP", new FarwardAction(false));
+        act.put("UP", new ForwardAction(false));
         act.put("SPACE", new ShootAction());
         act.put("LEFT_RIGHT_RELEASE", new RotateAction(null,true));
-        act.put("UP_RELEASE", new FarwardAction(true));
+        act.put("UP_RELEASE", new ForwardAction(true));
     }
 
     private void spawnObjects() {
