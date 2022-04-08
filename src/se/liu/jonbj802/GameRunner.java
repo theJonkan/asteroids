@@ -145,25 +145,24 @@ public class GameRunner
         for (final MoveableObject object : objects) {
             object.update();
 
-
-            final int x = object.getX(), y = object.getY();
+            final Point pos = object.getPos();
 
             // Deletes objects outside of bounds.
             if ((object.getClass() != Rocket.class) &&
-                (x > windowSize.width + OFFSET_DELETE || y > windowSize.height + OFFSET_DELETE || x < -OFFSET_DELETE || y < -OFFSET_DELETE)) {
+                (pos.x > windowSize.width + OFFSET_DELETE || pos.y > windowSize.height + OFFSET_DELETE || pos.x < -OFFSET_DELETE || pos.y < -OFFSET_DELETE)) {
                 unwantedObjects.add(object);
             }
 
             // Wraps around the rocket.
             if (object.getClass() == Rocket.class) {
-                if (x > windowSize.width + OFFSET_WRAP) {
-                    rocketPointer.setPos(-OFFSET_WRAP, y);
-                } else if (y > windowSize.height + OFFSET_WRAP) {
-                    rocketPointer.setPos(x, -OFFSET_WRAP);
-                } else if (x < -OFFSET_WRAP) {
-                    rocketPointer.setPos(windowSize.width + OFFSET_WRAP, y);
-                } else if (y < -OFFSET_WRAP) {
-                    rocketPointer.setPos(x, windowSize.height + OFFSET_WRAP);
+                if (pos.x > windowSize.width + OFFSET_WRAP) {
+                    rocketPointer.setPos(-OFFSET_WRAP, pos.y);
+                } else if (pos.y > windowSize.height + OFFSET_WRAP) {
+                    rocketPointer.setPos(pos.x, -OFFSET_WRAP);
+                } else if (pos.x < -OFFSET_WRAP) {
+                    rocketPointer.setPos(windowSize.width + OFFSET_WRAP, pos.y);
+                } else if (pos.y < -OFFSET_WRAP) {
+                    rocketPointer.setPos(pos.x, windowSize.height + OFFSET_WRAP);
                 }
             }
         }
@@ -191,9 +190,10 @@ public class GameRunner
         final List<MoveableObject> objects = new ArrayList<>();
 
         final GameRunner game = new GameRunner(objects);
-        game.rocketPointer = new Rocket();
-        objects.add(game.rocketPointer);
         game.show();
+
+        game.rocketPointer = new Rocket(game.frame.getBounds().getSize());
+        objects.add(game.rocketPointer);
 
         game.startRunner();
     }

@@ -77,19 +77,19 @@ public class GameComponent extends JComponent
             final int scale =  object.getSize();
             final double angle = object.getAngle();
 
-            final double scaledSinus = scale * Math.sin(angle);
-            final double scaledCosinus = scale * Math.cos(angle);
+            final double scaledSine = scale * Math.sin(angle);
+            final double scaledCosine = scale * Math.cos(angle);
 
             // See link for formula https://en.wikipedia.org/wiki/Rotation_matrix#In_two_dimensions.
             final double[][] scaler = {
-                    {scaledCosinus, -scaledSinus},
-                    {scaledSinus, scaledCosinus}
+                    {scaledCosine, -scaledSine},
+                    {scaledSine, scaledCosine}
             };
 
             final double[][] matrix = multiplyMatrix(scaler, object.getMatrix());
-            final int x = object.getX(), y = object.getY();
+            final Point pos = object.getPos();
 
-            drawLines(matrix, x, y, g2d);
+            drawLines(matrix, pos.x, pos.y, g2d);
 
         }
 

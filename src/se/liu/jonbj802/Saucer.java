@@ -1,7 +1,6 @@
 package se.liu.jonbj802;
 
 import java.awt.*;
-import java.util.Random;
 
 /**
  * Asteroid is an enemy that shoots towards the player.

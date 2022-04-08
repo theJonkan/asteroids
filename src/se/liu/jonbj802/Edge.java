@@ -8,12 +8,12 @@ public enum Edge
     LEFT, RIGHT, TOP, BOTTOM;
 
     // Edge.values() allocates each time it is called. Cache the result.
-    private static final Edge[] VALUES = Edge.values();
+    private static final int LENGTH = Edge.values().length;
 
     public static Edge get(final int i){
-        return VALUES[i];
+        return values()[i];
     }
     public static int size(){
-        return VALUES.length;
+        return LENGTH;
     }
 }

@@ -1,14 +1,16 @@
 package se.liu.jonbj802;
 
+import java.awt.*;
+
 /**
- * Bullets cause damage to enemies.
+ * Bullets cause damage to enemies. It is spawned by the rocket and saucers.
  */
 public class Bullet implements MoveableObject
 {
     private final static int SIZE = 2;
     private final static int SPEED = 10;
     private final double angle;
-    private int x, y;
+    private Point pos;
 
     private final static int START_DISTANCE = 20;
 
@@ -16,8 +18,7 @@ public class Bullet implements MoveableObject
 
     public Bullet(final double angle, final int x, final int y) {
 	this.angle = angle;
-	this.x = x;
-	this.y = y;
+	this.pos = new Point(x, y);
 	move(START_DISTANCE);
     }
 
@@ -29,22 +30,13 @@ public class Bullet implements MoveableObject
 	return SIZE;
     }
 
-    @Override public int getX() {
-	return x;
-    }
-
-    @Override public int getY() {
-	return y;
-    }
-
-    @Override public void setPos(final int x, final int y) {
-	this.x = x;
-	this.y = y;
+    @Override public Point getPos() {
+	return pos;
     }
 
     private void move(final double distance){
-	x += (int)Math.round(Math.cos(angle) * distance);
-	y += (int)Math.round(Math.sin(angle) * distance);
+	pos.x += (int)Math.round(Math.cos(angle) * distance);
+	pos.y += (int)Math.round(Math.sin(angle) * distance);
     }
 
 

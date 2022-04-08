@@ -1,5 +1,7 @@
 package se.liu.jonbj802;
 
+import java.awt.*;
+
 /**
  * Rocket is the player controlled object. It can shoot, fly and rotate in space.
  */
@@ -13,7 +15,7 @@ public class Rocket implements MoveableObject
     private final static int MAX_SPEED = 12;
 
     private double speed;
-    private int x = 200, y = 200; // Middle of space (center of screen)?
+    private Point pos;
     private double angle = Math.PI / 2;
     private double movementAngle = angle;
 
@@ -21,6 +23,10 @@ public class Rocket implements MoveableObject
     private Direction direction = null;
 
     private int shootingDelay;
+
+    public Rocket(final Dimension screenSize) {
+        this.pos = new Point(screenSize.width / 2, screenSize.height / 2);
+    }
 
     private void rotate(){
         if (direction == Direction.RIGHT) {
@@ -33,8 +39,8 @@ public class Rocket implements MoveableObject
     }
 
     private void move(){
-        x += (int)Math.round(Math.cos(movementAngle) * speed);
-        y += (int)Math.round(Math.sin(movementAngle) * speed);
+        pos.x += (int)Math.round(Math.cos(movementAngle) * speed);
+        pos.y += (int)Math.round(Math.sin(movementAngle) * speed);
     }
 
     // TODO: Decrease the speed if angle is not same as old angle, depending on the difference between them change different amounts.
@@ -61,17 +67,13 @@ public class Rocket implements MoveableObject
         return SIZE;
     }
 
-    @Override public int getX() {
-        return x;
+    @Override public Point getPos() {
+        return pos;
     }
 
-    @Override public int getY() {
-        return y;
-    }
-
-    @Override public void setPos(final int x, final int y) {
-        this.x = x;
-        this.y = y;
+    public void setPos(final int x, final int y) {
+        pos.x = x;
+        pos.y = y;
     }
 
     @Override public double[][] getMatrix() {
@@ -104,7 +106,7 @@ public class Rocket implements MoveableObject
     public Bullet shoot() {
         if (shootingDelay <= 0) {
             shootingDelay = DEFAULT_SHOOTING_DELAY;
-            return new Bullet(angle, x, y);
+            return new Bullet(angle, pos.x, pos.y);
         }
 
         return null;
