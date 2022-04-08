@@ -43,11 +43,14 @@ public class Rocket implements MoveableObject
         pos.y += (int)Math.round(Math.sin(movementAngle) * speed);
     }
 
-    // TODO: Decrease the speed if angle is not same as old angle, depending on the difference between them change different amounts.
-
     private void updateSpeed() {
+        final double angleDiff = Math.abs(movementAngle - angle);
         if (flying) {
-            speed = Math.min(MAX_SPEED, speed + ACCELERATION_INERTIA);
+            if (angleDiff < Math.PI / 3) {
+                speed = Math.min(MAX_SPEED, speed + ACCELERATION_INERTIA);
+            } else {
+                speed = Math.max(0, speed - angleDiff);
+            }
         } else {
             speed = Math.max(0, speed - RETARDATION_INERTIA);
         }
@@ -91,12 +94,12 @@ public class Rocket implements MoveableObject
     }
 
     @Override public void update() {
-        updateAngle();
-        updateSpeed();
-
         if (rotating){
             rotate();
         }
+
+        updateSpeed();
+        updateAngle();
 
         move();
 
