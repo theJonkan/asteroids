@@ -14,7 +14,8 @@ public class Bullet implements MoveableObject
 
     private final static int START_DISTANCE = 20;
 
-    // TODO: Remove with timer.
+    private final static int DELETION_DELAY = 100;
+    private int frameCalls;
 
     public Bullet(final double angle, final int x, final int y) {
 	this.angle = angle;
@@ -34,11 +35,23 @@ public class Bullet implements MoveableObject
 	return pos;
     }
 
+    @Override public void setPos(final int x, final int y) {
+	pos.x = x;
+	pos.y = y;
+    }
+
+    @Override public boolean shouldBeRemoved(final Dimension screenSize, final int offset) {
+	return frameCalls >= DELETION_DELAY;
+    }
+
+    @Override public boolean shouldWrapAround(final Dimension screenSize, final int offset) {
+	return true;
+    }
+
     private void move(final double distance){
 	pos.x += (int)Math.round(Math.cos(angle) * distance);
 	pos.y += (int)Math.round(Math.sin(angle) * distance);
     }
-
 
     @Override public double[][] getMatrix() {
 	return new double[][] {
@@ -49,5 +62,6 @@ public class Bullet implements MoveableObject
 
     @Override public void update() {
 	move(SPEED);
+	frameCalls++;
     }
 }

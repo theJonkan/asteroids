@@ -22,8 +22,21 @@ public abstract class AbstractEnemyObject implements EnemyObject
         return pos;
     }
 
+    @Override public void setPos(final int x, final int y) {
+        pos.x = x;
+        pos.y = y;
+    }
+
     @Override public double getAngle() {
         return angle;
+    }
+
+    @Override public boolean shouldBeRemoved(final Dimension screenSize, final int offset) {
+        return false;
+    }
+
+    @Override public boolean shouldWrapAround(final Dimension screenSize, final int offset) {
+        return false;
     }
 
     protected void move(final double distance){

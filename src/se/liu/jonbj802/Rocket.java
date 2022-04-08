@@ -65,18 +65,26 @@ public class Rocket implements MoveableObject
     public double getAngle(){
         return angle;
     }
-    
+
+    public void setPos(final int x, final int y) {
+        pos.x = x;
+        pos.y = y;
+    }
+
+    @Override public boolean shouldBeRemoved(final Dimension screenSize, final int offset) {
+        return false;
+    }
+
+    @Override public boolean shouldWrapAround(final Dimension screenSize, final int offset) {
+        return pos.x > screenSize.width + offset || pos.y > screenSize.height + offset || pos.x < -offset || pos.y < -offset;
+    }
+
     @Override public int getSize() {
         return SIZE;
     }
 
     @Override public Point getPos() {
         return pos;
-    }
-
-    public void setPos(final int x, final int y) {
-        pos.x = x;
-        pos.y = y;
     }
 
     @Override public double[][] getMatrix() {

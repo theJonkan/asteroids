@@ -118,19 +118,19 @@ public class GameRunner
     }
 
     private void spawnObjects() {
-        final Dimension windowSize = frame.getBounds().getSize();
+        final Dimension screenSize = frame.getBounds().getSize();
 
         double seconds = frameCalls/(1000.0/FRAME_TIME);
 
         if (seconds % ASTEROID_DELAY == 0){
-            objects.add(new Asteroid(windowSize));
-            objects.add(new Asteroid(windowSize));
+            objects.add(new Asteroid(screenSize));
+            objects.add(new Asteroid(screenSize));
         }
 
         // has a 50/50 chance to spawn a saucer each 10 seconds.
         if (seconds % SAUCER_DELAY == 0 && seconds != 0 && RND.nextBoolean()){
 
-            objects.add(new Saucer(windowSize));
+            objects.add(new Saucer(screenSize));
             frameCalls = 0; // Reset timer at longest duration.
         }
 
@@ -139,8 +139,7 @@ public class GameRunner
 
     private void updateObjects() {
         final List<MoveableObject> unwantedObjects = new ArrayList<>();
-        final Dimension windowSize = frame.getBounds().getSize();
-
+        final Dimension screenSize = frame.getBounds().getSize();
 
         for (final MoveableObject object : objects) {
             object.update();
@@ -148,31 +147,28 @@ public class GameRunner
             final Point pos = object.getPos();
 
             // Deletes objects outside of bounds.
-            if ((object.getClass() != Rocket.class) &&
-                (pos.x > windowSize.width + OFFSET_DELETE || pos.y > windowSize.height + OFFSET_DELETE || pos.x < -OFFSET_DELETE || pos.y < -OFFSET_DELETE)) {
+            if (object.shouldBeRemoved(screenSize, OFFSET_DELETE)) {
                 unwantedObjects.add(object);
             }
 
-            // Wraps around the rocket.
-            if (object.getClass() == Rocket.class) {
-                if (pos.x > windowSize.width + OFFSET_WRAP) {
-                    rocketPointer.setPos(-OFFSET_WRAP, pos.y);
-                } else if (pos.y > windowSize.height + OFFSET_WRAP) {
-                    rocketPointer.setPos(pos.x, -OFFSET_WRAP);
+            // Wraps around objects when going out of bounds.
+            if (object.shouldWrapAround(screenSize, OFFSET_WRAP)) {
+                if (pos.x > screenSize.width + OFFSET_WRAP) {
+                    object.setPos(-OFFSET_WRAP, pos.y);
+                } else if (pos.y > screenSize.height + OFFSET_WRAP) {
+                    object.setPos(pos.x, -OFFSET_WRAP);
                 } else if (pos.x < -OFFSET_WRAP) {
-                    rocketPointer.setPos(windowSize.width + OFFSET_WRAP, pos.y);
+                    object.setPos(screenSize.width + OFFSET_WRAP, pos.y);
                 } else if (pos.y < -OFFSET_WRAP) {
-                    rocketPointer.setPos(pos.x, windowSize.height + OFFSET_WRAP);
+                    object.setPos(pos.x, screenSize.height + OFFSET_WRAP);
                 }
             }
         }
 
         // Remove objects that were found outside of bounds.
-        for (final MoveableObject object: unwantedObjects){
+        for (final MoveableObject object: unwantedObjects) {
             objects.remove(object);
         }
-
-
     }
 
     private void startRunner() {
