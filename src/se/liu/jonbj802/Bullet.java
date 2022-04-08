@@ -42,9 +42,9 @@ public class Bullet implements MoveableObject
 	this.y = y;
     }
 
-    private void move(final double speed){
-	x += (int)Math.round(Math.cos(angle) * speed);
-	y += (int)Math.round(Math.sin(angle) * speed);
+    private void move(final double distance){
+	x += (int)Math.round(Math.cos(angle) * distance);
+	y += (int)Math.round(Math.sin(angle) * distance);
     }
 
 
