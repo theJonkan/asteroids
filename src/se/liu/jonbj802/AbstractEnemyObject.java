@@ -1,6 +1,5 @@
 package se.liu.jonbj802;
 
-import javax.swing.text.Position;
 import java.awt.*;
 import java.util.Random;
 
@@ -31,11 +30,11 @@ public abstract class AbstractEnemyObject implements EnemyObject
         return angle;
     }
 
-    @Override public boolean shouldBeRemoved(final Dimension screenSize, final int offset) {
+    @Override public boolean shouldDespawn(final Dimension screenSize, final int offset) {
         return false;
     }
 
-    @Override public boolean shouldWrapAround(final Dimension screenSize, final int offset) {
+    @Override public boolean shouldWrap(final Dimension screenSize, final int offset) {
         return false;
     }
 

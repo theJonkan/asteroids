@@ -3,7 +3,7 @@ package se.liu.jonbj802;
 import java.awt.*;
 
 /**
- * MoveableObject defines an object that can move.
+ * MoveableObject defines an object that can move. This is used by the renderer when displaying.
  */
 public interface MoveableObject
 {
@@ -14,6 +14,6 @@ public interface MoveableObject
     public double[][] getMatrix();
     public void update();
 
-    public boolean shouldBeRemoved(final Dimension screenSize, final int offset);
-    public boolean shouldWrapAround(final Dimension screenSize, final int offset);
+    public boolean shouldDespawn(final Dimension screenSize, final int offset);
+    public boolean shouldWrap(final Dimension screenSize, final int offset);
 }

@@ -7,8 +7,8 @@ import java.awt.*;
  */
 public class Saucer extends AbstractEnemyObject
 {
-    private final static int SIZE = 4;
     private final static int SPEED = 5;
+    private final static int SIZE = 4;
 
     public Saucer(final Dimension screenSize) {
 	super(screenSize);

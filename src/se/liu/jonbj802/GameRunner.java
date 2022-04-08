@@ -19,7 +19,7 @@ public class GameRunner
     private JFrame frame = null;
 
     private final static Random RND = new Random();
-    private static final int FRAME_TIME = 20; // 50 FPS => 20ms for each draw.
+    private static final int FRAME_TIME = 20; /** 50 FPS => 20ms for each draw. */
     private static final int OFFSET_WRAP = 20;
     private static final int OFFSET_DELETE = 100;
     private static final int SAUCER_DELAY = 10;
@@ -28,44 +28,34 @@ public class GameRunner
     private int frameCalls;
     private Rocket rocketPointer = null;
 
-    private class UpAction extends AbstractAction {
+    private class FarwardAction extends AbstractAction {
         private final boolean release;
 
-        private UpAction(final boolean release) {
+        private FarwardAction(final boolean release) {
             this.release = release;
         }
 
         @Override public void actionPerformed(final ActionEvent e) {
-            if (release) {
-                rocketPointer.upRelease();
-                return;
-            }
-
-            rocketPointer.upPress();
+            rocketPointer.setMovement(release);
         }
     }
 
-    private class LeftRightAction extends AbstractAction {
+    private class RotateAction extends AbstractAction {
         private final Direction direction;
         private final boolean release;
 
 
-        private LeftRightAction(final Direction direction, final boolean release) {
+        private RotateAction(final Direction direction, final boolean release) {
             this.direction = direction;
             this.release = release;
         }
 
         @Override public void actionPerformed(final ActionEvent e) {
-            if (release) {
-                rocketPointer.leftRightRelease();
-                return;
-            }
-
-            rocketPointer.leftRightPress(direction);
+            rocketPointer.setRotation(release, direction);
         }
     }
 
-    private class SpacebarAction extends AbstractAction {
+    private class ShootAction extends AbstractAction {
         @Override public void actionPerformed(final ActionEvent e) {
             final Bullet bullet = rocketPointer.shoot();
             if (bullet != null) {
@@ -109,12 +99,12 @@ public class GameRunner
 
 
         final ActionMap act = pane.getActionMap();
-        act.put("LEFT", new LeftRightAction(Direction.LEFT, false));
-        act.put("RIGHT", new LeftRightAction(Direction.RIGHT, false));
-        act.put("UP", new UpAction(false));
-        act.put("SPACE", new SpacebarAction());
-        act.put("LEFT_RIGHT_RELEASE", new LeftRightAction(null,true));
-        act.put("UP_RELEASE", new UpAction(true));
+        act.put("LEFT", new RotateAction(Direction.LEFT, false));
+        act.put("RIGHT", new RotateAction(Direction.RIGHT, false));
+        act.put("UP", new FarwardAction(false));
+        act.put("SPACE", new ShootAction());
+        act.put("LEFT_RIGHT_RELEASE", new RotateAction(null,true));
+        act.put("UP_RELEASE", new FarwardAction(true));
     }
 
     private void spawnObjects() {
@@ -147,12 +137,12 @@ public class GameRunner
             final Point pos = object.getPos();
 
             // Deletes objects outside of bounds.
-            if (object.shouldBeRemoved(screenSize, OFFSET_DELETE)) {
+            if (object.shouldDespawn(screenSize, OFFSET_DELETE)) {
                 unwantedObjects.add(object);
             }
 
             // Wraps around objects when going out of bounds.
-            if (object.shouldWrapAround(screenSize, OFFSET_WRAP)) {
+            if (object.shouldWrap(screenSize, OFFSET_WRAP)) {
                 if (pos.x > screenSize.width + OFFSET_WRAP) {
                     object.setPos(-OFFSET_WRAP, pos.y);
                 } else if (pos.y > screenSize.height + OFFSET_WRAP) {

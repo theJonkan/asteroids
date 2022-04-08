@@ -71,11 +71,11 @@ public class Rocket implements MoveableObject
         pos.y = y;
     }
 
-    @Override public boolean shouldBeRemoved(final Dimension screenSize, final int offset) {
+    @Override public boolean shouldDespawn(final Dimension screenSize, final int offset) {
         return false;
     }
 
-    @Override public boolean shouldWrapAround(final Dimension screenSize, final int offset) {
+    @Override public boolean shouldWrap(final Dimension screenSize, final int offset) {
         return pos.x > screenSize.width + offset || pos.y > screenSize.height + offset || pos.x < -offset || pos.y < -offset;
     }
 
@@ -123,21 +123,12 @@ public class Rocket implements MoveableObject
         return null;
     }
 
-    public void upRelease() {
-        flying = false;
-    }
-
-    public void leftRightRelease() {
-        rotating = false;
-        direction = null;
-    }
-
-    public void leftRightPress(final Direction direction) {
-        rotating = true;
+    public void setRotation(final boolean release, final Direction direction) {
+        this.rotating = !release;
         this.direction = direction;
     }
 
-    public void upPress() {
-        flying = true;
+    public void setMovement(final boolean release) {
+        flying = !release;
     }
 }

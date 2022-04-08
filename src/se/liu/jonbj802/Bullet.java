@@ -40,11 +40,11 @@ public class Bullet implements MoveableObject
 	pos.y = y;
     }
 
-    @Override public boolean shouldBeRemoved(final Dimension screenSize, final int offset) {
+    @Override public boolean shouldDespawn(final Dimension screenSize, final int offset) {
 	return frameCalls >= DELETION_DELAY;
     }
 
-    @Override public boolean shouldWrapAround(final Dimension screenSize, final int offset) {
+    @Override public boolean shouldWrap(final Dimension screenSize, final int offset) {
 	return true;
     }
 
