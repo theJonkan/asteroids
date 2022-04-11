@@ -30,22 +30,22 @@ public abstract class AbstractEnemyObject extends AbstractMoveableObject impleme
         final Edge sector = Edge.get(RND.nextInt(Edge.size()));
         switch (sector) {
             case LEFT -> {
-                this.pos = new Point(0, RND.nextInt(screenSize.height));
-                this.angle = RND.nextDouble(-1.0 / 2, 1.0/2);
+                pos = new Point(0, RND.nextInt(screenSize.height));
+                angle = RND.nextDouble(-1.0 / 2, 1.0/2);
             }
             case  RIGHT -> {
-                this.pos = new Point(screenSize.width, RND.nextInt(screenSize.height));
-                this.angle = RND.nextDouble(1.0/2, 3.0/2);
+                pos = new Point(screenSize.width, RND.nextInt(screenSize.height));
+                angle = RND.nextDouble(1.0/2, 3.0/2);
             }
             case BOTTOM -> {
-                this.pos = new Point(RND.nextInt(screenSize.width),0);
-                this.angle = RND.nextDouble(1);
+                pos = new Point(RND.nextInt(screenSize.width),0);
+                angle = RND.nextDouble(1);
             }
             case TOP -> {
-                this.pos = new Point(RND.nextInt(screenSize.width), screenSize.height);
-                this.angle = RND.nextDouble(1, 2);
+                pos = new Point(RND.nextInt(screenSize.width), screenSize.height);
+                angle = RND.nextDouble(1, 2);
             }
         }
-        this.angle *= Math.PI;
+        angle *= Math.PI;
     }
 }

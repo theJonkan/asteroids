@@ -95,6 +95,12 @@ public class Rocket extends AbstractMoveableObject
         shootingDelay--;
     }
 
+    /** Overwride the move to use movement angle. */
+    @Override protected void move(final double distance){
+        pos.x += (int)Math.round(Math.cos(movementAngle) * distance);
+        pos.y += (int)Math.round(Math.sin(movementAngle) * distance);
+    }
+
     public Bullet shoot() {
         if (shootingDelay <= 0) {
             shootingDelay = DEFAULT_SHOOTING_DELAY;
