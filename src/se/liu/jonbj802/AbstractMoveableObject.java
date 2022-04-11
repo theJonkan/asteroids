@@ -6,11 +6,13 @@ public abstract class AbstractMoveableObject implements MoveableObject
 {
     protected Point pos = null;
     protected double angle;
+    protected int size;
+    protected final static int SCALE_SIZE = 9;
 
-    // TODO: Fix AbstractClasses position, angle etc. Next step implement hitbox.
-    public AbstractMoveableObject(final Point pos, double angle) {
+    protected AbstractMoveableObject(final Point pos, final double angle, final int size) {
         this.pos = pos;
         this.angle = angle;
+        this.size = size;
     }
 
     @Override public Point getPos() {
@@ -21,8 +23,22 @@ public abstract class AbstractMoveableObject implements MoveableObject
         pos.x = x;
         pos.y = y;
     }
+
     @Override public double getAngle() {
         return angle;
+    }
+
+    @Override public int getSize() {
+        return size;
+    }
+
+    @Override public boolean shouldWrap(final Dimension screenSize, final int offset) {
+        return true;
+    }
+
+    @Override public Rectangle getHitbox(final Dimension screenSize) {
+        final int hitboxSize = SCALE_SIZE * size;
+        return new Rectangle(pos.x - hitboxSize/2, screenSize.height - pos.y - hitboxSize/2, hitboxSize, hitboxSize);
     }
 
     protected void move(final double distance){

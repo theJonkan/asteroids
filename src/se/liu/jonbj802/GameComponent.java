@@ -12,14 +12,10 @@ public class GameComponent extends JComponent
     private final List<MoveableObject> objects;
 
     private final static int LINE_WIDTH = 1;
-    private final static int SCALE_SIZE = 9;
 
     public GameComponent(final List<MoveableObject> objects) {
         this.objects = objects;
     }
-
-
-
 
     private void drawLines(final Matrix matrix, final int x, final int y, final Graphics2D g2d) {
         g2d.setColor(Color.WHITE);
@@ -63,16 +59,13 @@ public class GameComponent extends JComponent
         for (final MoveableObject object : objects) {
             final int scale = object.getSize();
             final Point pos = object.getPos();
-            final int hitboxSize = scale * SCALE_SIZE;
 
-            // g2d.setColor(Color.TRANSLUCENT);
+            // Make translucent!
             g2d.setColor(Color.red);
-            Rectangle hitbox = new Rectangle(pos.x - hitboxSize/2, getSize().height - pos.y - hitboxSize/2, hitboxSize, hitboxSize);
-            g2d.draw(hitbox);
+            g2d.draw(object.getHitbox(size));
 
 
             drawLines(object.getMatrix(), pos.x, pos.y, g2d);
-
         }
 
         super.paintComponent(g);

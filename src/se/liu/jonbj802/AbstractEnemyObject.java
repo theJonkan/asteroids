@@ -11,8 +11,8 @@ public abstract class AbstractEnemyObject extends AbstractMoveableObject impleme
 {
     private final static Random RND = new Random();
 
-    protected AbstractEnemyObject(final Dimension screenSize) {
-        super();
+    protected AbstractEnemyObject(final Dimension screenSize, final int size) {
+        super(null, 0, size); // Angle and position are generated after.
         generateRandomPosition(screenSize);
     }
 

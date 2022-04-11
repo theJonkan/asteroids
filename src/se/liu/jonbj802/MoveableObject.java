@@ -12,7 +12,7 @@ public interface MoveableObject
     public Point getPos();
     public void setPos(final int x, final int y);
     public Matrix getMatrix();
-    public Rectangle getHitbox();
+    public Rectangle getHitbox(final Dimension screenSize);
     public void update();
 
     public boolean shouldDespawn(final Dimension screenSize, final int offset);

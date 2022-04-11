@@ -11,7 +11,7 @@ public class Saucer extends AbstractEnemyObject
     private final static int SIZE = 4;
 
     public Saucer(final Dimension screenSize) {
-	super(screenSize);
+	super(screenSize, SIZE);
     }
 
     @Override public int getHealth() {
@@ -26,10 +26,6 @@ public class Saucer extends AbstractEnemyObject
 	return 0;
     }
 
-    @Override public int getSize() {
-	return SIZE;
-    }
-
     @Override public Matrix getMatrix() {
 	Matrix matrix = new Matrix(new double[][] {
 		{-2, 2, -3, 3, -6, 6, -4, 4, -2, -3, 2, 3, -3, -6, 3, 6, -6, -4, 6, 4},
@@ -38,6 +34,10 @@ public class Saucer extends AbstractEnemyObject
 
 	matrix.modify(SIZE, SPEED);
 	return matrix;
+    }
+
+    @Override public Rectangle getHitbox(final Dimension screenSize) {
+	return null;
     }
 
     @Override public void update() {

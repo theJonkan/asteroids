@@ -9,15 +9,13 @@ import java.util.Random;
 public class Asteroid extends AbstractEnemyObject
 {
     private final static Random RND = new Random();
-    private int size;
     private double speed;
 
     private final static int SMALLEST_ASTEROID = 4;
     private final static int BIGGEST_ASTEROID = 15;
 
     public Asteroid(final Dimension screenSize) {
-        super(screenSize);
-        this.size = RND.nextInt(SMALLEST_ASTEROID, BIGGEST_ASTEROID);
+        super(screenSize, RND.nextInt(SMALLEST_ASTEROID, BIGGEST_ASTEROID));
         this.speed = 45.0 / size;
     }
 
@@ -27,10 +25,6 @@ public class Asteroid extends AbstractEnemyObject
 
     @Override public void setHealth() {
 
-    }
-
-    @Override public int getSize() {
-        return size;
     }
 
     @Override public Matrix getMatrix() {

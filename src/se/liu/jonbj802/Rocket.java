@@ -5,7 +5,7 @@ import java.awt.*;
 /**
  * Rocket is the player controlled object. It can shoot, fly and rotate in space.
  */
-public class Rocket implements MoveableObject
+public class Rocket extends AbstractMoveableObject
 {
     private final static int SIZE = 5;
     private final static double ANGEL_CHANGE = 0.1;
@@ -15,8 +15,6 @@ public class Rocket implements MoveableObject
     private final static int MAX_SPEED = 12;
 
     private double speed;
-    private Point pos;
-    private double angle = Math.PI / 2;
     private double movementAngle = angle;
 
     private boolean flying, rotating;
@@ -25,7 +23,7 @@ public class Rocket implements MoveableObject
     private int shootingDelay;
 
     public Rocket(final Dimension screenSize) {
-        this.pos = new Point(screenSize.width / 2, screenSize.height / 2);
+        super(new Point(screenSize.width / 2, screenSize.height / 2), Math.PI / 2, SIZE);
     }
 
     private void rotate(){
@@ -36,11 +34,6 @@ public class Rocket implements MoveableObject
         }
 
         angle %= 2*Math.PI;
-    }
-
-    private void move(){
-        pos.x += (int)Math.round(Math.cos(movementAngle) * speed);
-        pos.y += (int)Math.round(Math.sin(movementAngle) * speed);
     }
 
     private void updateSpeed() {
@@ -62,15 +55,6 @@ public class Rocket implements MoveableObject
         }
     }
 
-    public double getAngle(){
-        return angle;
-    }
-
-    public void setPos(final int x, final int y) {
-        pos.x = x;
-        pos.y = y;
-    }
-
     @Override public boolean shouldDespawn(final Dimension screenSize, final int offset) {
         return false;
     }
@@ -81,10 +65,6 @@ public class Rocket implements MoveableObject
 
     @Override public int getSize() {
         return SIZE;
-    }
-
-    @Override public Point getPos() {
-        return pos;
     }
 
     @Override public Matrix getMatrix() {
@@ -110,7 +90,7 @@ public class Rocket implements MoveableObject
         updateSpeed();
         updateAngle();
 
-        move();
+        move(speed);
 
         shootingDelay--;
     }
