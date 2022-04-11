@@ -33,11 +33,14 @@ public class Asteroid extends AbstractEnemyObject
         return size;
     }
 
-    @Override public double[][] getMatrix() {
-        return new double[][] {
+    @Override public Matrix getMatrix() {
+        final Matrix matrix = new Matrix(new double[][] {
                 { -1, 0, 0, 2, 2, 4, 4, 4, 4, 3, 3, 1, 1, 1, 1, -1, -1, -4, -4, -4, -4, -3, -3, -4, -4, -4, -4, -2, -2, -1},
                 { 5, 4, 4, 4, 4, 2, 2, 0, 0, -3, -3, -2, -2, -4, -4, -4, -4, -2, -2, -1, -1, 0, 0, 1, 1, 2, 2, 2, 2, 5},
-        };
+        });
+
+        matrix.modify(size, angle);
+        return matrix;
     }
 
     @Override public void update() {

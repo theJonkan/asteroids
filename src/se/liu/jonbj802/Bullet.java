@@ -53,11 +53,14 @@ public class Bullet implements MoveableObject
 	pos.y += (int)Math.round(Math.sin(angle) * distance);
     }
 
-    @Override public double[][] getMatrix() {
-	return new double[][] {
+    @Override public Matrix getMatrix() {
+	Matrix matrix = new Matrix(new double[][] {
 		{-1, 1},
 		{0, 0}
-	};
+	});
+
+	matrix.modify(SIZE, angle);
+	return matrix;
     }
 
     @Override public void update() {

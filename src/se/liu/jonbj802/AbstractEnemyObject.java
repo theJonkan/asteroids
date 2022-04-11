@@ -43,6 +43,8 @@ public abstract class AbstractEnemyObject implements EnemyObject
         pos.y += (int)Math.round(Math.sin(angle) * distance);
     }
 
+    // TODO: Avoid entirely vertical or horizontal directions?
+
     protected void generateRandomPosition(final Dimension screenSize) {
         final Edge sector = Edge.get(RND.nextInt(Edge.size()));
         switch (sector) {

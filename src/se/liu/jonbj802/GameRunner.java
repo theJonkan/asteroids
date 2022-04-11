@@ -115,11 +115,12 @@ public class GameRunner
         if (seconds % ASTEROID_DELAY == 0){
             objects.add(new Asteroid(screenSize));
             objects.add(new Asteroid(screenSize));
+            objects.add(new Asteroid(screenSize));
+            objects.add(new Asteroid(screenSize));
         }
 
         // has a 50/50 chance to spawn a saucer each 10 seconds.
         if (seconds % SAUCER_DELAY == 0 && seconds != 0 && RND.nextBoolean()){
-
             objects.add(new Saucer(screenSize));
             frameCalls = 0; // Reset timer at longest duration.
         }

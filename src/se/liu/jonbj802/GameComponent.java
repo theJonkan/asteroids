@@ -12,39 +12,26 @@ public class GameComponent extends JComponent
     private final List<MoveableObject> objects;
 
     private final static int LINE_WIDTH = 1;
+    private final static int SCALE_SIZE = 9;
 
     public GameComponent(final List<MoveableObject> objects) {
         this.objects = objects;
     }
 
-    private double[][] multiplyMatrix(final double[][] matrix1, final double[][] matrix2){
-        final int rows = matrix1.length, columns = matrix2[0].length;
-        final double[][] result = new double[rows][columns];
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                for (int k = 0; k < rows; k++) {
-                    //result[i][j] = Math.fma(matrix1[i][k], matrix2[k][j], result[i][j]);
-                    result[i][j] += matrix1[i][k] * matrix2[k][j];
-                }
-            }
-        }
-
-        return result;
-    }
 
 
-    private void drawLines(final double[][] matrix, final int xOffset, final int yOffset, final Graphics2D g2d) {
+
+    private void drawLines(final Matrix matrix, final int x, final int y, final Graphics2D g2d) {
         g2d.setColor(Color.WHITE);
         g2d.setStroke(new BasicStroke(LINE_WIDTH));
 
         final int height = getSize().height;
 
-        final int columns = matrix[0].length;
+        final int columns = matrix.getColumns();
         for (int i = 0; i < columns; i += 2) {
-            final double x1 = matrix[0][i], y1 = matrix[1][i];
-            final double x2 = matrix[0][i + 1], y2 = matrix[1][i + 1];
-            g2d.drawLine((int) x1 + xOffset, height - ((int) y1 + yOffset), (int) x2 + xOffset, height - ((int) y2 + yOffset));
+            final double x1 = matrix.get(i, 0), y1 = matrix.get(i, 1);
+            final double x2 = matrix.get(i + 1, 0), y2 = matrix.get(i + 1, 1);
+            g2d.drawLine((int) x1 + x, height - ((int) y1 + y), (int) x2 + x, height - ((int) y2 + y));
         }
     }
 
@@ -74,22 +61,17 @@ public class GameComponent extends JComponent
 
 
         for (final MoveableObject object : objects) {
-            final int scale =  object.getSize();
-            final double angle = object.getAngle();
-
-            final double scaledSine = scale * Math.sin(angle);
-            final double scaledCosine = scale * Math.cos(angle);
-
-            // See link for formula https://en.wikipedia.org/wiki/Rotation_matrix#In_two_dimensions.
-            final double[][] scaler = {
-                    {scaledCosine, -scaledSine},
-                    {scaledSine, scaledCosine}
-            };
-
-            final double[][] matrix = multiplyMatrix(scaler, object.getMatrix());
+            final int scale = object.getSize();
             final Point pos = object.getPos();
+            final int hitboxSize = scale * SCALE_SIZE;
 
-            drawLines(matrix, pos.x, pos.y, g2d);
+            // g2d.setColor(Color.TRANSLUCENT);
+            g2d.setColor(Color.red);
+            Rectangle hitbox = new Rectangle(pos.x - hitboxSize/2, getSize().height - pos.y - hitboxSize/2, hitboxSize, hitboxSize);
+            g2d.draw(hitbox);
+
+
+            drawLines(object.getMatrix(), pos.x, pos.y, g2d);
 
         }
 

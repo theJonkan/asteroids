@@ -11,7 +11,7 @@ public interface MoveableObject
     public int getSize();
     public Point getPos();
     public void setPos(final int x, final int y);
-    public double[][] getMatrix();
+    public Matrix getMatrix();
     public void update();
 
     public boolean shouldDespawn(final Dimension screenSize, final int offset);

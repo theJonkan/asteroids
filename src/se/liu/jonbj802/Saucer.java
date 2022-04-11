@@ -30,11 +30,14 @@ public class Saucer extends AbstractEnemyObject
 	return SIZE;
     }
 
-    @Override public double[][] getMatrix() {
-	return new double[][] {
+    @Override public Matrix getMatrix() {
+	Matrix matrix = new Matrix(new double[][] {
 		{-2, 2, -3, 3, -6, 6, -4, 4, -2, -3, 2, 3, -3, -6, 3, 6, -6, -4, 6, 4},
 		{4, 4, 2, 2, 0, 0, -2, -2, 4, 2, 4, 2, 2, 0, 2, 0, 0, -2, 0, -2}
-	};
+	});
+
+	matrix.modify(SIZE, SPEED);
+	return matrix;
     }
 
     @Override public void update() {
