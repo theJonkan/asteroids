@@ -7,40 +7,21 @@ import java.util.Random;
  * AbstractEnemyObject is an abstraction for common code related to enemies.
  * The position and rotation are randomly generated to spawn at the edge and move inwards.
  */
-public abstract class AbstractEnemyObject implements EnemyObject
+public abstract class AbstractEnemyObject extends AbstractMoveableObject implements EnemyObject
 {
     private final static Random RND = new Random();
-    protected Point pos = null;
-    protected double angle;
 
     protected AbstractEnemyObject(final Dimension screenSize) {
+        super();
         generateRandomPosition(screenSize);
     }
 
-    @Override public Point getPos() {
-        return pos;
-    }
-
-    @Override public void setPos(final int x, final int y) {
-        pos.x = x;
-        pos.y = y;
-    }
-
-    @Override public double getAngle() {
-        return angle;
-    }
-
     @Override public boolean shouldDespawn(final Dimension screenSize, final int offset) {
-        return false;
+        return pos.x > screenSize.width + offset || pos.y > screenSize.height + offset || pos.x < -offset || pos.y < -offset;
     }
 
     @Override public boolean shouldWrap(final Dimension screenSize, final int offset) {
         return false;
-    }
-
-    protected void move(final double distance){
-        pos.x += (int)Math.round(Math.cos(angle) * distance);
-        pos.y += (int)Math.round(Math.sin(angle) * distance);
     }
 
     // TODO: Avoid entirely vertical or horizontal directions?

@@ -90,7 +90,7 @@ public class Rocket implements MoveableObject
     @Override public Matrix getMatrix() {
         Matrix matrix;
         if (flying) {
-            matrix =  new Matrix(new double[][] {
+            matrix = new Matrix(new double[][] {
                     { -3, 5, -3, 5, -1, -1, -4, -1, -4, -1},
                     { -3, 0, 3, 0, -2, 2, 0, -1, 0, 1},
             });
