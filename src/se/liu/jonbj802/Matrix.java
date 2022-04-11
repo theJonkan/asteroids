@@ -22,16 +22,17 @@ public class Matrix
 	positions = multiply(scaler, positions);
     }
 
+    /** Matrix multiplication optimized for matrix height 2 */
     private double[][] multiply(final double[][] matrix1, final double[][] matrix2){
-	final int rows = matrix1.length, columns = matrix2[0].length;
-	final double[][] result = new double[rows][columns];
+	final int columns = matrix2[0].length;
+	final double[][] result = new double[2][columns];
 
-	for (int i = 0; i < rows; i++) {
-	    for (int j = 0; j < columns; j++) {
-		for (int k = 0; k < rows; k++) {
-		    result[i][j] += matrix1[i][k] * matrix2[k][j];
-		}
-	    }
+	for (int j = 0; j < columns; j++) {
+	    result[0][j] = matrix1[0][0] * matrix2[0][j] + matrix1[0][1] * matrix2[1][j];
+	}
+
+	for (int j = 0; j < columns; j++) {
+	    result[1][j] = matrix1[1][0] * matrix2[0][j] + matrix1[1][1] * matrix2[1][j];
 	}
 
 	return result;
