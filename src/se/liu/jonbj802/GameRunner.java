@@ -114,9 +114,9 @@ public class GameRunner
 
         if (seconds % ASTEROID_DELAY == 0){
             objects.add(new Asteroid(screenSize));
-            objects.add(new Asteroid(screenSize));
-            objects.add(new Asteroid(screenSize));
-            objects.add(new Asteroid(screenSize));
+            //objects.add(new Asteroid(screenSize));
+            //objects.add(new Asteroid(screenSize));
+            //objects.add(new Asteroid(screenSize));
         }
 
         // has a 50/50 chance to spawn a saucer each 10 seconds.
@@ -126,6 +126,29 @@ public class GameRunner
         }
 
         frameCalls++;
+    }
+
+    private void checkCollision(){
+        final Dimension screenSize = frame.getBounds().getSize();
+
+        for (int i = 0; i < objects.size(); i++) {
+            for (int j = 0; j < objects.size(); j++) {
+                final MoveableObject object = objects.get(i);
+                final MoveableObject collider = objects.get(j);
+                if (object.getClass() != collider.getClass()) {
+                    final Rectangle objectHitbox = object.getHitbox(screenSize);
+                    final Rectangle colliderHitbox = collider.getHitbox(screenSize);
+
+                    if (i != j && objectHitbox.intersects(colliderHitbox)) {
+                        object.hasCollided();
+                        collider.hasCollided();
+
+                        System.out.println("object: " + objects.get(i).getClass().getName());
+                        System.out.println("collider: " + objects.get(j).getClass().getName());
+                    }
+                }
+            }
+        }
     }
 
     private void updateObjects() {
@@ -166,6 +189,7 @@ public class GameRunner
         final Timer timer = new Timer(FRAME_TIME, e -> {
             spawnObjects();
             updateObjects();
+            checkCollision();
             renderer.repaint();
         });
 

@@ -42,4 +42,8 @@ public class Saucer extends AbstractEnemyObject
     @Override public void update() {
 	move(SPEED);
     }
+
+    @Override public void hasCollided() {
+
+    }
 }

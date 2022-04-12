@@ -14,6 +14,7 @@ public interface MoveableObject
     public Matrix getMatrix();
     public Rectangle getHitbox(final Dimension screenSize);
     public void update();
+    public void hasCollided();
 
     public boolean shouldDespawn(final Dimension screenSize, final int offset);
     public boolean shouldWrap(final Dimension screenSize, final int offset);

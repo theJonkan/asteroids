@@ -42,4 +42,8 @@ public class Asteroid extends AbstractEnemyObject
     @Override public void update() {
         move(speed);
     }
+
+    @Override public void hasCollided() {
+
+    }
 }

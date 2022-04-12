@@ -14,6 +14,13 @@ public class Rocket extends AbstractMoveableObject
     private final static int DEFAULT_SHOOTING_DELAY = 10;
     private final static int MAX_SPEED = 12;
 
+    private double speed;
+    private double movementAngle = angle;
+    private boolean flying, rotating;
+    private Direction direction = null;
+    private int shootingDelay;
+
+    // TODO: Fix holding down spacebar with "shooting state".
     // TODO: Should we move these out to separate files?
     private final static double[][] FLYING_VECTORS = new double[][] {
             { -3, 5, -3, 5, -1, -1, -4, -1, -4, -1},
@@ -23,14 +30,6 @@ public class Rocket extends AbstractMoveableObject
             { -3, 5, -3, 5, -1, -1 },
             { -3, 0, 3, 0, -2, 2 },
     };
-
-    private double speed;
-    private double movementAngle = angle;
-
-    private boolean flying, rotating;
-    private Direction direction = null;
-
-    private int shootingDelay;
 
     public Rocket(final Dimension screenSize) {
         super(new Point(screenSize.width / 2, screenSize.height / 2), Math.PI / 2, SIZE);
@@ -101,6 +100,11 @@ public class Rocket extends AbstractMoveableObject
         shootingDelay--;
     }
 
+    // Change life to one less.
+    @Override public void hasCollided() {
+
+    }
+
     /** Overwride the move to use movement angle. */
     @Override protected void move(final double distance){
         pos.x += (int)Math.round(Math.cos(movementAngle) * distance);
@@ -110,7 +114,7 @@ public class Rocket extends AbstractMoveableObject
     public Bullet shoot() {
         if (shootingDelay <= 0) {
             shootingDelay = DEFAULT_SHOOTING_DELAY;
-            return new Bullet(angle, pos.x, pos.y);
+            return new Bullet(angle, pos.x, pos.y, speed);
         }
 
         return null;
