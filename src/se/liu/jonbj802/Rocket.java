@@ -26,6 +26,7 @@ public class Rocket extends AbstractMoveableObject
             { -3, 5, -3, 5, -1, -1, -4, -1, -4, -1},
             { -3, 0, 3, 0, -2, 2, 0, -1, 0, 1},
     };
+
     private final static double[][] DRIFTING_VECTORS = new double[][] {
             { -3, 5, -3, 5, -1, -1 },
             { -3, 0, 3, 0, -2, 2 },

@@ -16,7 +16,6 @@ public abstract class AbstractEnemyObject extends AbstractMoveableObject impleme
     private final static double RIGHT_ANGLE_2PI = 2 * Math.PI;
     private final static double LEFT_ANGLE = Math.PI;
 
-
     protected AbstractEnemyObject(final Dimension screenSize, final int size) {
         super(null, 0, size); // Angle and position are generated after.
         generateRandomPosition(screenSize);
@@ -29,8 +28,6 @@ public abstract class AbstractEnemyObject extends AbstractMoveableObject impleme
     @Override public boolean shouldWrap(final Dimension screenSize, final int offset) {
         return false;
     }
-
-    // TODO: Avoid entirely vertical or horizontal directions?
 
     protected void generateRandomPosition(final Dimension screenSize) {
         final Edge sector = Edge.get(RND.nextInt(Edge.size()));

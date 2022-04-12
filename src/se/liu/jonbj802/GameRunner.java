@@ -131,6 +131,7 @@ public class GameRunner
     private void checkCollision(){
         final Dimension screenSize = frame.getBounds().getSize();
 
+        // TODO: use .hit() with the in parameter being different kinds of objects, have different methods for these different objects.
         for (int i = 0; i < objects.size(); i++) {
             for (int j = 0; j < objects.size(); j++) {
                 final MoveableObject object = objects.get(i);
