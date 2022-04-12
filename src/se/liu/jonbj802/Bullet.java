@@ -44,7 +44,7 @@ public class Bullet extends AbstractMoveableObject
 	frameCalls++;
     }
 
-    @Override public void hasCollided() {
+    @Override public void collided() {
 	hasCollided = true;
     }
 }

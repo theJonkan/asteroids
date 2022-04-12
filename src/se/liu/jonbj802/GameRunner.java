@@ -114,9 +114,9 @@ public class GameRunner
 
         if (seconds % ASTEROID_DELAY == 0){
             objects.add(new Asteroid(screenSize));
-            //objects.add(new Asteroid(screenSize));
-            //objects.add(new Asteroid(screenSize));
-            //objects.add(new Asteroid(screenSize));
+            objects.add(new Asteroid(screenSize));
+            objects.add(new Asteroid(screenSize));
+            objects.add(new Asteroid(screenSize));
         }
 
         // has a 50/50 chance to spawn a saucer each 10 seconds.
@@ -140,8 +140,8 @@ public class GameRunner
                     final Rectangle colliderHitbox = collider.getHitbox(screenSize);
 
                     if (i != j && objectHitbox.intersects(colliderHitbox)) {
-                        object.hasCollided();
-                        collider.hasCollided();
+                        object.collided();
+                        collider.collided();
 
                         System.out.println("object: " + objects.get(i).getClass().getName());
                         System.out.println("collider: " + objects.get(j).getClass().getName());

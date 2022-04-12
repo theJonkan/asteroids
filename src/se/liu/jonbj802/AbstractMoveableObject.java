@@ -2,6 +2,9 @@ package se.liu.jonbj802;
 
 import java.awt.*;
 
+/**
+ * AbstractMoveableObject is an abstraction for common code related to all movable objects.
+ */
 public abstract class AbstractMoveableObject implements MoveableObject
 {
     protected Point pos = null;
@@ -22,14 +25,6 @@ public abstract class AbstractMoveableObject implements MoveableObject
     @Override public void setPos(final int x, final int y) {
         pos.x = x;
         pos.y = y;
-    }
-
-    @Override public double getAngle() {
-        return angle;
-    }
-
-    @Override public int getSize() {
-        return size;
     }
 
     @Override public boolean shouldWrap(final Dimension screenSize, final int offset) {

@@ -57,13 +57,11 @@ public class GameComponent extends JComponent
 
 
         for (final MoveableObject object : objects) {
-            final int scale = object.getSize();
             final Point pos = object.getPos();
 
             // Make translucent!
             g2d.setColor(Color.red);
             g2d.draw(object.getHitbox(size));
-
 
             drawLines(object.getMatrix(), pos.x, pos.y, g2d);
         }

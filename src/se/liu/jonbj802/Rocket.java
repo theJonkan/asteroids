@@ -72,10 +72,6 @@ public class Rocket extends AbstractMoveableObject
         return pos.x > screenSize.width + offset || pos.y > screenSize.height + offset || pos.x < -offset || pos.y < -offset;
     }
 
-    @Override public int getSize() {
-        return SIZE;
-    }
-
     @Override public Matrix getMatrix() {
         final Matrix matrix;
         if (flying) {
@@ -101,7 +97,7 @@ public class Rocket extends AbstractMoveableObject
     }
 
     // Change life to one less.
-    @Override public void hasCollided() {
+    @Override public void collided() {
 
     }
 

@@ -30,11 +30,6 @@ public class Saucer extends AbstractEnemyObject
 
     }
 
-    /** We want to return a 0 angle to always render with same rotation. */
-    @Override public double getAngle() {
-	return 0;
-    }
-
     @Override public Matrix getMatrix() {
 	return matrix;
     }
@@ -43,7 +38,7 @@ public class Saucer extends AbstractEnemyObject
 	move(SPEED);
     }
 
-    @Override public void hasCollided() {
+    @Override public void collided() {
 
     }
 }

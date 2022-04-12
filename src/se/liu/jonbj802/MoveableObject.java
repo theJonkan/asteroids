@@ -7,14 +7,13 @@ import java.awt.*;
  */
 public interface MoveableObject
 {
-    public double getAngle();
-    public int getSize();
     public Point getPos();
     public void setPos(final int x, final int y);
+    public void update();
+    public void collided();
+
     public Matrix getMatrix();
     public Rectangle getHitbox(final Dimension screenSize);
-    public void update();
-    public void hasCollided();
 
     public boolean shouldDespawn(final Dimension screenSize, final int offset);
     public boolean shouldWrap(final Dimension screenSize, final int offset);
