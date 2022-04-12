@@ -22,6 +22,7 @@ public class Saucer extends AbstractEnemyObject
 
     }
 
+    /** We want to return a 0 angle to always render with same rotation. */
     @Override public double getAngle() {
 	return 0;
     }
@@ -32,12 +33,8 @@ public class Saucer extends AbstractEnemyObject
 		{4, 4, 2, 2, 0, 0, -2, -2, 4, 2, 4, 2, 2, 0, 2, 0, 0, -2, 0, -2}
 	});
 
-	matrix.modify(SIZE, SPEED);
+	matrix.modify(SIZE, 0);
 	return matrix;
-    }
-
-    @Override public Rectangle getHitbox(final Dimension screenSize) {
-	return null;
     }
 
     @Override public void update() {
