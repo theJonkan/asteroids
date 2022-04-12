@@ -10,6 +10,12 @@ import java.util.Random;
 public abstract class AbstractEnemyObject extends AbstractMoveableObject implements EnemyObject
 {
     private final static Random RND = new Random();
+    private final static double TOP_ANGLE = Math.PI / 2;
+    private final static double BOTTOM_ANGLE = 3 * Math.PI / 2;
+    private final static double RIGHT_ANGLE = 0;
+    private final static double RIGHT_ANGLE_2PI = 2 * Math.PI;
+    private final static double LEFT_ANGLE = Math.PI;
+
 
     protected AbstractEnemyObject(final Dimension screenSize, final int size) {
         super(null, 0, size); // Angle and position are generated after.
@@ -31,21 +37,20 @@ public abstract class AbstractEnemyObject extends AbstractMoveableObject impleme
         switch (sector) {
             case LEFT -> {
                 pos = new Point(0, RND.nextInt(screenSize.height));
-                angle = RND.nextDouble(-1.0 / 2, 1.0/2);
+                angle = RND.nextDouble(-TOP_ANGLE, TOP_ANGLE);
             }
             case  RIGHT -> {
                 pos = new Point(screenSize.width, RND.nextInt(screenSize.height));
-                angle = RND.nextDouble(1.0/2, 3.0/2);
+                angle = RND.nextDouble(TOP_ANGLE, BOTTOM_ANGLE);
             }
             case BOTTOM -> {
                 pos = new Point(RND.nextInt(screenSize.width),0);
-                angle = RND.nextDouble(1);
+                angle = RND.nextDouble(LEFT_ANGLE);
             }
             case TOP -> {
                 pos = new Point(RND.nextInt(screenSize.width), screenSize.height);
-                angle = RND.nextDouble(1, 2);
+                angle = RND.nextDouble(LEFT_ANGLE, RIGHT_ANGLE_2PI);
             }
         }
-        angle *= Math.PI;
     }
 }

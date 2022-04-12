@@ -73,12 +73,15 @@ public class Rocket extends AbstractMoveableObject
     }
 
     @Override public Matrix getMatrix() {
-        final Matrix matrix;
+        final double[][] vectors;
+
         if (flying) {
-            matrix = new Matrix(FLYING_VECTORS);
+            vectors = FLYING_VECTORS;
         } else {
-            matrix = new Matrix(DRIFTING_VECTORS);
+            vectors = DRIFTING_VECTORS;
         }
+
+        Matrix matrix = new Matrix(vectors);
         matrix.modify(SIZE, angle);
         return matrix;
     }
