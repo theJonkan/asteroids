@@ -14,8 +14,8 @@ public class Bullet extends AbstractMoveableObject
 
     private final Matrix matrix;
     private final static double[][] VECTORS = new double[][] {
-	    {-1, 1},
-	    {0, 0}
+	    {1, 1, 1, -1, -1, -1, -1, 1},
+	    {1, -1, -1, -1, -1, 1, 1, 1}
     };
 
     private final static int DELETION_DELAY = 100;
