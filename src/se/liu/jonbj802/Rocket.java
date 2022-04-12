@@ -14,6 +14,16 @@ public class Rocket extends AbstractMoveableObject
     private final static int DEFAULT_SHOOTING_DELAY = 10;
     private final static int MAX_SPEED = 12;
 
+    // TODO: Should we move these out to separate files?
+    private final static double[][] FLYING_VECTORS = new double[][] {
+            { -3, 5, -3, 5, -1, -1, -4, -1, -4, -1},
+            { -3, 0, 3, 0, -2, 2, 0, -1, 0, 1},
+    };
+    private final static double[][] DRIFTING_VECTORS = new double[][] {
+            { -3, 5, -3, 5, -1, -1 },
+            { -3, 0, 3, 0, -2, 2 },
+    };
+
     private double speed;
     private double movementAngle = angle;
 
@@ -68,15 +78,11 @@ public class Rocket extends AbstractMoveableObject
     }
 
     @Override public Matrix getMatrix() {
-        Matrix matrix;
+        final Matrix matrix;
         if (flying) {
-            matrix = new Matrix(new double[][] {
-                    { -3, 5, -3, 5, -1, -1, -4, -1, -4, -1},
-                    { -3, 0, 3, 0, -2, 2, 0, -1, 0, 1},
-            });
+            matrix = new Matrix(FLYING_VECTORS);
         } else {
-            // TODO: Should we move these out to separate files?
-            matrix = new Matrix(new double[][] { { -3, 5, -3, 5, -1, -1 }, { -3, 0, 3, 0, -2, 2 }, });
+            matrix = new Matrix(DRIFTING_VECTORS);
         }
         matrix.modify(SIZE, angle);
         return matrix;

@@ -12,11 +12,19 @@ public class Bullet extends AbstractMoveableObject
 
     private final static int START_DISTANCE = 20;
 
+    private final Matrix matrix;
+    private final static double[][] VECTORS = new double[][] {
+	    {-1, 1},
+	    {0, 0}
+    };
+
     private final static int DELETION_DELAY = 100;
     private int frameCalls;
 
     public Bullet(final double angle, final int x, final int y) {
 	super(new Point(x, y), angle, SIZE);
+	matrix = new Matrix(VECTORS);
+	matrix.modify(SIZE, angle);
 	move(START_DISTANCE);
     }
 
@@ -25,12 +33,6 @@ public class Bullet extends AbstractMoveableObject
     }
 
     @Override public Matrix getMatrix() {
-	Matrix matrix = new Matrix(new double[][] {
-		{-1, 1},
-		{0, 0}
-	});
-
-	matrix.modify(SIZE, angle);
 	return matrix;
     }
 

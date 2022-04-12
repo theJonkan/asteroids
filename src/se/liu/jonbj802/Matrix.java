@@ -19,20 +19,20 @@ public class Matrix
 		{scaledSine, scaledCosine}
 	};
 
-	positions = multiply(scaler, positions);
+	positions = multiply(scaler);
     }
 
     /** Matrix multiplication optimized for matrix height 2 */
-    private double[][] multiply(final double[][] matrix1, final double[][] matrix2){
-	final int columns = matrix2[0].length;
+    private double[][] multiply(final double[][] matrix){
+	final int columns = positions[0].length;
 	final double[][] result = new double[2][columns];
 
 	for (int j = 0; j < columns; j++) {
-	    result[0][j] = matrix1[0][0] * matrix2[0][j] + matrix1[0][1] * matrix2[1][j];
-	}
+	    // Faster way of doing: result[0][j] = matrix[0][0] * positions[0][j] + matrix[0][1] * positions[1][j];
+	    result[0][j] = Math.fma(matrix[0][0], positions[0][j], matrix[0][1] * positions[1][j]);
 
-	for (int j = 0; j < columns; j++) {
-	    result[1][j] = matrix1[1][0] * matrix2[0][j] + matrix1[1][1] * matrix2[1][j];
+	    // Faster way of doing: result[1][j] = matrix[1][0] * positions[0][j] + matrix[1][1] * positions[1][j];
+	    result[1][j] = Math.fma(matrix[1][0], positions[0][j], matrix[1][1] * positions[1][j]);
 	}
 
 	return result;

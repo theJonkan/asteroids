@@ -10,8 +10,16 @@ public class Saucer extends AbstractEnemyObject
     private final static int SPEED = 5;
     private final static int SIZE = 4;
 
+    private final Matrix matrix;
+    private final static double[][] VECTORS = new double[][] {
+	    {-2, 2, -3, 3, -6, 6, -4, 4, -2, -3, 2, 3, -3, -6, 3, 6, -6, -4, 6, 4},
+	    {4, 4, 2, 2, 0, 0, -2, -2, 4, 2, 4, 2, 2, 0, 2, 0, 0, -2, 0, -2}
+    };
+
     public Saucer(final Dimension screenSize) {
 	super(screenSize, SIZE);
+	matrix = new Matrix(VECTORS);
+	matrix.modify(SIZE, 0);
     }
 
     @Override public int getHealth() {
@@ -28,12 +36,6 @@ public class Saucer extends AbstractEnemyObject
     }
 
     @Override public Matrix getMatrix() {
-	Matrix matrix = new Matrix(new double[][] {
-		{-2, 2, -3, 3, -6, 6, -4, 4, -2, -3, 2, 3, -3, -6, 3, 6, -6, -4, 6, 4},
-		{4, 4, 2, 2, 0, 0, -2, -2, 4, 2, 4, 2, 2, 0, 2, 0, 0, -2, 0, -2}
-	});
-
-	matrix.modify(SIZE, 0);
 	return matrix;
     }
 
