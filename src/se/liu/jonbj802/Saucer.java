@@ -12,6 +12,8 @@ public class Saucer extends AbstractEnemyObject
     private final static int SPEED = 5;
     private final static int SIZE = 4;
 
+    private boolean hasCollided;
+
     private final Matrix matrix;
     private final static double[][] VECTORS = new double[][] {
 	    {-2, 2, -3, 3, -6, 6, -4, 4, -2, -3, 2, 3, -3, -6, 3, 6, -6, -4, 6, 4},
@@ -41,6 +43,14 @@ public class Saucer extends AbstractEnemyObject
     }
 
     @Override public void collided() {
+	hasCollided = true;
+    }
 
+    @Override public boolean shouldDespawn(final Dimension screenSize, final int offset) {
+	return hasCollided || super.shouldDespawn(screenSize, offset);
+    }
+
+    @Override public CollisionType getCollisionType() {
+	return CollisionType.SAUCER;
     }
 }

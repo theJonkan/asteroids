@@ -23,6 +23,7 @@ public class GameRunner
     private static final int OFFSET_WRAP = 20;
     private static final int OFFSET_DELETE = 100;
     private static final int SAUCER_DELAY = 10;
+    private static final int SAUCER_POINT = 100;
     private static final int ASTEROID_DELAY = 3;
 
     private CollisionHandler collisionHandler;
@@ -83,6 +84,28 @@ public class GameRunner
         frame.setVisible(true);
     }
 
+    private void setUpCollisions() {
+        final Dimension screenSize = frame.getBounds().getSize();
+        collisionHandler.register(CollisionType.BULLET_PLAYER, CollisionType.ASTEROID, () -> {
+            rocketPointer.increaseScore(10);
+            objects.add(new Asteroid(screenSize));
+            objects.add(new Asteroid(screenSize));
+        });
+        collisionHandler.register(CollisionType.BULLET_PLAYER, CollisionType.SAUCER, () -> {
+            rocketPointer.increaseScore(SAUCER_POINT);
+        });
+        collisionHandler.register(CollisionType.ROCKET, CollisionType.ASTEROID, () -> {
+            rocketPointer.decreaseHealth();
+            rock
+        });
+        collisionHandler.register(CollisionType.ROCKET, CollisionType.SAUCER, () -> {
+            rocketPointer.decreaseHealth();
+        });
+        collisionHandler.register(CollisionType.BULLET_ENEMY, CollisionType.ROCKET, () -> {
+            rocketPointer.decreaseHealth();
+        });
+    }
+
     private void setUpKeyMap(final JFrame frame) {
         JComponent pane = frame.getRootPane();
         final InputMap in = pane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
@@ -139,16 +162,14 @@ public class GameRunner
             for (int j = 0; j < objects.size(); j++) {
                 final MoveableObject object = objects.get(i);
                 final MoveableObject collider = objects.get(j);
-                if (object.getClass() != collider.getClass()) {
-                    final Rectangle objectHitbox = object.getHitbox(screenSize);
-                    final Rectangle colliderHitbox = collider.getHitbox(screenSize);
+                final Rectangle objectHitbox = object.getHitbox(screenSize);
+                final Rectangle colliderHitbox = collider.getHitbox(screenSize);
 
-                    if (i != j && objectHitbox.intersects(colliderHitbox)) {
+                if (i != j && objectHitbox.intersects(colliderHitbox)) {
+                    final boolean collision = collisionHandler.collide(object.getCollisionType(), collider.getCollisionType());
+                    if (collision) {
                         object.collided();
                         collider.collided();
-
-                        System.out.println("object: " + objects.get(i).getClass().getName());
-                        System.out.println("collider: " + objects.get(j).getClass().getName());
                     }
                 }
             }
@@ -209,6 +230,7 @@ public class GameRunner
 
         game.rocketPointer = new Rocket(game.frame.getBounds().getSize());
         objects.add(game.rocketPointer);
+        game.setUpCollisions();
 
         game.startRunner();
     }

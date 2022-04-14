@@ -13,6 +13,7 @@ public class Bullet extends AbstractMoveableObject
 
     private double speed;
     private boolean hasCollided;
+    private boolean fromEnemy;
 
     private final Matrix matrix;
     private final static double[][] VECTORS = new double[][] {
@@ -23,11 +24,12 @@ public class Bullet extends AbstractMoveableObject
     private final static int DELETION_DELAY = 100;
     private int frameCalls;
 
-    public Bullet(final double angle, final int x, final int y, final double speed) {
+    public Bullet(final double angle, final int x, final int y, final double speed, final boolean fromEnemy) {
 	super(new Point(x, y), angle, SIZE);
 	matrix = new Matrix(VECTORS);
 	matrix.modify(SIZE, angle);
 	this.speed = speed + DEFAULT_SPEED;
+	this.fromEnemy = fromEnemy;
 	move(START_DISTANCE);
     }
 
@@ -37,6 +39,14 @@ public class Bullet extends AbstractMoveableObject
 
     @Override public Matrix getMatrix() {
 	return matrix;
+    }
+
+    @Override public CollisionType getCollisionType() {
+	if (fromEnemy) {
+	    return CollisionType.BULLET_ENEMY;
+	}
+
+	return CollisionType.BULLET_PLAYER;
     }
 
     @Override public void update() {

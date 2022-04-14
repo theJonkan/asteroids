@@ -14,6 +14,8 @@ public class Asteroid extends AbstractEnemyObject
     private final static int SMALLEST_ASTEROID = 4;
     private final static int BIGGEST_ASTEROID = 15;
 
+    private boolean hasCollided;
+
     private Matrix matrix;
     private final static double[][] VECTORS = new double[][] {
             { -1, 0, 0, 2, 2, 4, 4, 4, 4, 3, 3, 1, 1, 1, 1, -1, -1, -4, -4, -4, -4, -3, -3, -4, -4, -4, -4, -2, -2, -1 },
@@ -44,6 +46,14 @@ public class Asteroid extends AbstractEnemyObject
     }
 
     @Override public void collided() {
+        hasCollided = true;
+    }
 
+    @Override public boolean shouldDespawn(final Dimension screenSize, final int offset) {
+        return hasCollided || super.shouldDespawn(screenSize, offset);
+    }
+
+    @Override public CollisionType getCollisionType() {
+        return CollisionType.ASTEROID;
     }
 }

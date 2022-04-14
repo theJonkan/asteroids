@@ -11,6 +11,8 @@ public class GameComponent extends JComponent
 {
     private final List<MoveableObject> objects;
 
+    private final static int SCORE_OFFSET = 25;
+    private final static int TEXT_SIZE = 30;
     private final static int LINE_WIDTH = 1;
 
     public GameComponent(final List<MoveableObject> objects) {
@@ -64,6 +66,11 @@ public class GameComponent extends JComponent
             g2d.draw(object.getHitbox(size));
 
             drawLines(object.getMatrix(), pos.x, pos.y, g2d);
+        }
+
+        if (!objects.isEmpty()) {
+            g2d.setFont(new Font("serif", Font.PLAIN, TEXT_SIZE));
+            g2d.drawString(String.valueOf(((Rocket) objects.get(0)).getScore()), SCORE_OFFSET, SCORE_OFFSET + TEXT_SIZE);
         }
 
         super.paintComponent(g);

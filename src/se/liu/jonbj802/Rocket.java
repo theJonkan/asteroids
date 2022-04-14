@@ -19,6 +19,9 @@ public class Rocket extends AbstractMoveableObject
     private boolean flying, rotating;
     private Direction direction = null;
     private int shootingDelay;
+    private boolean hasCollided;
+    private int score;
+    private int health;
 
     // TODO: Fix holding down spacebar with "shooting state".
     // TODO: Should we move these out to separate files?
@@ -66,7 +69,7 @@ public class Rocket extends AbstractMoveableObject
     }
 
     @Override public boolean shouldDespawn(final Dimension screenSize, final int offset) {
-        return false;
+        return hasCollided;
     }
 
     @Override public boolean shouldWrap(final Dimension screenSize, final int offset) {
@@ -102,7 +105,11 @@ public class Rocket extends AbstractMoveableObject
 
     // Change life to one less.
     @Override public void collided() {
+        hasCollided = true;
+    }
 
+    @Override public CollisionType getCollisionType() {
+        return CollisionType.ROCKET;
     }
 
     /** Overwride the move to use movement angle. */
@@ -114,7 +121,7 @@ public class Rocket extends AbstractMoveableObject
     public Bullet shoot() {
         if (shootingDelay <= 0) {
             shootingDelay = DEFAULT_SHOOTING_DELAY;
-            return new Bullet(angle, pos.x, pos.y, speed);
+            return new Bullet(angle, pos.x, pos.y, speed, false);
         }
 
         return null;
@@ -127,5 +134,27 @@ public class Rocket extends AbstractMoveableObject
 
     public void setMovement(final boolean release) {
         flying = !release;
+    }
+
+    public int getScore(){
+        return score;
+    }
+
+    public void increaseScore(int increment){
+        score += increment;
+    }
+
+    public int getHealth(){
+        return health;
+    }
+
+    public void decreaseHealth(){
+        health -= 1;
+    }
+
+    public void damage(){
+        health--;
+
+        setPos((int)screenSize.width / 2, (int)screenSize.height / 2);
     }
 }
