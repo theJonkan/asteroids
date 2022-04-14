@@ -7,6 +7,8 @@ import java.awt.*;
  */
 public class Saucer extends AbstractEnemyObject
 {
+    // TODO: Let saucer shoot bullets.
+
     private final static int SPEED = 5;
     private final static int SIZE = 4;
 

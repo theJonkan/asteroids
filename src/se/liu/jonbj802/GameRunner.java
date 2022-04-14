@@ -25,6 +25,8 @@ public class GameRunner
     private static final int SAUCER_DELAY = 10;
     private static final int ASTEROID_DELAY = 3;
 
+    private CollisionHandler collisionHandler;
+
     private int frameCalls;
     private Rocket rocketPointer = null;
 
@@ -66,6 +68,7 @@ public class GameRunner
 
     public GameRunner(final List<MoveableObject> objects) {
         this.objects = objects;
+        this.collisionHandler = new CollisionHandler();
     }
 
     private void show() {
