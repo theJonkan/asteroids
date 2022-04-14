@@ -15,8 +15,11 @@ public class GameComponent extends JComponent
     private final static int TEXT_SIZE = 30;
     private final static int LINE_WIDTH = 1;
 
-    public GameComponent(final List<MoveableObject> objects) {
+    private boolean debug;
+
+    public GameComponent(final List<MoveableObject> objects, final boolean debug) {
         this.objects = objects;
+        this.debug = debug;
     }
 
     private void drawLines(final Matrix matrix, final int x, final int y, final Graphics2D g2d) {
@@ -61,9 +64,10 @@ public class GameComponent extends JComponent
         for (final MoveableObject object : objects) {
             final Point pos = object.getPos();
 
-            // Make translucent!
-            g2d.setColor(Color.red);
-            g2d.draw(object.getHitbox(size));
+            if (debug) {
+                g2d.setColor(Color.red);
+                g2d.draw(object.getHitbox(size));
+            }
 
             drawLines(object.getMatrix(), pos.x, pos.y, g2d);
         }
@@ -71,6 +75,8 @@ public class GameComponent extends JComponent
         if (!objects.isEmpty()) {
             g2d.setFont(new Font("serif", Font.PLAIN, TEXT_SIZE));
             g2d.drawString(String.valueOf(((Rocket) objects.get(0)).getScore()), SCORE_OFFSET, SCORE_OFFSET + TEXT_SIZE);
+            g2d.drawString("Lives: " + String.valueOf(((Rocket) objects.get(0)).getHealth()), SCORE_OFFSET, (SCORE_OFFSET + TEXT_SIZE) * 2);
+
         }
 
         super.paintComponent(g);

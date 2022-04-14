@@ -10,11 +10,12 @@ import java.util.Random;
 /**
  * GameRunner handles the window creation and game logic.
  */
-public class GameRunner
+public class GameRunner implements SpawnListener
 {
     //TODO: File logging with java.logging for higher grade.
 
     private final List<MoveableObject> objects;
+    private final List<MoveableObject> addQueue = new ArrayList<>();
     private GameComponent renderer = null;
     private JFrame frame = null;
 
@@ -60,10 +61,7 @@ public class GameRunner
 
     private class ShootAction extends AbstractAction {
         @Override public void actionPerformed(final ActionEvent e) {
-            final Bullet bullet = rocketPointer.shoot();
-            if (bullet != null) {
-                objects.add(bullet);
-            }
+            rocketPointer.shoot();
         }
     }
 
@@ -76,7 +74,7 @@ public class GameRunner
         frame = new JFrame("Asteroids");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        renderer = new GameComponent(objects);
+        renderer = new GameComponent(objects, false);
         frame.add(renderer);
         setUpKeyMap(frame);
 
@@ -84,26 +82,21 @@ public class GameRunner
         frame.setVisible(true);
     }
 
+    @Override public void spawn(final List<MoveableObject> newObjects) {
+        this.addQueue.addAll(newObjects);
+    }
+
     private void setUpCollisions() {
         final Dimension screenSize = frame.getBounds().getSize();
         collisionHandler.register(CollisionType.BULLET_PLAYER, CollisionType.ASTEROID, () -> {
             rocketPointer.increaseScore(10);
-            objects.add(new Asteroid(screenSize));
-            objects.add(new Asteroid(screenSize));
+            //objects.add(new Asteroid(screenSize));
+            //objects.add(new Asteroid(screenSize));
         });
-        collisionHandler.register(CollisionType.BULLET_PLAYER, CollisionType.SAUCER, () -> {
-            rocketPointer.increaseScore(SAUCER_POINT);
-        });
-        collisionHandler.register(CollisionType.ROCKET, CollisionType.ASTEROID, () -> {
-            rocketPointer.decreaseHealth();
-            rock
-        });
-        collisionHandler.register(CollisionType.ROCKET, CollisionType.SAUCER, () -> {
-            rocketPointer.decreaseHealth();
-        });
-        collisionHandler.register(CollisionType.BULLET_ENEMY, CollisionType.ROCKET, () -> {
-            rocketPointer.decreaseHealth();
-        });
+        collisionHandler.register(CollisionType.BULLET_PLAYER, CollisionType.SAUCER, () -> rocketPointer.increaseScore(SAUCER_POINT));
+        collisionHandler.register(CollisionType.ROCKET, CollisionType.ASTEROID, () -> rocketPointer.damage());
+        collisionHandler.register(CollisionType.ROCKET, CollisionType.SAUCER, () -> rocketPointer.damage());
+        collisionHandler.register(CollisionType.BULLET_ENEMY, CollisionType.ROCKET, () -> rocketPointer.damage());
     }
 
     private void setUpKeyMap(final JFrame frame) {
@@ -139,15 +132,15 @@ public class GameRunner
         double seconds = frameCalls/(1000.0/FRAME_TIME);
 
         if (seconds % ASTEROID_DELAY == 0){
-            objects.add(new Asteroid(screenSize));
-            objects.add(new Asteroid(screenSize));
-            objects.add(new Asteroid(screenSize));
-            objects.add(new Asteroid(screenSize));
+            objects.add(new Asteroid(screenSize, this));
+            objects.add(new Asteroid(screenSize, this));
+            objects.add(new Asteroid(screenSize, this));
+            objects.add(new Asteroid(screenSize, this));
         }
 
         // has a 50/50 chance to spawn a saucer each 10 seconds.
         if (seconds % SAUCER_DELAY == 0 && seconds != 0 && RND.nextBoolean()){
-            objects.add(new Saucer(screenSize));
+            objects.add(new Saucer(screenSize, rocketPointer, this));
             frameCalls = 0; // Reset timer at longest duration.
         }
 
@@ -157,7 +150,6 @@ public class GameRunner
     private void checkCollision(){
         final Dimension screenSize = frame.getBounds().getSize();
 
-        // TODO: use .hit() with the in parameter being different kinds of objects, have different methods for these different objects.
         for (int i = 0; i < objects.size(); i++) {
             for (int j = 0; j < objects.size(); j++) {
                 final MoveableObject object = objects.get(i);
@@ -179,6 +171,10 @@ public class GameRunner
     private void updateObjects() {
         final List<MoveableObject> unwantedObjects = new ArrayList<>();
         final Dimension screenSize = frame.getBounds().getSize();
+
+        // Avoids concurrent modification
+        objects.addAll(addQueue);
+        addQueue.clear();
 
         for (final MoveableObject object : objects) {
             object.update();
@@ -212,10 +208,12 @@ public class GameRunner
 
     private void startRunner() {
         final Timer timer = new Timer(FRAME_TIME, e -> {
-            spawnObjects();
-            updateObjects();
-            checkCollision();
-            renderer.repaint();
+            if (rocketPointer.getHealth() > 0) {
+                spawnObjects();
+                updateObjects();
+                checkCollision();
+                renderer.repaint();
+            }
         });
 
         timer.setCoalesce(true);
@@ -228,7 +226,7 @@ public class GameRunner
         final GameRunner game = new GameRunner(objects);
         game.show();
 
-        game.rocketPointer = new Rocket(game.frame.getBounds().getSize());
+        game.rocketPointer = new Rocket(game.frame.getBounds().getSize(), game);
         objects.add(game.rocketPointer);
         game.setUpCollisions();
 

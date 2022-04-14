@@ -1,6 +1,8 @@
 package se.liu.jonbj802;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Rocket is the player controlled object. It can shoot, fly and rotate in space.
@@ -14,17 +16,19 @@ public class Rocket extends AbstractMoveableObject
     private final static int DEFAULT_SHOOTING_DELAY = 10;
     private final static int MAX_SPEED = 12;
 
+    private final Dimension screenSize;
+
     private double speed;
     private double movementAngle = angle;
     private boolean flying, rotating;
     private Direction direction = null;
     private int shootingDelay;
-    private boolean hasCollided;
     private int score;
-    private int health;
+    private int health = 3;
+    private SpawnListener spawner;
 
     // TODO: Fix holding down spacebar with "shooting state".
-    // TODO: Should we move these out to separate files?
+    // TODO: Should we move these out to separate files? Yes.
     private final static double[][] FLYING_VECTORS = new double[][] {
             { -3, 5, -3, 5, -1, -1, -4, -1, -4, -1},
             { -3, 0, 3, 0, -2, 2, 0, -1, 0, 1},
@@ -35,8 +39,10 @@ public class Rocket extends AbstractMoveableObject
             { -3, 0, 3, 0, -2, 2 },
     };
 
-    public Rocket(final Dimension screenSize) {
+    public Rocket(final Dimension screenSize, final SpawnListener spawner) {
         super(new Point(screenSize.width / 2, screenSize.height / 2), Math.PI / 2, SIZE);
+        this.screenSize = screenSize;
+        this.spawner = spawner;
     }
 
     private void rotate(){
@@ -69,7 +75,7 @@ public class Rocket extends AbstractMoveableObject
     }
 
     @Override public boolean shouldDespawn(final Dimension screenSize, final int offset) {
-        return hasCollided;
+        return health < 1;
     }
 
     @Override public boolean shouldWrap(final Dimension screenSize, final int offset) {
@@ -105,26 +111,27 @@ public class Rocket extends AbstractMoveableObject
 
     // Change life to one less.
     @Override public void collided() {
-        hasCollided = true;
+
     }
 
     @Override public CollisionType getCollisionType() {
         return CollisionType.ROCKET;
     }
 
-    /** Overwride the move to use movement angle. */
     @Override protected void move(final double distance){
         pos.x += (int)Math.round(Math.cos(movementAngle) * distance);
         pos.y += (int)Math.round(Math.sin(movementAngle) * distance);
     }
 
-    public Bullet shoot() {
-        if (shootingDelay <= 0) {
-            shootingDelay = DEFAULT_SHOOTING_DELAY;
-            return new Bullet(angle, pos.x, pos.y, speed, false);
+    public void shoot() {
+        if (shootingDelay > 0) {
+            return;
         }
 
-        return null;
+        shootingDelay = DEFAULT_SHOOTING_DELAY;
+        final List<MoveableObject> list = new ArrayList<>();
+        list.add(new Bullet(angle, pos.x, pos.y, speed, false));
+        spawner.spawn(list);
     }
 
     public void setRotation(final boolean release, final Direction direction) {
@@ -148,13 +155,10 @@ public class Rocket extends AbstractMoveableObject
         return health;
     }
 
-    public void decreaseHealth(){
-        health -= 1;
-    }
-
     public void damage(){
         health--;
 
-        setPos((int)screenSize.width / 2, (int)screenSize.height / 2);
+        // TODO: We need a respawn timer.
+        setPos(screenSize.width / 2, screenSize.height / 2);
     }
 }
