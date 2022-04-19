@@ -17,7 +17,7 @@ public class Pair
     @Override public boolean equals(final Object obj) {
         if (this == obj){
             return true;
-        } else if (obj instanceof Pair pair){
+        } else if (obj instanceof Pair pair) {
             return (collider1 == pair.collider1 && collider2 == pair.collider2) || (collider1 == pair.collider2 && collider2 == pair.collider1);
         }
 
