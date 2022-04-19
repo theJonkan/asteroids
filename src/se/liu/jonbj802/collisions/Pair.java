@@ -1,4 +1,4 @@
-package se.liu.jonbj802;
+package se.liu.jonbj802.collisions;
 
 /**
  * Pair allows grouping two CollisionTypes into one type that can be used in maps.

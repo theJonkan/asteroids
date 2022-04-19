@@ -1,5 +1,8 @@
 package se.liu.jonbj802;
 
+import se.liu.jonbj802.collisions.CollisionHandler;
+import se.liu.jonbj802.collisions.CollisionType;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

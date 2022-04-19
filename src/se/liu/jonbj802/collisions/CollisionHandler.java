@@ -1,4 +1,4 @@
-package se.liu.jonbj802;
+package se.liu.jonbj802.collisions;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package se.liu.jonbj802;
+package se.liu.jonbj802.collisions;
 
 /**
  * CollisionType defines set types of collisions. These are used to

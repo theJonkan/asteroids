@@ -1,5 +1,7 @@
 package se.liu.jonbj802;
 
+import se.liu.jonbj802.collisions.CollisionType;
+
 import java.awt.*;
 
 /**
