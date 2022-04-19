@@ -7,7 +7,7 @@ import java.awt.*;
  */
 public abstract class AbstractMoveableObject implements MoveableObject
 {
-    protected Point pos = null;
+    protected Point pos;
     protected double angle;
     protected int size;
     protected final static int SCALE_SIZE = 9;

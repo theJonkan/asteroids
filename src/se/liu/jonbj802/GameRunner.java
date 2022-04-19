@@ -12,7 +12,7 @@ import java.util.Random;
  */
 public class GameRunner implements SpawnListener
 {
-    //TODO: File logging with java.logging for higher grade.
+    // TODO: File logging with java.logging for higher grade.
 
     private final List<MoveableObject> objects;
     private final List<MoveableObject> addQueue = new ArrayList<>();
@@ -24,8 +24,11 @@ public class GameRunner implements SpawnListener
     private static final int OFFSET_WRAP = 20;
     private static final int OFFSET_DELETE = 100;
     private static final int SAUCER_DELAY = 10;
-    private static final int SAUCER_POINT = 100;
     private static final int ASTEROID_DELAY = 3;
+
+    // TODO: We need to model this better.
+    private static final int ASTEROID_POINTS = 10;
+    private static final int SAUCER_POINTS = 100;
 
     private CollisionHandler collisionHandler;
 
@@ -87,16 +90,11 @@ public class GameRunner implements SpawnListener
     }
 
     private void setUpCollisions() {
-        final Dimension screenSize = frame.getBounds().getSize();
-        collisionHandler.register(CollisionType.BULLET_PLAYER, CollisionType.ASTEROID, () -> {
-            rocketPointer.increaseScore(10);
-            //objects.add(new Asteroid(screenSize));
-            //objects.add(new Asteroid(screenSize));
-        });
-        collisionHandler.register(CollisionType.BULLET_PLAYER, CollisionType.SAUCER, () -> rocketPointer.increaseScore(SAUCER_POINT));
-        collisionHandler.register(CollisionType.ROCKET, CollisionType.ASTEROID, () -> rocketPointer.damage());
-        collisionHandler.register(CollisionType.ROCKET, CollisionType.SAUCER, () -> rocketPointer.damage());
-        collisionHandler.register(CollisionType.BULLET_ENEMY, CollisionType.ROCKET, () -> rocketPointer.damage());
+        collisionHandler.register(CollisionType.BULLET_PLAYER, CollisionType.ASTEROID, () -> rocketPointer.increaseScore(ASTEROID_POINTS));
+        collisionHandler.register(CollisionType.BULLET_PLAYER, CollisionType.SAUCER, () -> rocketPointer.increaseScore(SAUCER_POINTS));
+        collisionHandler.register(CollisionType.ROCKET, CollisionType.ASTEROID);
+        collisionHandler.register(CollisionType.ROCKET, CollisionType.SAUCER);
+        collisionHandler.register(CollisionType.BULLET_ENEMY, CollisionType.ROCKET);
     }
 
     private void setUpKeyMap(final JFrame frame) {

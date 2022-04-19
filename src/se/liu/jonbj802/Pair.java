@@ -1,5 +1,9 @@
 package se.liu.jonbj802;
 
+/**
+ * Pair allows grouping two CollisionTypes into one type that can be used in maps.
+ * The pair type is defined like a set, meaning that Pair(a, b) == Pair(b, a).
+ */
 public class Pair
 {
     private final CollisionType collider1;

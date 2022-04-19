@@ -12,8 +12,7 @@ public abstract class AbstractEnemyObject extends AbstractMoveableObject impleme
     private final static Random RND = new Random();
     private final static double TOP_ANGLE = Math.PI / 2;
     private final static double BOTTOM_ANGLE = 3 * Math.PI / 2;
-    private final static double RIGHT_ANGLE = 0;
-    private final static double RIGHT_ANGLE_2PI = 2 * Math.PI;
+    private final static double RIGHT_ANGLE = 2 * Math.PI;
     private final static double LEFT_ANGLE = Math.PI;
 
     protected AbstractEnemyObject(final Dimension screenSize, final int size) {
@@ -46,7 +45,7 @@ public abstract class AbstractEnemyObject extends AbstractMoveableObject impleme
             }
             case TOP -> {
                 pos = new Point(RND.nextInt(screenSize.width), screenSize.height);
-                angle = RND.nextDouble(LEFT_ANGLE, RIGHT_ANGLE_2PI);
+                angle = RND.nextDouble(LEFT_ANGLE, RIGHT_ANGLE);
             }
         }
     }

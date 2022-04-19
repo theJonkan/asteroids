@@ -109,9 +109,8 @@ public class Rocket extends AbstractMoveableObject
         shootingDelay--;
     }
 
-    // Change life to one less.
     @Override public void collided() {
-
+        damage();
     }
 
     @Override public CollisionType getCollisionType() {

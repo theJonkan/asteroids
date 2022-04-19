@@ -75,7 +75,7 @@ public class GameComponent extends JComponent
         if (!objects.isEmpty()) {
             g2d.setFont(new Font("serif", Font.PLAIN, TEXT_SIZE));
             g2d.drawString(String.valueOf(((Rocket) objects.get(0)).getScore()), SCORE_OFFSET, SCORE_OFFSET + TEXT_SIZE);
-            g2d.drawString("Lives: " + String.valueOf(((Rocket) objects.get(0)).getHealth()), SCORE_OFFSET, (SCORE_OFFSET + TEXT_SIZE) * 2);
+            g2d.drawString("Lives: " + ((Rocket) objects.get(0)).getHealth(), SCORE_OFFSET, (SCORE_OFFSET + TEXT_SIZE) * 2);
 
         }
 
