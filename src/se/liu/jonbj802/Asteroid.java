@@ -16,6 +16,9 @@ public class Asteroid extends AbstractEnemyObject
     private final static int SMALLEST_ASTEROID = 4;
     private final static int BIGGEST_ASTEROID = 15;
 
+    private final static int SEPARATION = 10;
+    private final static int SIZE_DECREASE = 2;
+
     private boolean hasCollided;
     private SpawnListener spawner = null;
     private Dimension screenSize = null;
@@ -67,11 +70,11 @@ public class Asteroid extends AbstractEnemyObject
             return;
         }
 
-        final Asteroid asteroid1 = new Asteroid(screenSize, size - 2, spawner);
-        asteroid1.setPos(pos.x - 5, pos.y - 5);
+        final Asteroid asteroid1 = new Asteroid(screenSize, size - SIZE_DECREASE, spawner);
+        asteroid1.setPos(pos.x - SEPARATION, pos.y - SEPARATION);
 
-        final Asteroid asteroid2 = new Asteroid(screenSize, size - 2, spawner);
-        asteroid2.setPos(pos.x + 5, pos.y + 5);
+        final Asteroid asteroid2 = new Asteroid(screenSize, size - SIZE_DECREASE, spawner);
+        asteroid2.setPos(pos.x + SEPARATION, pos.y + SEPARATION);
 
         final List<MoveableObject> list = new ArrayList<>();
         list.add(asteroid1);

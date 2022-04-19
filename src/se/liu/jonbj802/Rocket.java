@@ -11,9 +11,13 @@ public class Rocket extends AbstractMoveableObject
 {
     private final static int SIZE = 5;
     private final static double ANGEL_CHANGE = 0.1;
+
     private final static double ACCELERATION_INERTIA = 0.2;
     private final static double RETARDATION_INERTIA = 0.07;
+
     private final static int DEFAULT_SHOOTING_DELAY = 10;
+    private final static int DEFAULT_RESPAWN_DELAY = 100;
+
     private final static int MAX_SPEED = 12;
 
     private final Dimension screenSize;
@@ -22,10 +26,12 @@ public class Rocket extends AbstractMoveableObject
     private double movementAngle = angle;
     private boolean flying, rotating;
     private Direction direction = null;
-    private int shootingDelay;
     private int score;
     private int health = 3;
     private SpawnListener spawner;
+
+    private int shootingDelay;
+    private int respawnDelay;
 
     // TODO: Fix holding down spacebar with "shooting state".
     // TODO: Should we move these out to separate files? Yes.
@@ -107,10 +113,12 @@ public class Rocket extends AbstractMoveableObject
         move(speed);
 
         shootingDelay--;
+        respawnDelay--;
     }
 
     @Override public void collided() {
         damage();
+        respawnDelay = 0;
     }
 
     @Override public CollisionType getCollisionType() {
@@ -155,9 +163,13 @@ public class Rocket extends AbstractMoveableObject
     }
 
     public void damage(){
+        if (respawnDelay > 0) {
+            return;
+        }
+
         health--;
 
-        // TODO: We need a respawn timer.
+        respawnDelay = DEFAULT_RESPAWN_DELAY;
         setPos(screenSize.width / 2, screenSize.height / 2);
     }
 }
