@@ -17,13 +17,11 @@ public class Pair
     @Override public boolean equals(final Object obj) {
         if (this == obj){
             return true;
-        }
-        if (!(obj instanceof Pair)){
-            return false;
+        } else if (obj instanceof Pair pair){
+            return (collider1 == pair.collider1 && collider2 == pair.collider2) || (collider1 == pair.collider2 && collider2 == pair.collider1);
         }
 
-        Pair pair = (Pair) obj;
-        return (collider1 == pair.collider1 && collider2 == pair.collider2) || (collider1 == pair.collider2 && collider2 == pair.collider1);
+        return false;
     }
 
     @Override public int hashCode() {
