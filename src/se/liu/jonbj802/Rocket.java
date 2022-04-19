@@ -24,7 +24,7 @@ public class Rocket extends AbstractMoveableObject
 
     private double speed;
     private double movementAngle = angle;
-    private boolean flying, rotating;
+    private boolean flying, rotating, shooting;
     private Direction direction = null;
     private int score;
     private int health = 3;
@@ -33,7 +33,6 @@ public class Rocket extends AbstractMoveableObject
     private int shootingDelay;
     private int respawnDelay;
 
-    // TODO: Fix holding down spacebar with "shooting state".
     // TODO: Should we move these out to separate files? Yes.
     private final static double[][] FLYING_VECTORS = new double[][] {
             { -3, 5, -3, 5, -1, -1, -4, -1, -4, -1},
@@ -80,6 +79,17 @@ public class Rocket extends AbstractMoveableObject
         }
     }
 
+    private void shoot() {
+        if (shootingDelay > 0) {
+            return;
+        }
+
+        shootingDelay = DEFAULT_SHOOTING_DELAY;
+        final List<MoveableObject> list = new ArrayList<>();
+        list.add(new Bullet(angle, pos.x, pos.y, speed, false));
+        spawner.spawn(list);
+    }
+
     @Override public boolean shouldDespawn(final Dimension screenSize, final int offset) {
         return health < 1;
     }
@@ -107,6 +117,10 @@ public class Rocket extends AbstractMoveableObject
             rotate();
         }
 
+        if (shooting) {
+            shoot();
+        }
+
         updateSpeed();
         updateAngle();
 
@@ -130,15 +144,8 @@ public class Rocket extends AbstractMoveableObject
         pos.y += (int)Math.round(Math.sin(movementAngle) * distance);
     }
 
-    public void shoot() {
-        if (shootingDelay > 0) {
-            return;
-        }
-
-        shootingDelay = DEFAULT_SHOOTING_DELAY;
-        final List<MoveableObject> list = new ArrayList<>();
-        list.add(new Bullet(angle, pos.x, pos.y, speed, false));
-        spawner.spawn(list);
+    public void setShooting(final boolean release) {
+        this.shooting = !release;
     }
 
     public void setRotation(final boolean release, final Direction direction) {
@@ -162,7 +169,7 @@ public class Rocket extends AbstractMoveableObject
         return health;
     }
 
-    public void damage(){
+    private void damage(){
         if (respawnDelay > 0) {
             return;
         }

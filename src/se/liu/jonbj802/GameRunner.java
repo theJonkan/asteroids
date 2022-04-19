@@ -63,8 +63,14 @@ public class GameRunner implements SpawnListener
     }
 
     private class ShootAction extends AbstractAction {
+        private final boolean release;
+
+        private ShootAction(final boolean release) {
+            this.release = release;
+        }
+
         @Override public void actionPerformed(final ActionEvent e) {
-            rocketPointer.shoot();
+            rocketPointer.setShooting(release);
         }
     }
 
@@ -107,21 +113,26 @@ public class GameRunner implements SpawnListener
 
         // See link for keycode list https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list.
         final int leftKey = 37;
-        final int spacebarKey = 38;
+        final int upKey = 38;
         final int rightKey = 39;
+        final int spacebarKey = 32;
 
         in.put(KeyStroke.getKeyStroke(leftKey, 0, true), "LEFT_RIGHT_RELEASE");
-        in.put(KeyStroke.getKeyStroke(spacebarKey, 0, true), "UP_RELEASE");
+        in.put(KeyStroke.getKeyStroke(upKey, 0, true), "UP_RELEASE");
         in.put(KeyStroke.getKeyStroke(rightKey, 0, true), "LEFT_RIGHT_RELEASE");
+        in.put(KeyStroke.getKeyStroke(spacebarKey, 0, true), "SPACE_RELEASE");
 
 
         final ActionMap act = pane.getActionMap();
         act.put("LEFT", new RotateAction(Direction.LEFT, false));
         act.put("RIGHT", new RotateAction(Direction.RIGHT, false));
-        act.put("UP", new ForwardAction(false));
-        act.put("SPACE", new ShootAction());
         act.put("LEFT_RIGHT_RELEASE", new RotateAction(null,true));
+
+        act.put("UP", new ForwardAction(false));
         act.put("UP_RELEASE", new ForwardAction(true));
+
+        act.put("SPACE", new ShootAction(false));
+        act.put("SPACE_RELEASE", new ShootAction(true));
     }
 
     private void spawnObjects() {
