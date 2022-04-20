@@ -17,7 +17,7 @@ public class Asteroid extends AbstractEnemyObject
     private final static Random RND = new Random();
     private double speed;
 
-    private final static int SMALLEST_ASTEROID = 4;
+    private final static int SMALLEST_ASTEROID = 6;
     private final static int BIGGEST_ASTEROID = 15;
 
     private final static int POS_SEPARATION = 10;
@@ -64,7 +64,8 @@ public class Asteroid extends AbstractEnemyObject
     @Override public void collided() {
         hasCollided = true;
 
-        if (size - SMALLEST_ASTEROID <= 0) {
+        final int nextSize = size - SIZE_DECREASE;
+        if (size - SMALLEST_ASTEROID <= 0 || nextSize <= 0) {
             return;
         }
 

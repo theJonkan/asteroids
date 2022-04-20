@@ -171,7 +171,7 @@ public class GameRunner implements SpawnListener
         frameCalls++;
     }
 
-    private void checkCollision(){
+    private void findCollisions(){
         final Dimension screenSize = frame.getBounds().getSize();
 
         for (int i = 0; i < objects.size(); i++) {
@@ -235,7 +235,7 @@ public class GameRunner implements SpawnListener
             if (rocketPointer.getHealth() > 0) {
                 spawnObjects();
                 updateObjects();
-                checkCollision();
+                findCollisions();
                 renderer.repaint();
             }
         });
