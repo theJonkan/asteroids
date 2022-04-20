@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 /**
  * GameRunner handles the window creation and game logic.
@@ -247,13 +250,24 @@ public class GameRunner implements SpawnListener
     public static void main(String[] args) {
         final List<MoveableObject> objects = new ArrayList<>();
 
+        final Logger logger = Logger.getLogger("AsteroidsLog");
+        try {
+            final java.util.logging.FileHandler fh = new java.util.logging.FileHandler("asteroids.log");
+            fh.setFormatter(new SimpleFormatter());
+            logger.addHandler(fh);
+            logger.addHandler(fh);
+        } catch (IOException e) {
+            logger.log(Level.WARNING, "Failed to set up file handler");
+            e.printStackTrace();
+        }
+
         final GameRunner game = new GameRunner(objects);
 
         try {
             game.setUpAssets();
         } catch (IOException e) {
+            logger.log(Level.SEVERE, "Failed to load assets");
             e.printStackTrace();
-            // TODO: Logging file handler.
             return;
         }
         game.show();
