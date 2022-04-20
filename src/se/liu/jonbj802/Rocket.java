@@ -1,6 +1,5 @@
 package se.liu.jonbj802;
 
-import com.google.gson.Gson;
 import se.liu.jonbj802.collisions.CollisionType;
 import se.liu.jonbj802.graphics.FileHandler;
 import se.liu.jonbj802.graphics.Matrix;

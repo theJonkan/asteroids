@@ -18,7 +18,12 @@ public class FileHandler
     }
 
     public void load(final String name) throws IOException {
-        final InputStream matrix = ClassLoader.getSystemResourceAsStream("images/matricies/" + name + ".json");
+        final String path = "images/matricies/" + name + ".json";
+        final InputStream matrix = ClassLoader.getSystemResourceAsStream(path);
+        if (matrix == null) {
+            throw new IOException("the file " + path + " does not exist or is empty");
+        }
+
         final byte[] contents = matrix.readAllBytes();
         matricies.put(name, gson.fromJson(new String(contents), Matrix.class));
     }
