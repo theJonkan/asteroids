@@ -2,7 +2,7 @@ package se.liu.jonbj802.collisions;
 
 /**
  * Pair allows grouping two CollisionTypes into one type that can be used in maps.
- * The pair type is defined like a set, meaning that Pair(a, b) == Pair(b, a).
+ * The Pair type is defined like a set, meaning that Pair(a, b) == Pair(b, a).
  */
 public class Pair
 {
@@ -17,7 +17,7 @@ public class Pair
     @Override public boolean equals(final Object obj) {
         if (this == obj){
             return true;
-        } else if (obj instanceof Pair pair) {
+        } if (obj instanceof Pair pair) {
             return (collider1 == pair.collider1 && collider2 == pair.collider2) || (collider1 == pair.collider2 && collider2 == pair.collider1);
         }
 
