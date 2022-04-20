@@ -19,6 +19,9 @@ public abstract class AbstractEnemyObject extends AbstractMoveableObject impleme
         super(null, 0, size); // Angle and position are generated after.
         generateRandomPosition(screenSize);
     }
+    protected AbstractEnemyObject(final Point pos, final int size, final double angle) {
+        super(pos, angle, size); // Angle and position are generated after.
+    }
 
     @Override public boolean shouldDespawn(final Dimension screenSize, final int offset) {
         return pos.x > screenSize.width + offset || pos.y > screenSize.height + offset || pos.x < -offset || pos.y < -offset;

@@ -18,12 +18,12 @@ public class Asteroid extends AbstractEnemyObject
     private final static int SMALLEST_ASTEROID = 4;
     private final static int BIGGEST_ASTEROID = 15;
 
-    private final static int SEPARATION = 10;
+    private final static int POS_SEPARATION = 10;
+    private final static double ANGLE_SEPARATION = 0.3;
     private final static int SIZE_DECREASE = 2;
 
     private boolean hasCollided;
     private SpawnListener spawner = null;
-    private Dimension screenSize = null;
 
     private Matrix matrix;
     private final static double[][] VECTORS = new double[][] {
@@ -33,20 +33,19 @@ public class Asteroid extends AbstractEnemyObject
 
     public Asteroid(final Dimension screenSize, final SpawnListener spawner) {
         super(screenSize, RND.nextInt(SMALLEST_ASTEROID, BIGGEST_ASTEROID));
-        init(screenSize, spawner);
+        init(spawner);
     }
 
-    public Asteroid(final Dimension screenSize, final int size, final SpawnListener spawner) {
-        super(screenSize, size);
-        init(screenSize, spawner);
+    public Asteroid(final Point pos, final int size, final double angle, final SpawnListener spawner) {
+        super(pos, size, angle);
+        init(spawner);
     }
 
-    private void init(final Dimension screenSize, final SpawnListener spawner) {
+    private void init(final SpawnListener spawner) {
         this.speed = 45.0 / size;
         this.matrix = new Matrix(VECTORS);
         this.matrix.modify(size, angle);
         this.spawner = spawner;
-        this.screenSize = screenSize;
     }
 
     @Override public int getHealth() {
@@ -72,11 +71,11 @@ public class Asteroid extends AbstractEnemyObject
             return;
         }
 
-        final Asteroid asteroid1 = new Asteroid(screenSize, size - SIZE_DECREASE, spawner);
-        asteroid1.setPos(pos.x - SEPARATION, pos.y - SEPARATION);
+        final Point pos1 = new Point(pos.x - POS_SEPARATION, pos.y - POS_SEPARATION);
+        final Asteroid asteroid1 = new Asteroid(pos1, size - SIZE_DECREASE, angle - ANGLE_SEPARATION, spawner);
 
-        final Asteroid asteroid2 = new Asteroid(screenSize, size - SIZE_DECREASE, spawner);
-        asteroid2.setPos(pos.x + SEPARATION, pos.y + SEPARATION);
+        final Point pos2 = new Point(pos.x + POS_SEPARATION, pos.y + POS_SEPARATION);
+        final Asteroid asteroid2 = new Asteroid(pos2,size - SIZE_DECREASE, angle + ANGLE_SEPARATION, spawner);
 
         final List<MoveableObject> list = new ArrayList<>();
         list.add(asteroid1);
