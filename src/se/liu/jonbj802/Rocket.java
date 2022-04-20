@@ -22,6 +22,7 @@ public class Rocket extends AbstractMoveableObject
 
     private final static int DEFAULT_SHOOTING_DELAY = 10;
     private final static int DEFAULT_RESPAWN_DELAY = 100;
+    private final static int DEFAULT_HEALTH = 3;
 
     private final static int MAX_SPEED = 12;
 
@@ -33,7 +34,7 @@ public class Rocket extends AbstractMoveableObject
     private boolean flying, rotating, shooting;
     private Direction direction = null;
     private int score;
-    private int health = 3;
+    private int health = DEFAULT_HEALTH;
     private SpawnListener spawner;
 
     private int shootingDelay;
@@ -82,9 +83,9 @@ public class Rocket extends AbstractMoveableObject
         }
 
         shootingDelay = DEFAULT_SHOOTING_DELAY;
-        final List<MoveableObject> list = new ArrayList<>();
-        list.add(new Bullet(angle, pos.x, pos.y, speed, false, fileHandler));
-        spawner.spawn(list);
+        final List<MoveableObject> bullets = new ArrayList<>();
+        bullets.add(new Bullet(angle, pos.x, pos.y, speed, false, fileHandler));
+        spawner.spawn(bullets);
     }
 
     @Override public boolean shouldDespawn(final Dimension screenSize, final int offset) {

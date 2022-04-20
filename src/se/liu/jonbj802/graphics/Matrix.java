@@ -5,6 +5,8 @@ public class Matrix
 {
     private double[][] positions;
 
+    private final static int HEIGHT = 2;
+
     public Matrix(final double[][] positions) {
 	this.positions = positions;
     }
@@ -25,7 +27,7 @@ public class Matrix
     /** Matrix multiplication optimized for matrix height 2 */
     private double[][] multiply(final double[][] matrix){
 	final int columns = positions[0].length;
-	final double[][] result = new double[2][columns];
+	final double[][] result = new double[HEIGHT][columns];
 
 	for (int j = 0; j < columns; j++) {
 	    // Faster way of doing: result[0][j] = matrix[0][0] * positions[0][j] + matrix[0][1] * positions[1][j];

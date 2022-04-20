@@ -31,7 +31,8 @@ public class GameComponent extends JComponent
         final int height = getSize().height;
 
         final int columns = matrix.getColumns();
-        for (int i = 0; i < columns; i += 2) {
+        final int lineDataLength = 2;
+        for (int i = 0; i < columns; i += lineDataLength) {
             final double x1 = matrix.get(i, 0), y1 = matrix.get(i, 1);
             final double x2 = matrix.get(i + 1, 0), y2 = matrix.get(i + 1, 1);
             g2d.drawLine((int) x1 + x, height - ((int) y1 + y), (int) x2 + x, height - ((int) y2 + y));
