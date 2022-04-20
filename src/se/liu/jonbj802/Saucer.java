@@ -1,6 +1,8 @@
 package se.liu.jonbj802;
 
 import se.liu.jonbj802.collisions.CollisionType;
+import se.liu.jonbj802.graphics.FileHandler;
+import se.liu.jonbj802.graphics.Matrix;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -21,15 +23,10 @@ public class Saucer extends AbstractEnemyObject
     private SpawnListener spawner;
 
     private final Matrix matrix;
-    private final static double[][] VECTORS = new double[][] {
-	    {-2, 2, -3, 3, -6, 6, -4, 4, -2, -3, 2, 3, -3, -6, 3, 6, -6, -4, 6, 4},
-	    {4, 4, 2, 2, 0, 0, -2, -2, 4, 2, 4, 2, 2, 0, 2, 0, 0, -2, 0, -2}
-    };
 
-    public Saucer(final Dimension screenSize, final Rocket rocketPointer, final SpawnListener spawner) {
-	super(screenSize, SIZE);
-	matrix = new Matrix(VECTORS);
-	matrix.modify(SIZE, 0);
+    public Saucer(final Dimension screenSize, final Rocket rocketPointer, final SpawnListener spawner, final FileHandler fileHandler) {
+	super(screenSize, SIZE, fileHandler);
+	matrix = fileHandler.get("saucer").modify(SIZE, 0);
 	this.rocketPointer = rocketPointer;
 	this.spawner = spawner;
     }
@@ -74,7 +71,7 @@ public class Saucer extends AbstractEnemyObject
 
 	shootingDelay = DEFAULT_SHOOTING_DELAY;
 	final List<MoveableObject> list = new ArrayList<>();
-	list.add(new Bullet(angleToRocket, pos.x, pos.y, 0, true));
+	list.add(new Bullet(angleToRocket, pos.x, pos.y, 0, true, fileHandler));
 	spawner.spawn(list);
     }
 

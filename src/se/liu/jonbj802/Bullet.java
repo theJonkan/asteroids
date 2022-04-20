@@ -1,6 +1,8 @@
 package se.liu.jonbj802;
 
 import se.liu.jonbj802.collisions.CollisionType;
+import se.liu.jonbj802.graphics.FileHandler;
+import se.liu.jonbj802.graphics.Matrix;
 
 import java.awt.*;
 
@@ -18,18 +20,13 @@ public class Bullet extends AbstractMoveableObject
     private boolean fromEnemy;
 
     private final Matrix matrix;
-    private final static double[][] VECTORS = new double[][] {
-	    {1, 1, 1, -1, -1, -1, -1, 1},
-	    {1, -1, -1, -1, -1, 1, 1, 1}
-    };
 
     private final static int DELETION_DELAY = 100;
     private int frameCalls;
 
-    public Bullet(final double angle, final int x, final int y, final double speed, final boolean fromEnemy) {
-	super(new Point(x, y), angle, SIZE);
-	matrix = new Matrix(VECTORS);
-	matrix.modify(SIZE, angle);
+    public Bullet(final double angle, final int x, final int y, final double speed, final boolean fromEnemy, final FileHandler fileHandler) {
+	super(new Point(x, y), angle, SIZE, fileHandler);
+	matrix = fileHandler.get("bullet").modify(SIZE, angle);
 	this.speed = speed + DEFAULT_SPEED;
 	this.fromEnemy = fromEnemy;
 	move(START_DISTANCE);

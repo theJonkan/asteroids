@@ -1,4 +1,4 @@
-package se.liu.jonbj802;
+package se.liu.jonbj802.graphics;
 
 /** Matrix contains rendering positions for graphics objects. It will always assume a height of 2. */
 public class Matrix
@@ -9,7 +9,7 @@ public class Matrix
 	this.positions = positions;
     }
 
-    public void modify(int scale, double angle){
+    public Matrix modify(int scale, double angle){
 	final double scaledSine = scale * Math.sin(angle);
 	final double scaledCosine = scale * Math.cos(angle);
 
@@ -19,7 +19,7 @@ public class Matrix
 		{scaledSine, scaledCosine}
 	};
 
-	positions = multiply(scaler);
+	return new Matrix(multiply(scaler));
     }
 
     /** Matrix multiplication optimized for matrix height 2 */

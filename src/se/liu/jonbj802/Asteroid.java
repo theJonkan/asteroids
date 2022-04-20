@@ -1,6 +1,8 @@
 package se.liu.jonbj802;
 
 import se.liu.jonbj802.collisions.CollisionType;
+import se.liu.jonbj802.graphics.FileHandler;
+import se.liu.jonbj802.graphics.Matrix;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -26,25 +28,20 @@ public class Asteroid extends AbstractEnemyObject
     private SpawnListener spawner = null;
 
     private Matrix matrix;
-    private final static double[][] VECTORS = new double[][] {
-            { -1, 0, 0, 2, 2, 4, 4, 4, 4, 3, 3, 1, 1, 1, 1, -1, -1, -4, -4, -4, -4, -3, -3, -4, -4, -4, -4, -2, -2, -1 },
-            { 5, 4, 4, 4, 4, 2, 2, 0, 0, -3, -3, -2, -2, -4, -4, -4, -4, -2, -2, -1, -1, 0, 0, 1, 1, 2, 2, 2, 2, 5 },
-    };
 
-    public Asteroid(final Dimension screenSize, final SpawnListener spawner) {
-        super(screenSize, RND.nextInt(SMALLEST_ASTEROID, BIGGEST_ASTEROID));
+    public Asteroid(final Dimension screenSize, final SpawnListener spawner, final FileHandler fileHandler) {
+        super(screenSize, RND.nextInt(SMALLEST_ASTEROID, BIGGEST_ASTEROID), fileHandler);
         init(spawner);
     }
 
-    public Asteroid(final Point pos, final int size, final double angle, final SpawnListener spawner) {
-        super(pos, size, angle);
+    public Asteroid(final Point pos, final int size, final double angle, final SpawnListener spawner, final FileHandler fileHandler) {
+        super(pos, size, angle, fileHandler);
         init(spawner);
     }
 
     private void init(final SpawnListener spawner) {
         this.speed = 45.0 / size;
-        this.matrix = new Matrix(VECTORS);
-        this.matrix.modify(size, angle);
+        this.matrix = fileHandler.get("asteroid_type1").modify(size, angle);
         this.spawner = spawner;
     }
 
@@ -72,10 +69,10 @@ public class Asteroid extends AbstractEnemyObject
         }
 
         final Point pos1 = new Point(pos.x - POS_SEPARATION, pos.y - POS_SEPARATION);
-        final Asteroid asteroid1 = new Asteroid(pos1, size - SIZE_DECREASE, angle - ANGLE_SEPARATION, spawner);
+        final Asteroid asteroid1 = new Asteroid(pos1, size - SIZE_DECREASE, angle - ANGLE_SEPARATION, spawner, fileHandler);
 
         final Point pos2 = new Point(pos.x + POS_SEPARATION, pos.y + POS_SEPARATION);
-        final Asteroid asteroid2 = new Asteroid(pos2,size - SIZE_DECREASE, angle + ANGLE_SEPARATION, spawner);
+        final Asteroid asteroid2 = new Asteroid(pos2,size - SIZE_DECREASE, angle + ANGLE_SEPARATION, spawner, fileHandler);
 
         final List<MoveableObject> list = new ArrayList<>();
         list.add(asteroid1);

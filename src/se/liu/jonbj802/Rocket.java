@@ -1,6 +1,9 @@
 package se.liu.jonbj802;
 
+import com.google.gson.Gson;
 import se.liu.jonbj802.collisions.CollisionType;
+import se.liu.jonbj802.graphics.FileHandler;
+import se.liu.jonbj802.graphics.Matrix;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -24,6 +27,7 @@ public class Rocket extends AbstractMoveableObject
 
     private final Dimension screenSize;
 
+    private final Matrix flyingMatrix, driftingMatrix;
     private double speed;
     private double movementAngle = angle;
     private boolean flying, rotating, shooting;
@@ -35,19 +39,10 @@ public class Rocket extends AbstractMoveableObject
     private int shootingDelay;
     private int respawnDelay;
 
-    // TODO: Should we move these out to separate files? Yes.
-    private final static double[][] FLYING_VECTORS = new double[][] {
-            { -3, 5, -3, 5, -1, -1, -4, -1, -4, -1},
-            { -3, 0, 3, 0, -2, 2, 0, -1, 0, 1},
-    };
-
-    private final static double[][] DRIFTING_VECTORS = new double[][] {
-            { -3, 5, -3, 5, -1, -1 },
-            { -3, 0, 3, 0, -2, 2 },
-    };
-
-    public Rocket(final Dimension screenSize, final SpawnListener spawner) {
-        super(new Point(screenSize.width / 2, screenSize.height / 2), Math.PI / 2, SIZE);
+    public Rocket(final Dimension screenSize, final SpawnListener spawner, final FileHandler fileHandler) {
+        super(new Point(screenSize.width / 2, screenSize.height / 2), Math.PI / 2, SIZE, fileHandler);
+        this.flyingMatrix = fileHandler.get("rocket_flying");
+        this.driftingMatrix = fileHandler.get("rocket_drifting");
         this.screenSize = screenSize;
         this.spawner = spawner;
     }
@@ -88,7 +83,7 @@ public class Rocket extends AbstractMoveableObject
 
         shootingDelay = DEFAULT_SHOOTING_DELAY;
         final List<MoveableObject> list = new ArrayList<>();
-        list.add(new Bullet(angle, pos.x, pos.y, speed, false));
+        list.add(new Bullet(angle, pos.x, pos.y, speed, false, fileHandler));
         spawner.spawn(list);
     }
 
@@ -101,17 +96,11 @@ public class Rocket extends AbstractMoveableObject
     }
 
     @Override public Matrix getMatrix() {
-        final double[][] vectors;
-
         if (flying) {
-            vectors = FLYING_VECTORS;
-        } else {
-            vectors = DRIFTING_VECTORS;
+            return flyingMatrix.modify(SIZE, angle);
         }
 
-        Matrix matrix = new Matrix(vectors);
-        matrix.modify(SIZE, angle);
-        return matrix;
+        return driftingMatrix.modify(SIZE, angle);
     }
 
     @Override public void update() {

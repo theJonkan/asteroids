@@ -1,5 +1,7 @@
 package se.liu.jonbj802;
 
+import se.liu.jonbj802.graphics.FileHandler;
+
 import java.awt.*;
 
 /**
@@ -10,12 +12,15 @@ public abstract class AbstractMoveableObject implements MoveableObject
     protected Point pos;
     protected double angle;
     protected int size;
+    protected FileHandler fileHandler;
+
     protected final static int SCALE_SIZE = 9;
 
-    protected AbstractMoveableObject(final Point pos, final double angle, final int size) {
+    protected AbstractMoveableObject(final Point pos, final double angle, final int size, final FileHandler fileHandler) {
         this.pos = pos;
         this.angle = angle;
         this.size = size;
+        this.fileHandler = fileHandler;
     }
 
     @Override public Point getPos() {

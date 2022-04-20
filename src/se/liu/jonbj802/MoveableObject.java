@@ -1,6 +1,7 @@
 package se.liu.jonbj802;
 
 import se.liu.jonbj802.collisions.CollisionType;
+import se.liu.jonbj802.graphics.Matrix;
 
 import java.awt.*;
 

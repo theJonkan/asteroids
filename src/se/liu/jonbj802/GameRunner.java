@@ -2,10 +2,12 @@ package se.liu.jonbj802;
 
 import se.liu.jonbj802.collisions.CollisionHandler;
 import se.liu.jonbj802.collisions.CollisionType;
+import se.liu.jonbj802.graphics.FileHandler;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -15,8 +17,6 @@ import java.util.Random;
  */
 public class GameRunner implements SpawnListener
 {
-    // TODO: File logging with java.logging for higher grade.
-
     private final List<MoveableObject> objects;
     private final List<MoveableObject> addQueue = new ArrayList<>();
     private GameComponent renderer = null;
@@ -34,6 +34,7 @@ public class GameRunner implements SpawnListener
     private static final int SAUCER_POINTS = 100;
 
     private CollisionHandler collisionHandler;
+    private final FileHandler fileHandler;
 
     private int frameCalls;
     private Rocket rocketPointer = null;
@@ -80,6 +81,7 @@ public class GameRunner implements SpawnListener
     public GameRunner(final List<MoveableObject> objects) {
         this.objects = objects;
         this.collisionHandler = new CollisionHandler();
+        this.fileHandler = new FileHandler();
     }
 
     private void show() {
@@ -106,6 +108,14 @@ public class GameRunner implements SpawnListener
         collisionHandler.register(CollisionType.BULLET_ENEMY, CollisionType.ROCKET);
     }
 
+    private void setUpAssets() throws IOException {
+        fileHandler.load("asteroid_type1");
+        fileHandler.load("bullet");
+        fileHandler.load("rocket_drifting");
+        fileHandler.load("rocket_flying");
+        fileHandler.load("saucer");
+    }
+
     private void setUpKeyMap(final JFrame frame) {
         JComponent pane = frame.getRootPane();
         final InputMap in = pane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
@@ -119,6 +129,8 @@ public class GameRunner implements SpawnListener
         final int upKey = 38;
         final int rightKey = 39;
         final int spacebarKey = 32;
+
+        // Erik suggests us to use KeyListener instead.
 
         in.put(KeyStroke.getKeyStroke(leftKey, 0, true), "LEFT_RIGHT_RELEASE");
         in.put(KeyStroke.getKeyStroke(upKey, 0, true), "UP_RELEASE");
@@ -144,15 +156,15 @@ public class GameRunner implements SpawnListener
         double seconds = frameCalls/(1000.0/FRAME_TIME);
 
         if (seconds % ASTEROID_DELAY == 0){
-            objects.add(new Asteroid(screenSize, this));
-            objects.add(new Asteroid(screenSize, this));
-            objects.add(new Asteroid(screenSize, this));
-            objects.add(new Asteroid(screenSize, this));
+            objects.add(new Asteroid(screenSize, this, fileHandler));
+            objects.add(new Asteroid(screenSize, this, fileHandler));
+            objects.add(new Asteroid(screenSize, this, fileHandler));
+            objects.add(new Asteroid(screenSize, this, fileHandler));
         }
 
         // has a 50/50 chance to spawn a saucer each 10 seconds.
         if (seconds % SAUCER_DELAY == 0 && seconds != 0 && RND.nextBoolean()){
-            objects.add(new Saucer(screenSize, rocketPointer, this));
+            objects.add(new Saucer(screenSize, rocketPointer, this, fileHandler));
             frameCalls = 0; // Reset timer at longest duration.
         }
 
@@ -236,9 +248,17 @@ public class GameRunner implements SpawnListener
         final List<MoveableObject> objects = new ArrayList<>();
 
         final GameRunner game = new GameRunner(objects);
+
+        try {
+            game.setUpAssets();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // TODO: Logging file handler.
+            return;
+        }
         game.show();
 
-        game.rocketPointer = new Rocket(game.frame.getBounds().getSize(), game);
+        game.rocketPointer = new Rocket(game.frame.getBounds().getSize(), game, game.fileHandler);
         objects.add(game.rocketPointer);
         game.setUpCollisions();
 

@@ -1,5 +1,7 @@
 package se.liu.jonbj802;
 
+import se.liu.jonbj802.graphics.FileHandler;
+
 import java.awt.*;
 import java.util.Random;
 
@@ -15,12 +17,12 @@ public abstract class AbstractEnemyObject extends AbstractMoveableObject impleme
     private final static double RIGHT_ANGLE = 2 * Math.PI;
     private final static double LEFT_ANGLE = Math.PI;
 
-    protected AbstractEnemyObject(final Dimension screenSize, final int size) {
-        super(null, 0, size); // Angle and position are generated after.
+    protected AbstractEnemyObject(final Dimension screenSize, final int size, final FileHandler fileHandler) {
+        super(null, 0, size, fileHandler); // Angle and position are generated after.
         generateRandomPosition(screenSize);
     }
-    protected AbstractEnemyObject(final Point pos, final int size, final double angle) {
-        super(pos, angle, size); // Angle and position are generated after.
+    protected AbstractEnemyObject(final Point pos, final int size, final double angle, final FileHandler fileHandler) {
+        super(pos, angle, size, fileHandler); // Angle and position are generated after.
     }
 
     @Override public boolean shouldDespawn(final Dimension screenSize, final int offset) {

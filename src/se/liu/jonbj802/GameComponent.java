@@ -1,5 +1,7 @@
 package se.liu.jonbj802;
 
+import se.liu.jonbj802.graphics.Matrix;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
