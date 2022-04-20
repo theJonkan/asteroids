@@ -2,11 +2,15 @@ package se.liu.jonbj802.graphics;
 
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * FileHandler allows loading Matrix graphics from json files inside the resources folder.
+ */
 public class FileHandler
 {
     private Map<String, Matrix> matricies;
@@ -18,7 +22,7 @@ public class FileHandler
     }
 
     public void load(final String name) throws IOException {
-        final String path = "images/matricies/" + name + ".json";
+        final String path = "images" + File.separator + "matricies" + File.separator + name + ".json";
         final InputStream matrix = ClassLoader.getSystemResourceAsStream(path);
         if (matrix == null) {
             throw new IOException("the file " + path + " does not exist or is empty");
