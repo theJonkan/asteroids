@@ -206,7 +206,7 @@ public class GameRunner implements SpawnListener
         }
         game.show();
 
-        game.rocketPointer = new Rocket(game.frame.getBounds().getSize(), game, game.fileHandler);
+        game.rocketPointer = new Rocket(game.frame.getBounds().getSize(), game, game.fileHandler, game.collisionHandler);
         objects.add(game.rocketPointer);
         game.setUpCollisions();
         game.setUpKeyMap();

@@ -1,6 +1,7 @@
 package se.liu.jonbj802.moveable_objects;
 
 import se.liu.jonbj802.SpawnListener;
+import se.liu.jonbj802.collisions.CollisionHandler;
 import se.liu.jonbj802.collisions.CollisionType;
 import se.liu.jonbj802.graphics.FileHandler;
 import se.liu.jonbj802.graphics.Matrix;
@@ -38,16 +39,18 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
     private int score;
     private int health = DEFAULT_HEALTH;
     private SpawnListener spawner;
+    private CollisionHandler collisions;
 
     private int shootingDelay;
     private int respawnDelay;
 
-    public Rocket(final Dimension screenSize, final SpawnListener spawner, final FileHandler fileHandler) {
+    public Rocket(final Dimension screenSize, final SpawnListener spawner, final FileHandler fileHandler, final CollisionHandler collisions) {
         super(new Point(screenSize.width / 2, screenSize.height / 2), Math.PI / 2, SIZE, fileHandler);
         this.flyingMatrix = fileHandler.get("rocket_flying");
         this.driftingMatrix = fileHandler.get("rocket_drifting");
         this.screenSize = screenSize;
         this.spawner = spawner;
+        this.collisions = collisions;
     }
 
     private void rotate(){
@@ -122,11 +125,12 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
 
         shootingDelay--;
         respawnDelay--;
+
+        collisions.setEnabled(respawnDelay <= 0);
     }
 
     @Override public void collided() {
         damage();
-        respawnDelay = 0;
     }
 
     @Override public CollisionType getCollisionType() {

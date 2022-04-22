@@ -10,6 +10,7 @@ import java.util.Map;
 public class CollisionHandler
 {
     private Map<Pair, CollisionAction> collisionMap = new HashMap<>();
+    private boolean enabled = true;
 
     public void register(final CollisionType collider1, final CollisionType collider2, final CollisionAction action) {
         collisionMap.put(new Pair(collider1, collider2), action);
@@ -21,11 +22,15 @@ public class CollisionHandler
 
     public boolean collide(final CollisionType collider1, final CollisionType collider2) {
         final CollisionAction action = collisionMap.get(new Pair(collider1, collider2));
-        if (action == null) {
+        if (!enabled || action == null) {
             return false;
         }
 
         action.handleCollision();
         return true;
+    }
+
+    public void setEnabled(final boolean enabled) {
+        this.enabled = enabled;
     }
 }
