@@ -26,6 +26,7 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
     private final static int DEFAULT_SHOOTING_DELAY = 10;
     private final static int DEFAULT_RESPAWN_DELAY = 100;
     private final static int DEFAULT_HEALTH = 3;
+    private final static double DEFAULT_ANGLE = Math.PI / 2;
 
     private final static int MAX_SPEED = 12;
 
@@ -45,7 +46,7 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
     private int respawnDelay;
 
     public Rocket(final Dimension screenSize, final SpawnListener spawner, final FileHandler fileHandler, final CollisionHandler collisions) {
-        super(new Point(screenSize.width / 2, screenSize.height / 2), Math.PI / 2, SIZE, fileHandler);
+        super(new Point(screenSize.width / 2, screenSize.height / 2), DEFAULT_ANGLE, SIZE, fileHandler);
         this.flyingMatrix = fileHandler.get("rocket_flying");
         this.driftingMatrix = fileHandler.get("rocket_drifting");
         this.screenSize = screenSize;
@@ -130,7 +131,19 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
     }
 
     @Override public void collided() {
-        damage();
+        if (respawnDelay > 0) {
+            return;
+        }
+
+        setPos(screenSize.width / 2, screenSize.height / 2);
+
+        respawnDelay = DEFAULT_RESPAWN_DELAY;
+        movementAngle = DEFAULT_ANGLE;
+        angle = DEFAULT_ANGLE;
+        shootingDelay = 0;
+        speed = 0;
+
+        health--;
     }
 
     @Override public CollisionType getCollisionType() {
@@ -165,17 +178,6 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
 
     public int getHealth(){
         return health;
-    }
-
-    private void damage(){
-        if (respawnDelay > 0) {
-            return;
-        }
-
-        health--;
-
-        respawnDelay = DEFAULT_RESPAWN_DELAY;
-        setPos(screenSize.width / 2, screenSize.height / 2);
     }
 
     @Override public void keyTyped(final KeyEvent e) {}
