@@ -6,7 +6,6 @@ import se.liu.jonbj802.graphics.FileHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,45 +41,6 @@ public class GameRunner implements SpawnListener
     private int frameCalls;
     private Rocket rocketPointer = null;
 
-    private class ForwardAction extends AbstractAction {
-        private final boolean release;
-
-        private ForwardAction(final boolean release) {
-            this.release = release;
-        }
-
-        @Override public void actionPerformed(final ActionEvent e) {
-            rocketPointer.setMovement(release);
-        }
-    }
-
-    private class RotateAction extends AbstractAction {
-        private final Direction direction;
-        private final boolean release;
-
-
-        private RotateAction(final Direction direction, final boolean release) {
-            this.direction = direction;
-            this.release = release;
-        }
-
-        @Override public void actionPerformed(final ActionEvent e) {
-            rocketPointer.setRotation(release, direction);
-        }
-    }
-
-    private class ShootAction extends AbstractAction {
-        private final boolean release;
-
-        private ShootAction(final boolean release) {
-            this.release = release;
-        }
-
-        @Override public void actionPerformed(final ActionEvent e) {
-            rocketPointer.setShooting(release);
-        }
-    }
-
     public GameRunner(final List<MoveableObject> objects) {
         this.objects = objects;
         this.collisionHandler = new CollisionHandler();
@@ -93,7 +53,6 @@ public class GameRunner implements SpawnListener
 
         renderer = new GameComponent(objects, false);
         frame.add(renderer);
-        setUpKeyMap(frame);
 
         frame.pack();
         frame.setVisible(true);
@@ -119,38 +78,8 @@ public class GameRunner implements SpawnListener
         fileHandler.load("saucer");
     }
 
-    private void setUpKeyMap(final JFrame frame) {
-        JComponent pane = frame.getRootPane();
-        final InputMap in = pane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-        in.put(KeyStroke.getKeyStroke("LEFT"), "LEFT");
-        in.put(KeyStroke.getKeyStroke("RIGHT"), "RIGHT");
-        in.put(KeyStroke.getKeyStroke("UP"), "UP");
-        in.put(KeyStroke.getKeyStroke("SPACE"), "SPACE");
-
-        // See link for keycode list https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list.
-        final int leftKey = 37;
-        final int upKey = 38;
-        final int rightKey = 39;
-        final int spacebarKey = 32;
-
-        // Erik suggests us to use KeyListener instead.
-
-        in.put(KeyStroke.getKeyStroke(leftKey, 0, true), "LEFT_RIGHT_RELEASE");
-        in.put(KeyStroke.getKeyStroke(upKey, 0, true), "UP_RELEASE");
-        in.put(KeyStroke.getKeyStroke(rightKey, 0, true), "LEFT_RIGHT_RELEASE");
-        in.put(KeyStroke.getKeyStroke(spacebarKey, 0, true), "SPACE_RELEASE");
-
-
-        final ActionMap act = pane.getActionMap();
-        act.put("LEFT", new RotateAction(Direction.LEFT, false));
-        act.put("RIGHT", new RotateAction(Direction.RIGHT, false));
-        act.put("LEFT_RIGHT_RELEASE", new RotateAction(null,true));
-
-        act.put("UP", new ForwardAction(false));
-        act.put("UP_RELEASE", new ForwardAction(true));
-
-        act.put("SPACE", new ShootAction(false));
-        act.put("SPACE_RELEASE", new ShootAction(true));
+    private void setUpKeyMap() {
+        frame.addKeyListener(rocketPointer);
     }
 
     private void spawnObjects() {
@@ -275,6 +204,7 @@ public class GameRunner implements SpawnListener
         game.rocketPointer = new Rocket(game.frame.getBounds().getSize(), game, game.fileHandler);
         objects.add(game.rocketPointer);
         game.setUpCollisions();
+        game.setUpKeyMap();
 
         game.startRunner();
     }

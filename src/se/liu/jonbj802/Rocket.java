@@ -5,13 +5,15 @@ import se.liu.jonbj802.graphics.FileHandler;
 import se.liu.jonbj802.graphics.Matrix;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Rocket is the player controlled object. It can shoot, fly and rotate in space.
  */
-public class Rocket extends AbstractMoveableObject
+public class Rocket extends AbstractMoveableObject implements KeyListener
 {
     private final static int SIZE = 5;
     private final static double ANGEL_CHANGE = 0.1;
@@ -169,5 +171,24 @@ public class Rocket extends AbstractMoveableObject
 
         respawnDelay = DEFAULT_RESPAWN_DELAY;
         setPos(screenSize.width / 2, screenSize.height / 2);
+    }
+
+    @Override public void keyTyped(final KeyEvent e) {}
+
+    private void handleKey(final boolean released, final KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_LEFT -> setRotation(released, Direction.LEFT);
+            case KeyEvent.VK_RIGHT -> setRotation(released, Direction.RIGHT);
+            case KeyEvent.VK_UP -> setMovement(released);
+            case KeyEvent.VK_SPACE -> setShooting(released);
+        }
+    }
+
+    @Override public void keyPressed(final KeyEvent e) {
+        handleKey(false, e);
+    }
+
+    @Override public void keyReleased(final KeyEvent e) {
+        handleKey(true, e);
     }
 }
