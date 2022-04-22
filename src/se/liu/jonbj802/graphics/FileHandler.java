@@ -13,11 +13,11 @@ import java.util.Map;
  */
 public class FileHandler
 {
-    private Map<String, Matrix> matricies;
+    private Map<String, Matrix> matrices;
     private final Gson gson;
 
     public FileHandler() {
-        this.matricies = new HashMap<>();
+        this.matrices = new HashMap<>();
         this.gson = new Gson();
     }
 
@@ -29,10 +29,10 @@ public class FileHandler
         }
 
         final byte[] contents = matrix.readAllBytes();
-        matricies.put(name, gson.fromJson(new String(contents), Matrix.class));
+        matrices.put(name, gson.fromJson(new String(contents), Matrix.class));
     }
 
     public Matrix get(final String name) {
-        return matricies.get(name);
+        return matrices.get(name);
     }
 }
