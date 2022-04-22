@@ -65,7 +65,7 @@ public class Asteroid extends AbstractEnemyObject
         hasCollided = true;
 
         final int nextSize = size - SIZE_DECREASE;
-        if (size - SMALLEST_ASTEROID <= 0 || nextSize <= 0) {
+        if (size - SMALLEST_ASTEROID <= 0 || nextSize < 0) {
             return;
         }
 
