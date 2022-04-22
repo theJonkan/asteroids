@@ -3,6 +3,11 @@ package se.liu.jonbj802;
 import se.liu.jonbj802.collisions.CollisionHandler;
 import se.liu.jonbj802.collisions.CollisionType;
 import se.liu.jonbj802.graphics.FileHandler;
+import se.liu.jonbj802.moveable_objects.Asteroid;
+import se.liu.jonbj802.moveable_objects.GameComponent;
+import se.liu.jonbj802.moveable_objects.MoveableObject;
+import se.liu.jonbj802.moveable_objects.Rocket;
+import se.liu.jonbj802.moveable_objects.Saucer;
 
 import javax.swing.*;
 import java.awt.*;

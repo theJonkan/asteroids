@@ -1,4 +1,4 @@
-package se.liu.jonbj802;
+package se.liu.jonbj802.moveable_objects;
 
 import se.liu.jonbj802.graphics.FileHandler;
 
