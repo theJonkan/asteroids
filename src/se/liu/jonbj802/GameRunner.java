@@ -112,10 +112,11 @@ public class GameRunner implements SpawnListener
         final Dimension screenSize = frame.getBounds().getSize();
 
         for (int i = 0; i < objects.size(); i++) {
+            final MoveableObject object = objects.get(i);
+            final Rectangle objectHitbox = object.getHitbox(screenSize);
+
             for (int j = 0; j < objects.size(); j++) {
-                final MoveableObject object = objects.get(i);
                 final MoveableObject collider = objects.get(j);
-                final Rectangle objectHitbox = object.getHitbox(screenSize);
                 final Rectangle colliderHitbox = collider.getHitbox(screenSize);
 
                 if (i != j && objectHitbox.intersects(colliderHitbox)) {
