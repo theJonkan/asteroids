@@ -111,15 +111,21 @@ public class GameRunner implements SpawnListener
     private void findCollisions(){
         final Dimension screenSize = frame.getBounds().getSize();
 
-        for (int i = 0; i < objects.size(); i++) {
+        /* Once we have checked one object against all others, we can increment start
+        and stop checking that going forward. We also never need to check the last element
+        as all possible pairs contianing thta one have been checked by the time we get there. */
+
+        int start = 1;
+        final int lastCheck = objects.size() - 1;
+        for (int i = 0; i < lastCheck; i++) {
             final MoveableObject object = objects.get(i);
             final Rectangle objectHitbox = object.getHitbox(screenSize);
 
-            for (int j = 0; j < objects.size(); j++) {
+            for (int j = start; j < objects.size(); j++) {
                 final MoveableObject collider = objects.get(j);
                 final Rectangle colliderHitbox = collider.getHitbox(screenSize);
 
-                if (i != j && objectHitbox.intersects(colliderHitbox)) {
+                if (objectHitbox.intersects(colliderHitbox)) {
                     final boolean collision = collisionHandler.collide(object.getCollisionType(), collider.getCollisionType());
                     if (collision) {
                         object.collided();
@@ -127,6 +133,8 @@ public class GameRunner implements SpawnListener
                     }
                 }
             }
+
+            start++;
         }
     }
 

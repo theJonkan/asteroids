@@ -9,8 +9,6 @@ public class Pair
     private final CollisionType collider1;
     private final CollisionType collider2;
 
-    private final static int HASH_NUMBER = 25;
-
     public Pair(final CollisionType collider1, final CollisionType collider2) {
         this.collider1 = collider1;
         this.collider2 = collider2;
@@ -27,6 +25,6 @@ public class Pair
     }
 
     @Override public int hashCode() {
-        return collider1.hashCode() * HASH_NUMBER + collider2.hashCode();
+        return collider1.hashCode() + collider2.hashCode();
     }
 }
