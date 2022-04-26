@@ -9,7 +9,7 @@ import java.util.Random;
  * AbstractEnemyObject is an abstraction for common code related to enemies.
  * The position and rotation are randomly generated to spawn at the edge and move inwards.
  */
-public abstract class AbstractEnemyObject extends AbstractMoveableObject implements EnemyObject
+public abstract class AbstractEnemyObject extends AbstractMoveableObject
 {
     private final static Random RND = new Random();
     private final static double TOP_ANGLE = Math.PI / 2;

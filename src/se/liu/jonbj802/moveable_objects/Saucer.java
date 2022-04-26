@@ -32,14 +32,6 @@ public class Saucer extends AbstractEnemyObject
 	this.spawner = spawner;
     }
 
-    @Override public int getHealth() {
-	return 0;
-    }
-
-    @Override public void setHealth() {
-
-    }
-
     @Override public Matrix getMatrix() {
 	return matrix;
     }
