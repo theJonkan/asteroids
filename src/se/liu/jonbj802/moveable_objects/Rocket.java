@@ -32,7 +32,6 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
 
     private final Dimension screenSize;
 
-    private final Matrix flyingMatrix, driftingMatrix;
     private double speed;
     private double movementAngle = angle;
     private boolean flying, rotating, shooting;
@@ -47,8 +46,6 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
 
     public Rocket(final Dimension screenSize, final SpawnListener spawner, final FileHandler fileHandler, final CollisionHandler collisions) {
         super(new Point(screenSize.width / 2, screenSize.height / 2), DEFAULT_ANGLE, SIZE, fileHandler);
-        this.flyingMatrix = fileHandler.get("rocket_flying");
-        this.driftingMatrix = fileHandler.get("rocket_drifting");
         this.screenSize = screenSize;
         this.spawner = spawner;
         this.collisions = collisions;
@@ -104,10 +101,10 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
 
     @Override public Matrix getMatrix() {
         if (flying) {
-            return flyingMatrix.modify(SIZE, angle);
+            return fileHandler.get("rocket_flying").modify(SIZE, angle);
         }
 
-        return driftingMatrix.modify(SIZE, angle);
+        return fileHandler.get("rocket_drifting").modify(SIZE, angle);
     }
 
     @Override public void update() {
