@@ -181,9 +181,9 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
 
     private void handleKey(final boolean released, final KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_LEFT -> setRotation(released, Direction.LEFT);
-            case KeyEvent.VK_RIGHT -> setRotation(released, Direction.RIGHT);
-            case KeyEvent.VK_UP -> setMovement(released);
+            case KeyEvent.VK_UP, KeyEvent.VK_W  -> setMovement(released);
+            case KeyEvent.VK_LEFT, KeyEvent.VK_A -> setRotation(released, Direction.LEFT);
+            case KeyEvent.VK_RIGHT, KeyEvent.VK_D  -> setRotation(released, Direction.RIGHT);
             case KeyEvent.VK_SPACE -> setShooting(released);
         }
     }
