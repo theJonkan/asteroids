@@ -29,7 +29,6 @@ public class GameRunner implements SpawnListener
     private final List<MoveableObject> addQueue = new ArrayList<>();
     private GameComponent renderer = null;
     private JFrame frame = null;
-    private boolean gameRunning = true;
 
     private final static Random RND = new Random();
     private static final int FRAME_TIME = 20; /** 50 FPS => 20ms for each draw. */
@@ -58,9 +57,8 @@ public class GameRunner implements SpawnListener
         frame = new JFrame("Asteroids");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        renderer = new GameComponent(objects, false);
+        renderer = new GameComponent(objects, true);
         frame.add(renderer);
-        setUpKeyMap(frame);
 
         frame.pack();
         frame.setVisible(true);
@@ -177,11 +175,7 @@ public class GameRunner implements SpawnListener
 
     private void startRunner() {
         final Timer timer = new Timer(FRAME_TIME, e -> {
-            if (rocketPointer.getHealth() <= 0){
-                gameRunning = false;
-            }
-
-            if (gameRunning) {
+            if (rocketPointer.getHealth() > 0) {
                 spawnObjects();
                 updateObjects();
                 findCollisions();
@@ -218,7 +212,7 @@ public class GameRunner implements SpawnListener
         }
         game.show();
 
-        game.rocketPointer = new Rocket(game.frame.getBounds().getSize(), game, game.fileHandler);
+        game.rocketPointer = new Rocket(game.frame.getBounds().getSize(), game, game.fileHandler, game.collisionHandler);
         objects.add(game.rocketPointer);
         game.setUpCollisions();
         game.setUpKeyMap();
