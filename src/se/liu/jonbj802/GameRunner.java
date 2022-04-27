@@ -3,6 +3,7 @@ package se.liu.jonbj802;
 import se.liu.jonbj802.collisions.CollisionHandler;
 import se.liu.jonbj802.collisions.CollisionType;
 import se.liu.jonbj802.graphics.FileHandler;
+import se.liu.jonbj802.graphics.TextObject;
 import se.liu.jonbj802.moveable_objects.Asteroid;
 import se.liu.jonbj802.moveable_objects.GameComponent;
 import se.liu.jonbj802.moveable_objects.MoveableObject;
@@ -56,7 +57,7 @@ public class GameRunner implements SpawnListener
         frame = new JFrame("Asteroids");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        renderer = new GameComponent(objects, false);
+        renderer = new GameComponent(objects, true);
         frame.add(renderer);
 
         frame.pack();
@@ -76,11 +77,7 @@ public class GameRunner implements SpawnListener
     }
 
     private void setUpAssets() throws IOException {
-        fileHandler.load("asteroid_type1");
-        fileHandler.load("bullet");
-        fileHandler.load("rocket_drifting");
-        fileHandler.load("rocket_flying");
-        fileHandler.load("saucer");
+        fileHandler.loadAll();
     }
 
     private void setUpKeyMap() {
