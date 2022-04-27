@@ -76,8 +76,8 @@ public class GameRunner extends KeyAdapter implements SpawnListener
         frame.setVisible(true);
     }
 
-    @Override public void spawn(final List<MoveableObject> newObjects) {
-        this.addQueue.addAll(newObjects);
+    @Override public void spawn(final MoveableObject... newObjects) {
+        this.addQueue.addAll(List.of(newObjects));
     }
 
     private void setUpCollisions() {
@@ -224,6 +224,28 @@ public class GameRunner extends KeyAdapter implements SpawnListener
         timer.start();
     }
 
+    @Override public void keyPressed(final KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (rocketPointer == null) {
+                if (gameRunning) {
+                    startGame();
+                } else {
+                    restartGame();
+                }
+            }
+        } else {
+            if (rocketPointer != null) {
+                rocketPointer.keyPressed(e);
+            }
+        }
+    }
+
+    @Override public void keyReleased(final KeyEvent e) {
+        if (rocketPointer != null) {
+            rocketPointer.keyReleased(e);
+        }
+    }
+
     public static void main(String[] args) {
         final List<MoveableObject> objects = new ArrayList<>();
 
@@ -250,28 +272,6 @@ public class GameRunner extends KeyAdapter implements SpawnListener
 
         game.setUpCollisions();
         game.startScreen();
-    }
-
-    @Override public void keyPressed(final KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (rocketPointer == null) {
-                if (gameRunning) {
-                    startGame();
-                } else {
-                    restartGame();
-                }
-            }
-        } else {
-            if (rocketPointer != null) {
-                rocketPointer.keyPressed(e);
-            }
-        }
-    }
-
-    @Override public void keyReleased(final KeyEvent e) {
-        if (rocketPointer != null) {
-            rocketPointer.keyReleased(e);
-        }
     }
 }
 

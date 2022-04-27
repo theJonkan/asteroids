@@ -68,10 +68,7 @@ public class Asteroid extends AbstractEnemyObject
         final Point pos2 = new Point(pos.x + POS_SEPARATION, pos.y + POS_SEPARATION);
         final Asteroid asteroid2 = new Asteroid(pos2,size - SIZE_DECREASE, angle + ANGLE_SEPARATION, spawner, fileHandler);
 
-        final List<MoveableObject> pieces = new ArrayList<>();
-        pieces.add(asteroid1);
-        pieces.add(asteroid2);
-        spawner.spawn(pieces);
+        spawner.spawn(asteroid1, asteroid2);
     }
 
     @Override public boolean shouldDespawn(final Dimension screenSize, final int offset) {

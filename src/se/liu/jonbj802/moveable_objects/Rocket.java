@@ -86,9 +86,7 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
         }
 
         shootingDelay = DEFAULT_SHOOTING_DELAY;
-        final List<MoveableObject> bullets = new ArrayList<>();
-        bullets.add(new Bullet(angle, pos.x, pos.y, speed, false, fileHandler));
-        spawner.spawn(bullets);
+        spawner.spawn(new Bullet(angle, pos.x, pos.y, speed, false, fileHandler));
     }
 
     @Override public boolean shouldDespawn(final Dimension screenSize, final int offset) {

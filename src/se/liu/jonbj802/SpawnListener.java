@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface SpawnListener
 {
-    public void spawn(final List<MoveableObject> objects);
+    public void spawn(final MoveableObject... objects);
 }

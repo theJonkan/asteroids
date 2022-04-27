@@ -63,9 +63,7 @@ public class Saucer extends AbstractEnemyObject
 	double angleToRocket = Math.atan((double)deltaX/deltaY);
 
 	shootingDelay = DEFAULT_SHOOTING_DELAY;
-	final List<MoveableObject> bullets = new ArrayList<>();
-	bullets.add(new Bullet(angleToRocket, pos.x, pos.y, 0, true, fileHandler));
-	spawner.spawn(bullets);
+	spawner.spawn(new Bullet(angleToRocket, pos.x, pos.y, 0, true, fileHandler));
     }
 
     @Override public CollisionType getCollisionType() {
