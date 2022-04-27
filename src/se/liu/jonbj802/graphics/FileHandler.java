@@ -35,7 +35,7 @@ public class FileHandler
     }
 
     public void loadAll() throws IOException {
-        final File directory = new File(ClassLoader.getSystemResource("images" + File.separator + "matrices").getFile());
+        final File directory = new File(ClassLoader.getSystemResource("images/matrices").getFile());
         final String[] files = directory.list();
         for (final String name : files) {
             load(name);

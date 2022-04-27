@@ -3,7 +3,6 @@ package se.liu.jonbj802;
 import se.liu.jonbj802.collisions.CollisionHandler;
 import se.liu.jonbj802.collisions.CollisionType;
 import se.liu.jonbj802.graphics.FileHandler;
-import se.liu.jonbj802.graphics.TextObject;
 import se.liu.jonbj802.moveable_objects.Asteroid;
 import se.liu.jonbj802.moveable_objects.GameComponent;
 import se.liu.jonbj802.moveable_objects.MoveableObject;
@@ -12,6 +11,8 @@ import se.liu.jonbj802.moveable_objects.Saucer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +24,14 @@ import java.util.logging.SimpleFormatter;
 /**
  * GameRunner handles the window creation and game logic.
  */
-public class GameRunner implements SpawnListener
+public class GameRunner extends KeyAdapter implements SpawnListener
 {
     private final List<MoveableObject> objects;
     private final List<MoveableObject> addQueue = new ArrayList<>();
     private GameComponent renderer = null;
     private JFrame frame = null;
+    StartComponent startComponent = null;
+    private boolean gameRunning = true;
 
     private final static Random RND = new Random();
     private static final int FRAME_TIME = 20; /** 50 FPS => 20ms for each draw. */
@@ -54,11 +57,20 @@ public class GameRunner implements SpawnListener
     }
 
     private void show() {
+        frame.remove(startComponent);
+        renderer = new GameComponent(objects, false);
+        frame.add(renderer);
+
+        frame.pack();
+    }
+
+    private void startScreen(){
         frame = new JFrame("Asteroids");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        renderer = new GameComponent(objects, true);
-        frame.add(renderer);
+        startComponent = new StartComponent();
+        frame.add(startComponent);
+        setUpKeyMap();
 
         frame.pack();
         frame.setVisible(true);
@@ -81,7 +93,7 @@ public class GameRunner implements SpawnListener
     }
 
     private void setUpKeyMap() {
-        frame.addKeyListener(rocketPointer);
+        frame.addKeyListener(this);
     }
 
     private void spawnObjects() {
@@ -173,9 +185,34 @@ public class GameRunner implements SpawnListener
         }
     }
 
+    private void startGame() {
+        rocketPointer = new Rocket(frame.getBounds().getSize(), this, fileHandler, collisionHandler);
+        objects.add(rocketPointer);
+
+        startRunner();
+        show();
+    }
+
+    private void restartGame() {
+        gameRunning = true;
+        rocketPointer = new Rocket(frame.getBounds().getSize(), this, fileHandler, collisionHandler);
+        objects.add(rocketPointer);
+    }
+
+    private void stopGame() {
+        gameRunning = false;
+        rocketPointer = null;
+        addQueue.clear();
+        objects.clear();
+    }
+
     private void startRunner() {
         final Timer timer = new Timer(FRAME_TIME, e -> {
-            if (rocketPointer.getHealth() > 0) {
+            if (gameRunning && rocketPointer.getHealth() <= 0){
+                stopGame();
+            }
+
+            if (gameRunning) {
                 spawnObjects();
                 updateObjects();
                 findCollisions();
@@ -210,14 +247,31 @@ public class GameRunner implements SpawnListener
             e.printStackTrace();
             return;
         }
-        game.show();
 
-        game.rocketPointer = new Rocket(game.frame.getBounds().getSize(), game, game.fileHandler, game.collisionHandler);
-        objects.add(game.rocketPointer);
         game.setUpCollisions();
-        game.setUpKeyMap();
+        game.startScreen();
+    }
 
-        game.startRunner();
+    @Override public void keyPressed(final KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (rocketPointer == null) {
+                if (gameRunning) {
+                    startGame();
+                } else {
+                    restartGame();
+                }
+            }
+        } else {
+            if (rocketPointer != null) {
+                rocketPointer.keyPressed(e);
+            }
+        }
+    }
+
+    @Override public void keyReleased(final KeyEvent e) {
+        if (rocketPointer != null) {
+            rocketPointer.keyReleased(e);
+        }
     }
 }
 
