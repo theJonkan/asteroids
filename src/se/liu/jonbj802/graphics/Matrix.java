@@ -1,6 +1,5 @@
 package se.liu.jonbj802.graphics;
 
-import java.util.Arrays;
 import java.util.List;
 
 /** Matrix contains rendering positions for graphics objects. It will always assume a height of 2. */

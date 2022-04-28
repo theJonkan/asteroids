@@ -6,8 +6,6 @@ import se.liu.jonbj802.graphics.FileHandler;
 import se.liu.jonbj802.graphics.Matrix;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Asteroid is an enemy that shoots towards the player.

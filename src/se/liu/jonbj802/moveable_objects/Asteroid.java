@@ -6,8 +6,6 @@ import se.liu.jonbj802.graphics.FileHandler;
 import se.liu.jonbj802.graphics.Matrix;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 /**

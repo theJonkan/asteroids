@@ -9,8 +9,6 @@ import se.liu.jonbj802.graphics.Matrix;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Rocket is the player controlled object. It can shoot, fly and rotate in space.
