@@ -58,7 +58,7 @@ public class Matrix
 	    result[1][i] = positions[1][i];
 	}
 
-	final int letterOffset = 10;
+	final int letterOffset = 5;
 	for (int i = 0; i < matrices.size(); i++) {
 	    final Matrix matrix = matrices.get(i);
 	    final int length = matrix.positions[0].length;
