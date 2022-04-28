@@ -13,7 +13,6 @@ import java.util.List;
 public abstract class AbstractRendererComponent extends JComponent
 {
     private final static int LINE_WIDTH = 1;
-    private final static Stroke STROKE = new BasicStroke(LINE_WIDTH);
 
     private void drawLines(final Matrix matrix, final int x, final int y, final Graphics2D g2d) {
         final int height = getSize().height;
@@ -50,7 +49,6 @@ public abstract class AbstractRendererComponent extends JComponent
 
     protected void paintObjects(final Graphics g, final List<? extends DisplayableObject> objects) {
         final Graphics2D g2d = (Graphics2D) g;
-        final Dimension size = getSize();
 
         // Change rendering hints for better line quality.
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -58,7 +56,7 @@ public abstract class AbstractRendererComponent extends JComponent
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
         g2d.setColor(Color.WHITE);
-        g2d.setStroke(STROKE);
+        g2d.setStroke(new BasicStroke(LINE_WIDTH));
         for (final DisplayableObject object : objects) {
             final Point pos = object.getPos();
             drawLines(object.getMatrix(), pos.x, pos.y, g2d);

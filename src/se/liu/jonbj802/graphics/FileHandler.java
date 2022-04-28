@@ -35,6 +35,10 @@ public class FileHandler
     public void loadAll() throws IOException {
         final File directory = new File(ClassLoader.getSystemResource("images/matrices").getFile());
         final String[] files = directory.list();
+        if (files == null) {
+            throw new IOException("the directory " + directory.getPath() + " does not exist or is empty");
+        }
+
         for (final String name : files) {
             load(name);
         }

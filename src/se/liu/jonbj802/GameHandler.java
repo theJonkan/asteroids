@@ -3,6 +3,7 @@ package se.liu.jonbj802;
 import se.liu.jonbj802.collisions.CollisionHandler;
 import se.liu.jonbj802.collisions.CollisionType;
 import se.liu.jonbj802.graphics.FileHandler;
+import se.liu.jonbj802.graphics.TextObject;
 import se.liu.jonbj802.moveable_objects.Asteroid;
 import se.liu.jonbj802.moveable_objects.MoveableObject;
 import se.liu.jonbj802.moveable_objects.Rocket;
@@ -39,7 +40,7 @@ public class GameHandler extends AbstractRendererComponent implements SpawnListe
     private static final int SAUCER_POINTS = 100;
 
     private final JFrame frame;
-    private final Timer timer;
+    private Timer timer = null;
 
     private CollisionHandler collisionHandler = new CollisionHandler();
     private final FileHandler fileHandler;
@@ -51,8 +52,11 @@ public class GameHandler extends AbstractRendererComponent implements SpawnListe
 	super();
 	this.frame = frame;
 	this.fileHandler = fileHandler;
+	setUpTimer();
+    }
 
-	this.timer = new Timer(FRAME_TIME, e -> {
+    private void setUpTimer() {
+	timer = new Timer(FRAME_TIME, e -> {
 	    if (rocketPointer.getHealth() <= 0){
 		stop();
 	    }
@@ -99,7 +103,6 @@ public class GameHandler extends AbstractRendererComponent implements SpawnListe
     public void stop() {
 	timer.stop();
 	addQueue.clear();
-	objects.clear();
     }
 
     private void spawnObjects() {

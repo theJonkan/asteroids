@@ -1,19 +1,28 @@
 package se.liu.jonbj802;
 
+import se.liu.jonbj802.graphics.FileHandler;
+import se.liu.jonbj802.graphics.TextObject;
+import se.liu.jonbj802.moveable_objects.MoveableObject;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * StartScreenHandler contains all the logic for setting up and drawing the start screen.
  */
 public class StartScreenHandler extends AbstractRendererComponent
 {
-    static final int TEXT_SIZE = 30;
-    static final int WIDTH_OFFSET = 100;
-    static final int HEIGHT_OFFSET = 0;
+    private static final int TEXT_SIZE = 30;
+    private static final int WIDTH_OFFSET = 100;
+    private static final int HEIGHT_OFFSET = 0;
 
-    protected StartScreenHandler(final JFrame frame) {
+    private final FileHandler fileHandler;
+
+    protected StartScreenHandler(final FileHandler fileHandler) {
 	super();
+	this.fileHandler = fileHandler;
     }
 
     @Override protected void paintComponent(final Graphics g) {
