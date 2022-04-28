@@ -3,6 +3,9 @@ package se.liu.jonbj802;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * StartScreenHandler contains all the logic for setting up and drawing the start screen.
+ */
 public class StartScreenHandler extends AbstractRendererComponent
 {
     static final int TEXT_SIZE = 30;

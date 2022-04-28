@@ -2,7 +2,9 @@ package se.liu.jonbj802.graphics;
 
 import java.util.List;
 
-/** Matrix contains rendering positions for graphics objects. It will always assume a height of 2. */
+/**
+ * Matrix contains rendering positions for graphics objects. It will always assume a height of 2.
+*/
 public class Matrix
 {
     private double[][] positions;
@@ -50,21 +52,22 @@ public class Matrix
 
 	final double[][] result = new double[HEIGHT][columns];
 
-	for (int i = 0; i < positions[0].length; i++) {
+	int indexOffset = positions[0].length;
+	for (int i = 0; i <indexOffset; i++) {
 	    result[0][i] = positions[0][i];
 	    result[1][i] = positions[1][i];
 	}
 
-	int indexOffset = positions[0].length;
 	final int letterOffset = 10;
 	for (int i = 0; i < matrices.size(); i++) {
 	    final Matrix matrix = matrices.get(i);
-	    for (int j = 0; j < matrix.positions[0].length; j++) {
+	    final int length = matrix.positions[0].length;
+	    for (int j = 0; j < length; j++) {
 		result[0][indexOffset + j] = matrix.positions[0][j] + letterOffset * i;
 		result[1][indexOffset + j] = matrix.positions[1][j];
 	    }
 
-	    indexOffset += matrix.positions[0].length;
+	    indexOffset += length;
 	}
 
 	return new Matrix(result);

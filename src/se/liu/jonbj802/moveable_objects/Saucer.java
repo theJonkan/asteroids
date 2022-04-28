@@ -8,7 +8,7 @@ import se.liu.jonbj802.graphics.Matrix;
 import java.awt.*;
 
 /**
- * Asteroid is an enemy that shoots towards the player.
+ * Saucer is an enemy that moves across the space and shoots towards the player.
  */
 public class Saucer extends AbstractEnemyObject
 {

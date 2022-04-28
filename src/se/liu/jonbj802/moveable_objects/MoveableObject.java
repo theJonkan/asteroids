@@ -10,6 +10,7 @@ import java.awt.*;
  */
 public interface MoveableObject extends DisplayableObject
 {
+    public void setPos(final int x, final int y);
     public void update();
 
     public void collided();

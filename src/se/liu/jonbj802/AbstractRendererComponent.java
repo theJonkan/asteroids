@@ -7,7 +7,8 @@ import java.awt.*;
 import java.util.List;
 
 /**
- * GameComponent renders lines between the points inside the matricies.
+ * AbstractRendererComponent helps with the drawing of DisplayableObjects.
+ * It draws a black background and all the lines between points in the objects' matrices.
  */
 public abstract class AbstractRendererComponent extends JComponent
 {

@@ -6,6 +6,10 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TextObject allows rendering text on screen using vector graphics instead of raster fonts.
+ * Allowed characters are: a, d, e, i, n, o, p, r, s, t.
+ */
 public class TextObject implements DisplayableObject
 {
     private final Point pos;
@@ -31,11 +35,6 @@ public class TextObject implements DisplayableObject
 
     @Override public Point getPos() {
 	return pos;
-    }
-
-    @Override public void setPos(final int x, final int y) {
-	pos.x = x;
-	pos.y = y;
     }
 
     @Override public Matrix getMatrix() {

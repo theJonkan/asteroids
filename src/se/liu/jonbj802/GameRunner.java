@@ -11,7 +11,8 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 /**
- * GameRunner handles the window creation and game logic.
+ * GameRunner handles the initialisation, window creation as well as logic for
+ * switching between the start screen and the game screen.
  */
 public class GameRunner extends KeyAdapter
 {

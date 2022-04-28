@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * GameHandler handles all the game logic as well as how it should draw.
+ */
 public class GameHandler extends AbstractRendererComponent implements SpawnListener, KeyListener
 {
     private final List<MoveableObject> objects = new ArrayList<>();
