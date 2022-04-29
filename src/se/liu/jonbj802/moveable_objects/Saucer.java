@@ -22,10 +22,13 @@ public class Saucer extends AbstractEnemyObject
     private SpawnListener spawner;
 
     private final Matrix matrix;
+    private final Dimension screenSize;
 
     public Saucer(final Dimension screenSize, final Rocket rocketPointer, final SpawnListener spawner, final FileHandler fileHandler) {
 	super(screenSize, SIZE, fileHandler);
 	matrix = fileHandler.get("saucer").modify(SIZE, 0);
+
+	this.screenSize = screenSize;
 	this.rocketPointer = rocketPointer;
 	this.spawner = spawner;
     }
@@ -55,10 +58,14 @@ public class Saucer extends AbstractEnemyObject
 	    return;
 	}
 
-	int deltaX = rocketPointer.getPos().x - pos.x;
-	int deltaY = rocketPointer.getPos().y - pos.y;
-	// TODO: Fix angle calculations.
-	double angleToRocket = Math.atan((double)deltaX/deltaY);
+	double deltaX = (pos.x - (screenSize.getHeight() / 2)) - (rocketPointer.getPos().x - (screenSize.getHeight() / 2));
+	double deltaY =  (pos.y - (screenSize.getWidth() / 2)) - (rocketPointer.getPos().y - (screenSize.getWidth() / 2)) ;
+
+	double angleToRocket = Math.atan((double)deltaY/deltaX);
+
+	if (deltaX > 0) {
+	    angleToRocket -= Math.PI;
+	}
 
 	shootingDelay = DEFAULT_SHOOTING_DELAY;
 	spawner.spawn(new Bullet(angleToRocket, pos.x, pos.y, 0, true, fileHandler));

@@ -18,6 +18,7 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
     private final static int SIZE = 5;
     private final static double ANGEL_CHANGE = 0.1;
 
+    private final static int MAX_SPEED = 12;
     private final static double ACCELERATION_INERTIA = 0.2;
     private final static double RETARDATION_INERTIA = 0.07;
 
@@ -25,8 +26,6 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
     private final static int DEFAULT_RESPAWN_DELAY = 100;
     private final static int DEFAULT_HEALTH = 3;
     private final static double DEFAULT_ANGLE = Math.PI / 2;
-
-    private final static int MAX_SPEED = 12;
 
     private final Dimension screenSize;
 
