@@ -1,7 +1,5 @@
 package se.liu.jonbj802.graphics;
 
-import se.liu.jonbj802.DisplayableObject;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;

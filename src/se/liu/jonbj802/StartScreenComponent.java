@@ -1,5 +1,6 @@
 package se.liu.jonbj802;
 
+import se.liu.jonbj802.graphics.AbstractRendererComponent;
 import se.liu.jonbj802.graphics.FileHandler;
 
 import java.awt.*;
@@ -7,7 +8,7 @@ import java.awt.*;
 /**
  * StartScreenHandler contains all the logic for setting up and drawing the start screen.
  */
-public class StartScreenHandler extends AbstractRendererComponent
+public class StartScreenComponent extends AbstractRendererComponent
 {
     private static final int TEXT_SIZE = 30;
     private static final int WIDTH_OFFSET = 100;
@@ -15,7 +16,7 @@ public class StartScreenHandler extends AbstractRendererComponent
 
     private final FileHandler fileHandler;
 
-    protected StartScreenHandler(final FileHandler fileHandler) {
+    protected StartScreenComponent(final FileHandler fileHandler) {
 	super();
 	this.fileHandler = fileHandler;
     }

@@ -1,7 +1,7 @@
 package se.liu.jonbj802.moveable_objects;
 
-import se.liu.jonbj802.DisplayableObject;
 import se.liu.jonbj802.collisions.CollisionType;
+import se.liu.jonbj802.graphics.DisplayableObject;
 
 import java.awt.*;
 

@@ -10,8 +10,8 @@ import se.liu.jonbj802.moveable_objects.Saucer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -19,13 +19,10 @@ import java.util.Random;
 /**
  * GameHandler handles all the game logic as well as how it should draw.
  */
-public class GameHandler extends AbstractRendererComponent implements SpawnListener, KeyListener
+public class GameHandler extends KeyAdapter implements SpawnListener
 {
     private final List<MoveableObject> objects = new ArrayList<>();
     private final List<MoveableObject> addQueue = new ArrayList<>();
-
-    private final static int SCORE_OFFSET = 25;
-    private final static int TEXT_SIZE = 30;
 
     private final static Random RND = new Random();
     private static final int FRAME_TIME = 20; /** 50 FPS => 20ms for each draw. */
@@ -42,6 +39,7 @@ public class GameHandler extends AbstractRendererComponent implements SpawnListe
     private Timer timer = null;
 
     private CollisionHandler collisionHandler = new CollisionHandler();
+    private GameScreenComponent gameScreen;
     private final FileHandler fileHandler;
 
     private int frameCalls;
@@ -51,7 +49,12 @@ public class GameHandler extends AbstractRendererComponent implements SpawnListe
 	super();
 	this.frame = frame;
 	this.fileHandler = fileHandler;
+	this.gameScreen = new GameScreenComponent(objects);
 	setUpTimer();
+    }
+
+    public GameScreenComponent getGameScreen() {
+	return gameScreen;
     }
 
     private void setUpTimer() {
@@ -64,7 +67,7 @@ public class GameHandler extends AbstractRendererComponent implements SpawnListe
 	    updateObjects();
 	    findCollisions();
 
-	    repaint();
+	    gameScreen.repaint();
 	});
 	timer.setCoalesce(true);
     }
@@ -196,21 +199,6 @@ public class GameHandler extends AbstractRendererComponent implements SpawnListe
     @Override public void spawn(final MoveableObject... newObjects) {
 	this.addQueue.addAll(List.of(newObjects));
     }
-
-    @Override protected void paintComponent(final Graphics g) {
-	final Graphics2D g2d = (Graphics2D) g;
-
-	super.paintComponent(g2d);
-	paintObjects(g2d, objects);
-
-	if (!objects.isEmpty()) {
-	    g2d.setFont(new Font("serif", Font.PLAIN, TEXT_SIZE));
-	    g2d.drawString(String.valueOf(rocketPointer.getScore()), SCORE_OFFSET, SCORE_OFFSET + TEXT_SIZE);
-	    g2d.drawString("Lives: " + rocketPointer.getHealth(), SCORE_OFFSET, (SCORE_OFFSET + TEXT_SIZE) * 2);
-	}
-    }
-
-    @Override public void keyTyped(final KeyEvent e) {}
 
     @Override public void keyPressed(final KeyEvent e) {
 	rocketPointer.keyPressed(e);

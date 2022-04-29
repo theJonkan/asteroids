@@ -1,6 +1,4 @@
-package se.liu.jonbj802;
-
-import se.liu.jonbj802.graphics.Matrix;
+package se.liu.jonbj802.graphics;
 
 import javax.swing.*;
 import java.awt.*;

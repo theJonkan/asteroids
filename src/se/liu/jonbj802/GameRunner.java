@@ -18,7 +18,7 @@ public class GameRunner extends KeyAdapter
 {
     private JFrame frame = null;
     private GameHandler gameHandler = null;
-    private StartScreenHandler startScreenHandler = null;
+    private StartScreenComponent startScreenComponent = null;
 
     private final FileHandler fileHandler = new FileHandler();
 
@@ -28,8 +28,8 @@ public class GameRunner extends KeyAdapter
         frame = new JFrame("Asteroids");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        startScreenHandler = new StartScreenHandler(fileHandler);
-        frame.add(startScreenHandler);
+        startScreenComponent = new StartScreenComponent(fileHandler);
+        frame.add(startScreenComponent);
         frame.pack();
 
         frame.addKeyListener(this);
@@ -41,22 +41,22 @@ public class GameRunner extends KeyAdapter
     }
 
     private void showGame() {
-        frame.remove(startScreenHandler);
+        frame.remove(startScreenComponent);
 
         gameHandler = new GameHandler(frame, fileHandler);
         gameHandler.setUpCollisions();
         gameHandler.start();
 
-        frame.add(gameHandler);
+        frame.add(gameHandler.getGameScreen());
         frame.pack();
     }
 
     private void showStartScreen() {
         gameHandler.stop();
-        frame.remove(gameHandler);
+        frame.remove(gameHandler.getGameScreen());
 
-        startScreenHandler = new StartScreenHandler(fileHandler);
-        frame.add(startScreenHandler);
+        startScreenComponent = new StartScreenComponent(fileHandler);
+        frame.add(startScreenComponent);
         frame.pack();
     }
 
