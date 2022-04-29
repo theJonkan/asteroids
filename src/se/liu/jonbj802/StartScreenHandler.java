@@ -1,13 +1,8 @@
 package se.liu.jonbj802;
 
 import se.liu.jonbj802.graphics.FileHandler;
-import se.liu.jonbj802.graphics.TextObject;
-import se.liu.jonbj802.moveable_objects.MoveableObject;
 
-import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * StartScreenHandler contains all the logic for setting up and drawing the start screen.
