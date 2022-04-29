@@ -97,7 +97,7 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 
     public void start() {
 	rocketPointer = new Rocket(frame.getBounds().getSize(), this, fileHandler, collisionHandler);
-	gameScreen = new GameScreenComponent(objects, rocketPointer);
+	gameScreen = new GameScreenComponent(objects, rocketPointer, fileHandler);
 	objects.add(rocketPointer);
 	timer.start();
     }

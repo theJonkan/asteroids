@@ -2,19 +2,24 @@ package se.liu.jonbj802;
 
 import se.liu.jonbj802.graphics.AbstractRendererComponent;
 import se.liu.jonbj802.graphics.FileHandler;
+import se.liu.jonbj802.graphics.TextObject;
 
 import java.awt.*;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * StartScreenHandler contains all the logic for setting up and drawing the start screen.
  */
 public class StartScreenComponent extends AbstractRendererComponent
 {
-    private static final int TEXT_SIZE = 30;
-    private static final int WIDTH_OFFSET = 100;
-    private static final int HEIGHT_OFFSET = 0;
+    private static final int TITLE_SIZE = 8;
+    private static final int DESCRIPTION_SIZE = 8;
 
-    private final FileHandler fileHandler;
+    private static final int WIDTH_OFFSET = 20;
+    private static final int HEIGHT_OFFSET = 40;
+
+    final FileHandler fileHandler;
 
     protected StartScreenComponent(final FileHandler fileHandler) {
 	super();
@@ -27,9 +32,18 @@ public class StartScreenComponent extends AbstractRendererComponent
 
 	super.paintComponent(g2d);
 
-	g2d.setColor(Color.WHITE);
-	g2d.setFont(new Font("serif", Font.PLAIN, TEXT_SIZE));
-	g2d.drawString("JAVA ASTEROIDS", size.width/2 - WIDTH_OFFSET, size.height / 2 + HEIGHT_OFFSET);
-	g2d.drawString("Press enter to start the game", size.width/2 - WIDTH_OFFSET * 2, size.height / 2 + HEIGHT_OFFSET + TEXT_SIZE);
+	final List<TextObject> textObjects = new ArrayList<>();
+
+	final String titleText = "asteroids";
+	final Point titlePos = new Point(size.width/2 - titleText.length() * WIDTH_OFFSET, size.height/2 + HEIGHT_OFFSET);
+	final TextObject title = new TextObject(titleText, titlePos, TITLE_SIZE, fileHandler);
+	textObjects.add(title);
+
+	final String descriptionText = "press enter to start";
+	final Point descriptionPos = new Point(size.width/2 - descriptionText.length() * WIDTH_OFFSET, size.height/2 - HEIGHT_OFFSET);
+	final TextObject description = new TextObject(descriptionText, descriptionPos, TITLE_SIZE, fileHandler);
+	textObjects.add(description);
+
+	paintObjects(g2d, textObjects);
     }
 }
