@@ -12,11 +12,13 @@ public class GameScreenComponent extends AbstractRendererComponent
     private final static int SCORE_OFFSET = 25;
     private final static int TEXT_SIZE = 30;
 
+    private final Rocket rocket;
     private final List<MoveableObject> objects;
 
-    public GameScreenComponent(final List<MoveableObject> objects) {
+    public GameScreenComponent(final List<MoveableObject> objects, final Rocket rocket) {
 	super();
 	this.objects = objects;
+	this.rocket = rocket;
     }
 
     @Override protected void paintComponent(final Graphics g) {
@@ -26,7 +28,6 @@ public class GameScreenComponent extends AbstractRendererComponent
 	paintObjects(g2d, objects);
 
 	if (!objects.isEmpty()) {
-	    final Rocket rocket = (Rocket) objects.get(0);
 	    g2d.setFont(new Font("serif", Font.PLAIN, TEXT_SIZE));
 	    g2d.drawString(String.valueOf(rocket.getScore()), SCORE_OFFSET, SCORE_OFFSET + TEXT_SIZE);
 	    g2d.drawString("Lives: " + rocket.getHealth(), SCORE_OFFSET, (SCORE_OFFSET + TEXT_SIZE) * 2);

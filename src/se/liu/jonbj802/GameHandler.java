@@ -39,7 +39,7 @@ public class GameHandler extends KeyAdapter implements SpawnListener
     private Timer timer = null;
 
     private CollisionHandler collisionHandler = new CollisionHandler();
-    private GameScreenComponent gameScreen;
+    private GameScreenComponent gameScreen = null;
     private final FileHandler fileHandler;
 
     private int frameCalls;
@@ -49,7 +49,6 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 	super();
 	this.frame = frame;
 	this.fileHandler = fileHandler;
-	this.gameScreen = new GameScreenComponent(objects);
 	setUpTimer();
     }
 
@@ -98,6 +97,7 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 
     public void start() {
 	rocketPointer = new Rocket(frame.getBounds().getSize(), this, fileHandler, collisionHandler);
+	gameScreen = new GameScreenComponent(objects, rocketPointer);
 	objects.add(rocketPointer);
 	timer.start();
     }
