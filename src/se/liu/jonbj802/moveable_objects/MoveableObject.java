@@ -6,7 +6,8 @@ import se.liu.jonbj802.collisions.CollisionType;
 import java.awt.*;
 
 /**
- * MoveableObject defines an object that can move. This is used by the renderer when displaying.
+ * MoveableObject defines an object that can move and collide.
+ * Note that the coordinates assume the bottom left corner as origin; in contrast to Swing which assumes top left.
  */
 public interface MoveableObject extends DisplayableObject
 {
