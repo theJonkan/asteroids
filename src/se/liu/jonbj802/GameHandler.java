@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * GameHandler handles all the game logic as well as how it should draw.
+ * GameHandler handles all the game logic and movement of objects.
  */
 public class GameHandler extends KeyAdapter implements SpawnListener
 {

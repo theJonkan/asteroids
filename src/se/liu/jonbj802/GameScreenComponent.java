@@ -7,6 +7,9 @@ import se.liu.jonbj802.moveable_objects.Rocket;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * GameScreenComponent renders the game screen with all the objects and text.
+ */
 public class GameScreenComponent extends AbstractRendererComponent
 {
     private final static int SCORE_OFFSET = 25;
