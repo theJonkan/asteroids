@@ -33,7 +33,7 @@ public class Asteroid extends AbstractEnemyObject
         init(spawner);
     }
 
-    public Asteroid(final Point pos, final int size, final double angle, final SpawnListener spawner, final FileHandler fileHandler) {
+    private Asteroid(final Point pos, final int size, final double angle, final SpawnListener spawner, final FileHandler fileHandler) {
         super(pos, size, angle, fileHandler);
         init(spawner);
     }
