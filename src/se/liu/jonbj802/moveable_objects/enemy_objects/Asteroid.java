@@ -13,9 +13,9 @@ import java.util.Random;
  */
 public class Asteroid extends AbstractEnemyObject
 {
-    private final static Random RND = new Random();
     private double speed;
 
+    private final static int TYPES = 3;
     private final static int SMALLEST_ASTEROID = 6;
     private final static int BIGGEST_ASTEROID = 15;
 
@@ -40,7 +40,8 @@ public class Asteroid extends AbstractEnemyObject
 
     private void init(final SpawnListener spawner) {
         this.speed = 45.0 / size;
-        this.matrix = fileHandler.get("asteroid_type1").modify(size, angle);
+        final int type = RND.nextInt(TYPES);
+        this.matrix = fileHandler.get("asteroid_type_" + type).modify(size, angle);
         this.spawner = spawner;
     }
 

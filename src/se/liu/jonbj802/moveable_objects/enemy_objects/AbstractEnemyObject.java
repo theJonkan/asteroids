@@ -12,7 +12,7 @@ import java.util.Random;
  */
 public abstract class AbstractEnemyObject extends AbstractMoveableObject
 {
-    private final static Random RND = new Random();
+    protected final static Random RND = new Random();
     private final static double TOP_ANGLE = Math.PI / 2;
     private final static double BOTTOM_ANGLE = 3 * Math.PI / 2;
     private final static double RIGHT_ANGLE = 2 * Math.PI;
