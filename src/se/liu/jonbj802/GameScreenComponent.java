@@ -4,6 +4,7 @@ import se.liu.jonbj802.graphics.AbstractRendererComponent;
 import se.liu.jonbj802.graphics.DisplayableObject;
 import se.liu.jonbj802.graphics.FileHandler;
 import se.liu.jonbj802.graphics.Matrix;
+import se.liu.jonbj802.graphics.MatrixObject;
 import se.liu.jonbj802.moveable_objects.MoveableObject;
 import se.liu.jonbj802.moveable_objects.Rocket;
 
@@ -52,15 +53,8 @@ public class GameScreenComponent extends AbstractRendererComponent
 	final Matrix rocketLifeMatrix = fileHandler.get("rocket_drifting").modify(3, Math.PI/2);
 	final List<DisplayableObject> lives = new ArrayList<>();
 	for (int i = 0; i < rocket.getHealth(); i++) {
-	    final int offset = i * LIVES_SPACING;
-	    lives.add(new DisplayableObject()
-	    {
-		@Override public Point getPos() {
-		    return new Point(LIVES_HORIZONTAL_OFFSET + offset, size.height - LIVES_VERTICAL_OFFSET);
-		}
-
-		@Override public Matrix getMatrix() { return rocketLifeMatrix; }
-	    });
+	    final int horizontalOffset = LIVES_HORIZONTAL_OFFSET+ i * LIVES_SPACING;
+	    lives.add(new MatrixObject(new Point(horizontalOffset, size.height - LIVES_VERTICAL_OFFSET), rocketLifeMatrix));
 	}
 
 	paintObjects(g2d, lives);
