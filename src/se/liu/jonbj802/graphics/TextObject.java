@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * TextObject allows rendering text on screen using vector graphics instead of raster fonts.
- * Allowed characters are: a, d, e, i, n, o, p, r, s, t.
+ * Allowed characters are: a, d, e, i, n, o, p, r, s, t and space.
  */
 public class TextObject implements DisplayableObject
 {
@@ -21,7 +21,7 @@ public class TextObject implements DisplayableObject
 	for (int i = 1; i < text.length(); i++) {
 	    final char letter = text.charAt(i);
 	    if (letter == ' ') {
-		letters.add(new Matrix(new double[][] {{0, 0}, {0, 0}}));
+		letters.add(fileHandler.get("char_space"));
 		continue;
 	    }
 

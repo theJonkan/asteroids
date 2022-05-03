@@ -19,6 +19,7 @@ public class GameScreenComponent extends AbstractRendererComponent
 {
     private final static int SCORE_OFFSET = 25;
     private final static int TEXT_SIZE = 30;
+    private final static int LIVES_SIZE = 3;
     private final static int LIVES_HORIZONTAL_OFFSET = 35;
     private final static int LIVES_VERTICAL_OFFSET = 4 * SCORE_OFFSET;
     private final static int LIVES_SPACING = 30;
@@ -50,7 +51,7 @@ public class GameScreenComponent extends AbstractRendererComponent
 
 	final Dimension size = getSize();
 
-	final Matrix rocketLifeMatrix = fileHandler.get("rocket_drifting").modify(3, Math.PI/2);
+	final Matrix rocketLifeMatrix = fileHandler.get("rocket_drifting").modify(LIVES_SIZE, Math.PI/2);
 	final List<DisplayableObject> lives = new ArrayList<>();
 	for (int i = 0; i < rocket.getHealth(); i++) {
 	    final int horizontalOffset = LIVES_HORIZONTAL_OFFSET+ i * LIVES_SPACING;
