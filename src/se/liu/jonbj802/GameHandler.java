@@ -113,10 +113,10 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 	double seconds = frameCalls/(1000.0/FRAME_TIME);
 
 	if (seconds % ASTEROID_DELAY == 0){
-	    objects.add(new Asteroid(screenSize, this, fileHandler));
-	    objects.add(new Asteroid(screenSize, this, fileHandler));
-	    objects.add(new Asteroid(screenSize, this, fileHandler));
-	    objects.add(new Asteroid(screenSize, this, fileHandler));
+	    final int toSpawn = 5;
+	    for (int i = 0; i < toSpawn; i++) {
+		objects.add(new Asteroid(screenSize, this, fileHandler));
+	    }
 	}
 
 	// Has a 50/50 chance to spawn a saucer each 10 seconds.
