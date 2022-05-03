@@ -5,7 +5,9 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
+import java.util.IllegalFormatWidthException;
 import java.util.Map;
 
 /**
@@ -21,19 +23,33 @@ public class FileHandler
         this.gson = new Gson();
     }
 
-    public void load(final String name) throws IOException {
+    public void load(final String name) throws IOException, IllegalFormatWidthException {
         final String path = "images" + File.separator + "matrices" + File.separator + name;
-        final InputStream matrix = ClassLoader.getSystemResourceAsStream(path);
-        if (matrix == null) {
-            throw new IOException("the file " + path + " does not exist or is empty");
+        final InputStream fileStream = ClassLoader.getSystemResourceAsStream(path);
+        if (fileStream == null) {
+            throw new IOException("the file at " + path + " does not exist");
         }
 
-        final byte[] contents = matrix.readAllBytes();
-        matrices.put(name, gson.fromJson(new String(contents), Matrix.class));
+        final byte[] contents = fileStream.readAllBytes();
+        if (contents.length == 0) {
+            throw new IOException("the file at " + path + " is empty");
+        }
+
+        final Matrix matrix = gson.fromJson(new String(contents), Matrix.class);
+        if (matrix.getColumns() % 2 != 0) {
+            throw new IllegalFormatWidthException(matrix.getColumns());
+        }
+
+        matrices.put(name, matrix);
     }
 
     public void loadAll() throws IOException {
-        final File directory = new File(ClassLoader.getSystemResource("images/matrices").getFile());
+        final URL url = ClassLoader.getSystemResource("images/matrices");
+        if (url == null) {
+            throw new IOException("could not find matrices directory");
+        }
+
+        final File directory = new File(url.getPath());
         final String[] files = directory.list();
         if (files == null) {
             throw new IOException("the directory " + directory.getPath() + " does not exist or is empty");

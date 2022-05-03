@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.IllegalFormatWidthException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
@@ -92,7 +93,7 @@ public class GameRunner extends KeyAdapter
             final java.util.logging.FileHandler fh = new java.util.logging.FileHandler("asteroids.log");
             fh.setFormatter(new SimpleFormatter());
             logger.addHandler(fh);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             logger.log(Level.WARNING, "Failed to set up file handler");
             e.printStackTrace();
         }
@@ -100,8 +101,12 @@ public class GameRunner extends KeyAdapter
         final GameRunner game = new GameRunner();
         try {
             game.setUpAssets();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             logger.log(Level.SEVERE, "Failed to load assets");
+            e.printStackTrace();
+            return;
+        } catch (final IllegalFormatWidthException e) {
+            logger.log(Level.SEVERE, "Incorrect matrix length: " + e.getWidth());
             e.printStackTrace();
             return;
         }
