@@ -31,7 +31,6 @@ public class GameHandler extends KeyAdapter implements SpawnListener
     private static final int SAUCER_DELAY = 10;
     private static final int ASTEROID_DELAY = 3;
 
-    // TODO: We need to model this better.
     private static final int ASTEROID_POINTS = 10;
     private static final int SAUCER_POINTS = 100;
 

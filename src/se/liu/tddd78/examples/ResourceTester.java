@@ -45,8 +45,6 @@ public class ResourceTester
                 str = reader.readLine();
             }
         } catch (IOException e) {
-            // TODO: Exceptions need to be handled somehow.  This code is incomplete
-            //  and the rest is left as an exercise for course participants.
             e.printStackTrace();
         }
     }
