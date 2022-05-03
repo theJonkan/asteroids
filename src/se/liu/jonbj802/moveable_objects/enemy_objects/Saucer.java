@@ -1,9 +1,11 @@
-package se.liu.jonbj802.moveable_objects;
+package se.liu.jonbj802.moveable_objects.enemy_objects;
 
 import se.liu.jonbj802.SpawnListener;
 import se.liu.jonbj802.collisions.CollisionType;
 import se.liu.jonbj802.graphics.FileHandler;
 import se.liu.jonbj802.graphics.Matrix;
+import se.liu.jonbj802.moveable_objects.Bullet;
+import se.liu.jonbj802.moveable_objects.Rocket;
 
 import java.awt.*;
 

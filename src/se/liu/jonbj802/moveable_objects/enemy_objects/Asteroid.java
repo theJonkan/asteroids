@@ -1,4 +1,4 @@
-package se.liu.jonbj802.moveable_objects;
+package se.liu.jonbj802.moveable_objects.enemy_objects;
 
 import se.liu.jonbj802.SpawnListener;
 import se.liu.jonbj802.collisions.CollisionType;

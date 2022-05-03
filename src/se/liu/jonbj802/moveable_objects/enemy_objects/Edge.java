@@ -1,4 +1,4 @@
-package se.liu.jonbj802.moveable_objects;
+package se.liu.jonbj802.moveable_objects.enemy_objects;
 
 /**
  * Edge is an enum with the different edges of the screen.

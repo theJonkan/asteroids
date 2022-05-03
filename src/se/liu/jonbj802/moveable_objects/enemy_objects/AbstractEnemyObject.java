@@ -1,6 +1,7 @@
-package se.liu.jonbj802.moveable_objects;
+package se.liu.jonbj802.moveable_objects.enemy_objects;
 
 import se.liu.jonbj802.graphics.FileHandler;
+import se.liu.jonbj802.moveable_objects.AbstractMoveableObject;
 
 import java.awt.*;
 import java.util.Random;

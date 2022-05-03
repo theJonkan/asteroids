@@ -5,8 +5,8 @@ import se.liu.jonbj802.graphics.FileHandler;
 import se.liu.jonbj802.graphics.TextObject;
 
 import java.awt.*;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * StartScreenHandler contains all the logic for setting up and drawing the start screen.
