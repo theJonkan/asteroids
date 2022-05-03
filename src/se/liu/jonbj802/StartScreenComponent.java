@@ -14,12 +14,10 @@ import java.util.ArrayList;
 public class StartScreenComponent extends AbstractRendererComponent
 {
     private static final int TITLE_SIZE = 8;
-    private static final int DESCRIPTION_SIZE = 8;
-
     private static final int WIDTH_OFFSET = 20;
     private static final int HEIGHT_OFFSET = 40;
 
-    final FileHandler fileHandler;
+    private final FileHandler fileHandler;
 
     protected StartScreenComponent(final FileHandler fileHandler) {
 	super();
