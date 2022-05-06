@@ -6,5 +6,5 @@ package se.liu.jonbj802.collisions;
  */
 public enum CollisionType
 {
-    ASTEROID, SAUCER, BULLET_PLAYER, BULLET_ENEMY, ROCKET
+    ASTEROID, SAUCER, BULLET_PLAYER, BULLET_ENEMY, ROCKET, POWERUP
 }

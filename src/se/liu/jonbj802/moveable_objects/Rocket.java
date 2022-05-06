@@ -38,6 +38,8 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
     private SpawnListener spawner;
     private CollisionHandler collisions;
 
+
+
     private int shootingDelay;
     private int respawnDelay;
 
@@ -166,6 +168,10 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
 
     public void increaseScore(int increment){
         score += increment;
+    }
+
+    public void setHealth(final int health){
+        this.health = health;
     }
 
     public int getHealth(){

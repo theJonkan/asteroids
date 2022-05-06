@@ -7,6 +7,7 @@ import se.liu.jonbj802.moveable_objects.MoveableObject;
 import se.liu.jonbj802.moveable_objects.Rocket;
 import se.liu.jonbj802.moveable_objects.enemy_objects.Asteroid;
 import se.liu.jonbj802.moveable_objects.enemy_objects.Saucer;
+import se.liu.jonbj802.moveable_objects.powerups.HealthPowerUp;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,6 +44,7 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 
     private int frameCalls;
     private Rocket rocketPointer = null;
+    Dimension screenSize = null;
 
     protected GameHandler(final JFrame frame, final FileHandler fileHandler) {
 	super();
@@ -76,6 +78,7 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 	collisionHandler.register(CollisionType.ROCKET, CollisionType.ASTEROID);
 	collisionHandler.register(CollisionType.ROCKET, CollisionType.SAUCER);
 	collisionHandler.register(CollisionType.BULLET_ENEMY, CollisionType.ROCKET);
+	collisionHandler.register(CollisionType.POWERUP, CollisionType.ROCKET);
     }
 
     public boolean hasFinished() {
@@ -95,9 +98,12 @@ public class GameHandler extends KeyAdapter implements SpawnListener
     }
 
     public void start() {
-	rocketPointer = new Rocket(frame.getBounds().getSize(), this, fileHandler, collisionHandler);
+	screenSize = frame.getBounds().getSize();
+
+	rocketPointer = new Rocket(screenSize, this, fileHandler, collisionHandler);
 	gameScreen = new GameScreenComponent(objects, rocketPointer, fileHandler);
 	objects.add(rocketPointer);
+	objects.add(new HealthPowerUp(screenSize, rocketPointer, fileHandler));
 	timer.start();
     }
 
@@ -107,7 +113,6 @@ public class GameHandler extends KeyAdapter implements SpawnListener
     }
 
     private void spawnObjects() {
-	final Dimension screenSize = frame.getBounds().getSize();
 
 	double seconds = frameCalls/(1000.0/FRAME_TIME);
 
@@ -128,7 +133,6 @@ public class GameHandler extends KeyAdapter implements SpawnListener
     }
 
     private void findCollisions(){
-	final Dimension screenSize = frame.getBounds().getSize();
 
         /* Once we have checked one object against all others, we can increment start
         and stop checking that going forward. We also never need to check the last element
@@ -159,7 +163,6 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 
     private void updateObjects() {
 	final List<MoveableObject> unwantedObjects = new ArrayList<>();
-	final Dimension screenSize = frame.getBounds().getSize();
 
 	// Avoids concurrent modification
 	objects.addAll(addQueue);
