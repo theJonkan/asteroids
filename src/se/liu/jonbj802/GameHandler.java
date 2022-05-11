@@ -151,8 +151,8 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 		if (objectHitbox.intersects(colliderHitbox)) {
 		    final boolean collision = collisionHandler.collide(object.getCollisionType(), collider.getCollisionType());
 		    if (collision) {
-			object.collided();
 			collider.collided();
+			object.collided();
 		    }
 		}
 	    }

@@ -16,6 +16,7 @@ public class HealthPowerUp extends AbstractPowerUp
 
     @Override public void collided() {
 	super.collided();
+	rocket.addPowerUp();
 	rocket.setHealth(rocket.getHealth() + 1);
     }
 

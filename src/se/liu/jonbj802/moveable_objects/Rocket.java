@@ -38,7 +38,7 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
     private SpawnListener spawner;
     private CollisionHandler collisions;
 
-
+    private boolean powerupCollided;
 
     private int shootingDelay;
     private int respawnDelay;
@@ -124,8 +124,15 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
         collisions.setEnabled(respawnDelay <= 0);
     }
 
+    public void addPowerUp() {
+        powerupCollided = true;
+    }
+
     @Override public void collided() {
-        if (respawnDelay > 0) {
+        if (powerupCollided) {
+            powerupCollided = false;
+            return;
+        } else if (respawnDelay > 0) {
             return;
         }
 
