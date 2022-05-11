@@ -30,8 +30,10 @@ public class GameHandler extends KeyAdapter implements SpawnListener
     private static final int FRAME_TIME = 20; /** 50 FPS => 20ms for each draw. */
     private static final int OFFSET_WRAP = 20;
     private static final int OFFSET_DELETE = 100;
+
     private static final int SAUCER_DELAY = 10;
     private static final int ASTEROID_DELAY = 3;
+    private static final int POWERUP_DELAY = 25;
 
     private static final int ASTEROID_POINTS = 10;
     private static final int SAUCER_POINTS = 100;
@@ -128,7 +130,14 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 	// Has a 50/50 chance to spawn a saucer each 10 seconds.
 	if (seconds % SAUCER_DELAY == 0 && seconds != 0 && RND.nextBoolean()){
 	    objects.add(new Saucer(screenSize, rocketPointer, this, fileHandler));
-	    frameCalls = 0; // Reset timer at longest duration.
+	    //frameCalls = 0; // Reset timer at longest duration.
+	}
+
+	if (seconds % POWERUP_DELAY == 0 && seconds != 0) {
+	    switch(RND.nextInt(2)) {
+		case (0) -> {objects.add(new SpeedPowerUp(screenSize, rocketPointer, fileHandler));}
+		case (1) -> {objects.add(new HealthPowerUp(screenSize, rocketPointer, fileHandler));}
+	    }
 	}
 
 	frameCalls++;
