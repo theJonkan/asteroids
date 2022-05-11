@@ -6,6 +6,9 @@ import se.liu.jonbj802.moveable_objects.Rocket;
 
 import java.awt.*;
 
+/**
+ * BulletPowerUp is a powerup that make the rocket shoot in a scattershot pattern.
+ */
 public class BulletPowerUp extends AbstractPowerUp
 {
     private final Matrix matrix;

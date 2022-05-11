@@ -6,6 +6,9 @@ import se.liu.jonbj802.moveable_objects.Rocket;
 
 import java.awt.*;
 
+/**
+ * SpeedPowerUp is a powerup that increases the max speed of the rocket.
+ */
 public class SpeedPowerUp extends AbstractPowerUp
 {
     private final Matrix matrix;

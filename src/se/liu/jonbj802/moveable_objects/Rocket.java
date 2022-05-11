@@ -23,8 +23,10 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
     private final static double ACCELERATION_INERTIA = 0.2;
     private final static double RETARDATION_INERTIA = 0.07;
 
+    private final static int FPS = 50;
     private final static int DEFAULT_SHOOTING_DELAY = 10;
-    private final static int DEFAULT_RESPAWN_DELAY = 100;
+    private final static int DEFAULT_RESPAWN_DELAY = 2 * FPS;
+    private final static int DEFAULT_POWERUP_DURATION = 10 * FPS;
     private final static int DEFAULT_HEALTH = 3;
     private final static double DEFAULT_ANGLE = Math.PI / 2;
 
@@ -214,11 +216,11 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
     }
 
     public void speedUp(){
-        speedDuration = 50 * 10;
+        speedDuration = DEFAULT_POWERUP_DURATION;
     }
 
     public void enableScattershot() {
-        scattershotDuration = 50 * 10;
+        scattershotDuration = DEFAULT_POWERUP_DURATION;
     }
 
     @Override public void keyTyped(final KeyEvent e) {}

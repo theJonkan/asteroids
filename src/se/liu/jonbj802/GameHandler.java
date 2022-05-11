@@ -134,7 +134,8 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 	}
 
 	if (seconds % POWERUP_DELAY == 0 && seconds != 0) {
-	    switch(RND.nextInt(3)) {
+	    final int powerups = 3;
+	    switch(RND.nextInt(powerups)) {
 		case (0) -> {objects.add(new SpeedPowerUp(screenSize, rocketPointer, fileHandler));}
 		case (1) -> {objects.add(new HealthPowerUp(screenSize, rocketPointer, fileHandler));}
 		case (2) -> {objects.add(new BulletPowerUp(screenSize, rocketPointer, fileHandler));}
