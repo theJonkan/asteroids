@@ -8,6 +8,7 @@ import se.liu.jonbj802.moveable_objects.Rocket;
 import se.liu.jonbj802.moveable_objects.enemy_objects.Asteroid;
 import se.liu.jonbj802.moveable_objects.enemy_objects.Saucer;
 import se.liu.jonbj802.moveable_objects.powerups.HealthPowerUp;
+import se.liu.jonbj802.moveable_objects.powerups.SpeedPowerUp;
 
 import javax.swing.*;
 import java.awt.*;
@@ -104,6 +105,7 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 	gameScreen = new GameScreenComponent(objects, rocketPointer, fileHandler);
 	objects.add(rocketPointer);
 	objects.add(new HealthPowerUp(screenSize, rocketPointer, fileHandler));
+	objects.add(new SpeedPowerUp(screenSize, rocketPointer, fileHandler));
 	timer.start();
     }
 

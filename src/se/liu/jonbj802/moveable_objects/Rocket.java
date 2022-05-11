@@ -19,6 +19,7 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
     private final static double ANGEL_CHANGE = 0.1;
 
     private final static int MAX_SPEED = 12;
+    private final static int FAST_MAX_SPEED = 18;
     private final static double ACCELERATION_INERTIA = 0.2;
     private final static double RETARDATION_INERTIA = 0.07;
 
@@ -29,6 +30,7 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
 
     private final Dimension screenSize;
 
+    private int maxSpeed;
     private double speed;
     private double movementAngle = angle;
     private boolean flying, rotating, shooting;
@@ -39,7 +41,7 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
     private CollisionHandler collisions;
 
     private boolean powerupCollided;
-
+    private int speedDuration;
     private int shootingDelay;
     private int respawnDelay;
 
@@ -64,7 +66,7 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
         final double angleDiff = Math.abs(movementAngle - angle);
         if (flying) {
             if (angleDiff < Math.PI / 3) {
-                speed = Math.min(MAX_SPEED, speed + ACCELERATION_INERTIA);
+                speed = Math.min(maxSpeed, speed + ACCELERATION_INERTIA);
             } else {
                 speed = Math.max(0, speed - angleDiff);
             }
@@ -111,6 +113,13 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
 
         if (shooting) {
             shoot();
+        }
+
+        if (speedDuration <= 0) {
+            maxSpeed = MAX_SPEED;
+        } else {
+            maxSpeed = FAST_MAX_SPEED;
+            speedDuration--;
         }
 
         updateSpeed();
@@ -183,6 +192,10 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
 
     public int getHealth(){
         return health;
+    }
+
+    public void speedUp(){
+        speedDuration = 50 * 10;
     }
 
     @Override public void keyTyped(final KeyEvent e) {}
