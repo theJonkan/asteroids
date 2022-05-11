@@ -6,7 +6,6 @@ import se.liu.jonbj802.graphics.FileHandler;
 import se.liu.jonbj802.graphics.Matrix;
 
 import java.awt.*;
-import java.util.Random;
 
 /**
  * Asteroid is an enemy that breaks into smaller chunks when hit.

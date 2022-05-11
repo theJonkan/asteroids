@@ -8,6 +8,9 @@ import se.liu.jonbj802.moveable_objects.Rocket;
 import java.awt.*;
 import java.util.Random;
 
+/**
+ * AbstractPowerUp contains common code for creating PowerUps.
+ */
 public abstract class AbstractPowerUp extends AbstractMoveableObject
 {
     private final static int DEFAULT_DESPAWN_DELAY = 50*5;

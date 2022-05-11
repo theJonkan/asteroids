@@ -44,7 +44,7 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 
     private int frameCalls;
     private Rocket rocketPointer = null;
-    Dimension screenSize = null;
+    private Dimension screenSize = null;
 
     protected GameHandler(final JFrame frame, final FileHandler fileHandler) {
 	super();

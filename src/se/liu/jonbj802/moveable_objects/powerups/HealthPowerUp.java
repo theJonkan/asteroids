@@ -6,12 +6,17 @@ import se.liu.jonbj802.moveable_objects.Rocket;
 
 import java.awt.*;
 
+/**
+ * HealthPowerUp is a powerup that gives the rocket one more life.
+ */
 public class HealthPowerUp extends AbstractPowerUp
 {
+    private final Matrix matrix;
 
     public HealthPowerUp(final Dimension screenSize, final Rocket rocket, final FileHandler fileHandler)
     {
 	super(screenSize, rocket, fileHandler);
+	this.matrix = fileHandler.get("health_powerup").modify(size, angle);
     }
 
     @Override public void collided() {
@@ -21,6 +26,6 @@ public class HealthPowerUp extends AbstractPowerUp
     }
 
     @Override public Matrix getMatrix() {
-	return fileHandler.get("health_powerup").modify(size, angle);
+	return matrix;
     }
 }
