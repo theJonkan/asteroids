@@ -6,21 +6,22 @@ import se.liu.jonbj802.moveable_objects.Rocket;
 
 import java.awt.*;
 
-public class SpeedPowerUp extends AbstractPowerUp
+public class BulletPowerUp extends AbstractPowerUp
 {
     private final Matrix matrix;
 
-    public SpeedPowerUp(final Dimension screenSize, final Rocket rocket, final FileHandler fileHandler)
+    public BulletPowerUp(final Dimension screenSize, final Rocket rocket, final FileHandler fileHandler)
     {
 	super(screenSize, rocket, fileHandler);
-	this.matrix = fileHandler.get("powerup_speed").modify(size, angle);
+	this.matrix = fileHandler.get("powerup_bullet").modify(size, angle);
     }
 
     @Override public void collided() {
 	super.collided();
 	rocket.addPowerUp();
-	rocket.speedUp();
+	rocket.enableScattershot();
     }
+
 
     @Override public Matrix getMatrix() {
 	return matrix;

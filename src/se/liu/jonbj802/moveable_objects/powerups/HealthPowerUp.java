@@ -16,7 +16,7 @@ public class HealthPowerUp extends AbstractPowerUp
     public HealthPowerUp(final Dimension screenSize, final Rocket rocket, final FileHandler fileHandler)
     {
 	super(screenSize, rocket, fileHandler);
-	this.matrix = fileHandler.get("health_powerup").modify(size, angle);
+	this.matrix = fileHandler.get("powerup_health").modify(size, angle);
     }
 
     @Override public void collided() {

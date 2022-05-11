@@ -7,6 +7,7 @@ import se.liu.jonbj802.moveable_objects.MoveableObject;
 import se.liu.jonbj802.moveable_objects.Rocket;
 import se.liu.jonbj802.moveable_objects.enemy_objects.Asteroid;
 import se.liu.jonbj802.moveable_objects.enemy_objects.Saucer;
+import se.liu.jonbj802.moveable_objects.powerups.BulletPowerUp;
 import se.liu.jonbj802.moveable_objects.powerups.HealthPowerUp;
 import se.liu.jonbj802.moveable_objects.powerups.SpeedPowerUp;
 
@@ -106,8 +107,7 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 	rocketPointer = new Rocket(screenSize, this, fileHandler, collisionHandler);
 	gameScreen = new GameScreenComponent(objects, rocketPointer, fileHandler);
 	objects.add(rocketPointer);
-	objects.add(new HealthPowerUp(screenSize, rocketPointer, fileHandler));
-	objects.add(new SpeedPowerUp(screenSize, rocketPointer, fileHandler));
+	objects.add(new BulletPowerUp(screenSize, rocketPointer, fileHandler));
 	timer.start();
     }
 
@@ -134,9 +134,10 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 	}
 
 	if (seconds % POWERUP_DELAY == 0 && seconds != 0) {
-	    switch(RND.nextInt(2)) {
+	    switch(RND.nextInt(3)) {
 		case (0) -> {objects.add(new SpeedPowerUp(screenSize, rocketPointer, fileHandler));}
 		case (1) -> {objects.add(new HealthPowerUp(screenSize, rocketPointer, fileHandler));}
+		case (2) -> {objects.add(new BulletPowerUp(screenSize, rocketPointer, fileHandler));}
 	    }
 	}
 

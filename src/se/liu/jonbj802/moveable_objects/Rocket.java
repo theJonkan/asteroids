@@ -42,6 +42,7 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
 
     private boolean powerupCollided;
     private int speedDuration;
+    private int scattershotDuration;
     private int shootingDelay;
     private int respawnDelay;
 
@@ -87,6 +88,15 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
         }
 
         shootingDelay = DEFAULT_SHOOTING_DELAY;
+
+        if (scattershotDuration > 0) {
+            final double scatterAngle =  Math.PI / 6;
+            spawner.spawn(
+                    new Bullet(angle + scatterAngle, pos.x, pos.y, speed, false, fileHandler),
+                    new Bullet(angle - scatterAngle, pos.x, pos.y, speed, false, fileHandler)
+            );
+        }
+
         spawner.spawn(new Bullet(angle, pos.x, pos.y, speed, false, fileHandler));
     }
 
@@ -122,12 +132,19 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
             speedDuration--;
         }
 
+        if (scattershotDuration <= 0) {
+            scattershotDuration = 0;
+        } else {
+            scattershotDuration--;
+        }
+
         updateSpeed();
         updateAngle();
 
         move(speed);
 
         shootingDelay--;
+
         respawnDelay--;
 
         collisions.setEnabled(respawnDelay <= 0);
@@ -150,6 +167,8 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
         respawnDelay = DEFAULT_RESPAWN_DELAY;
         movementAngle = DEFAULT_ANGLE;
         angle = DEFAULT_ANGLE;
+        scattershotDuration = 0;
+        speedDuration = 0;
         shootingDelay = 0;
         speed = 0;
 
@@ -196,6 +215,10 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
 
     public void speedUp(){
         speedDuration = 50 * 10;
+    }
+
+    public void enableScattershot() {
+        scattershotDuration = 50 * 10;
     }
 
     @Override public void keyTyped(final KeyEvent e) {}
