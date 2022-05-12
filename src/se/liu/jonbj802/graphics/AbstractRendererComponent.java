@@ -12,6 +12,12 @@ public abstract class AbstractRendererComponent extends JComponent
 {
     private final static int LINE_WIDTH = 1;
 
+    protected final FileHandler fileHandler;
+
+    protected AbstractRendererComponent(final FileHandler fileHandler) {
+        this.fileHandler = fileHandler;
+    }
+
     private void drawLines(final Matrix matrix, final int x, final int y, final Graphics2D g2d) {
         final int height = getSize().height;
 

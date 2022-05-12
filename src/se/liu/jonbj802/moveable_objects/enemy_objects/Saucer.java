@@ -21,13 +21,13 @@ public class Saucer extends AbstractEnemyObject
     private boolean hasCollided;
     private int shootingDelay;
     private final Rocket rocketPointer;
-    private SpawnListener spawner;
+    private final SpawnListener spawner;
 
     private final Matrix matrix;
 
     public Saucer(final Dimension screenSize, final Rocket rocketPointer, final SpawnListener spawner, final FileHandler fileHandler) {
 	super(screenSize, SIZE, fileHandler);
-	matrix = fileHandler.get("saucer").modify(SIZE, 0);
+	this.matrix = fileHandler.get("saucer").modify(SIZE, 0);
 
 	this.rocketPointer = rocketPointer;
 	this.spawner = spawner;

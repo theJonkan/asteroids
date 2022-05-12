@@ -39,8 +39,8 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
     private Direction direction = null;
     private int score;
     private int health = DEFAULT_HEALTH;
-    private SpawnListener spawner;
-    private CollisionHandler collisions;
+    private final SpawnListener spawner;
+    private final CollisionHandler collisions;
 
     private boolean powerupCollided;
     private int speedDuration;

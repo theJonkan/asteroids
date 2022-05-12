@@ -27,13 +27,11 @@ public class GameScreenComponent extends AbstractRendererComponent
 
     private final Rocket rocket;
     private final List<MoveableObject> objects;
-    private final FileHandler fileHandler;
 
     public GameScreenComponent(final List<MoveableObject> objects, final Rocket rocket, final FileHandler fileHandler) {
-	super();
+	super(fileHandler);
 	this.objects = objects;
 	this.rocket = rocket;
-	this.fileHandler = fileHandler;
     }
 
     @Override protected void paintComponent(final Graphics g) {

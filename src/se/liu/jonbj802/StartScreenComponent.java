@@ -17,11 +17,9 @@ public class StartScreenComponent extends AbstractRendererComponent
     private static final int WIDTH_OFFSET = 20;
     private static final int HEIGHT_OFFSET = 40;
 
-    private final FileHandler fileHandler;
 
     protected StartScreenComponent(final FileHandler fileHandler) {
-	super();
-	this.fileHandler = fileHandler;
+	super(fileHandler);
     }
 
     @Override protected void paintComponent(final Graphics g) {

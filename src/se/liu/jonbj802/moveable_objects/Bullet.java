@@ -26,7 +26,7 @@ public class Bullet extends AbstractMoveableObject
 
     public Bullet(final double angle, final int x, final int y, final double speed, final boolean fromEnemy, final FileHandler fileHandler) {
 	super(new Point(x, y), angle, SIZE, fileHandler);
-	matrix = fileHandler.get("bullet").modify(SIZE, angle);
+	this.matrix = fileHandler.get("bullet").modify(SIZE, angle);
 	this.speed = speed + DEFAULT_SPEED;
 	this.fromEnemy = fromEnemy;
 	move(START_DISTANCE);

@@ -107,7 +107,7 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 	rocketPointer = new Rocket(screenSize, this, fileHandler, collisionHandler);
 	gameScreen = new GameScreenComponent(objects, rocketPointer, fileHandler);
 	objects.add(rocketPointer);
-	objects.add(new BulletPowerUp(screenSize, rocketPointer, fileHandler));
+
 	timer.start();
     }
 
@@ -117,8 +117,7 @@ public class GameHandler extends KeyAdapter implements SpawnListener
     }
 
     private void spawnObjects() {
-
-	double seconds = frameCalls/(1000.0/FRAME_TIME);
+	final double seconds = frameCalls/(1000.0/FRAME_TIME);
 
 	if (seconds % ASTEROID_DELAY == 0){
 	    final int toSpawn = 5;
@@ -130,7 +129,6 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 	// Has a 50/50 chance to spawn a saucer each 10 seconds.
 	if (seconds % SAUCER_DELAY == 0 && seconds != 0 && RND.nextBoolean()){
 	    objects.add(new Saucer(screenSize, rocketPointer, this, fileHandler));
-	    //frameCalls = 0; // Reset timer at longest duration.
 	}
 
 	if (seconds % POWERUP_DELAY == 0 && seconds != 0) {
@@ -140,6 +138,7 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 		case (1) -> {objects.add(new HealthPowerUp(screenSize, rocketPointer, fileHandler));}
 		case (2) -> {objects.add(new BulletPowerUp(screenSize, rocketPointer, fileHandler));}
 	    }
+	    frameCalls = 0; // Reset timer at longest duration.
 	}
 
 	frameCalls++;

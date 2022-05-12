@@ -11,16 +11,20 @@ public abstract class AbstractMoveableObject implements MoveableObject
 {
     protected Point pos;
     protected double angle;
-    protected int size;
-    protected FileHandler fileHandler;
+    protected final int size;
+    protected final FileHandler fileHandler;
 
-    protected final static int SCALE_SIZE = 9;
+    private final static int SCALE_SIZE = 9;
+    private final int hitboxSize;
+    private final Rectangle hitbox;
 
     protected AbstractMoveableObject(final Point pos, final double angle, final int size, final FileHandler fileHandler) {
         this.pos = pos;
         this.angle = angle;
         this.size = size;
         this.fileHandler = fileHandler;
+        this.hitboxSize = SCALE_SIZE * size;
+        this.hitbox = new Rectangle(hitboxSize, hitboxSize);
     }
 
     @Override public Point getPos() {
@@ -37,8 +41,8 @@ public abstract class AbstractMoveableObject implements MoveableObject
     }
 
     @Override public Rectangle getHitbox(final Dimension screenSize) {
-        final int hitboxSize = SCALE_SIZE * size;
-        return new Rectangle(pos.x - hitboxSize/2, screenSize.height - pos.y - hitboxSize/2, hitboxSize, hitboxSize);
+        hitbox.setLocation(pos.x - hitboxSize/2, screenSize.height - pos.y - hitboxSize/2);
+        return hitbox;
     }
 
     protected void move(final double distance){

@@ -18,7 +18,7 @@ public abstract class AbstractPowerUp extends AbstractMoveableObject
 
     private final static Random RND = new Random();
     private int despawnDelay;
-    protected Rocket rocket;
+    protected final Rocket rocket;
     private boolean hasCollided = false;
 
     protected AbstractPowerUp(final Dimension screenSize, final Rocket rocket, final FileHandler fileHandler)
@@ -29,9 +29,8 @@ public abstract class AbstractPowerUp extends AbstractMoveableObject
     }
 
     private void generateRandomPosition(final Dimension screenSize){
-	int posX = RND.nextInt(screenSize.width);
-	int posY = RND.nextInt(screenSize.height);
-
+	final int posX = RND.nextInt(screenSize.width);
+	final int posY = RND.nextInt(screenSize.height);
 	setPos(posX, posY);
     }
 
