@@ -1,6 +1,8 @@
 package se.liu.jonbj802.graphics;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Matrix contains rendering positions for graphics objects. It will always assume a height of 2.
@@ -28,11 +30,17 @@ public class Matrix
 	return new Matrix(multiply(scaler));
     }
 
-    /** Matrix multiplication optimized for matrix height 2 */
     private double[][] multiply(final double[][] matrix){
+	if (matrix == null) {
+	    final Logger logger = Logger.getLogger("AsteroidsLog");
+	    logger.log(Level.WARNING, "Matrix is null pointer");
+	    return new double[][]{};
+	}
+
 	final int columns = positions[0].length;
 	final double[][] result = new double[HEIGHT][columns];
 
+	// Optimized matrix multiplication for height of 2.
 	for (int j = 0; j < columns; j++) {
 	    // Faster way of doing: result[0][j] = matrix[0][0] * positions[0][j] + matrix[0][1] * positions[1][j];
 	    result[0][j] = Math.fma(matrix[0][0], positions[0][j], matrix[0][1] * positions[1][j]);

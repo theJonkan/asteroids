@@ -13,7 +13,9 @@ import java.util.Random;
 public abstract class AbstractEnemyObject extends AbstractMoveableObject
 {
     protected final static Random RND = new Random();
-    @SuppressWarnings("SequentialConstants") // Enums do not support specific values. These are better as constants.
+
+    // The fields below do not make sense as enums. They contain values.
+
     private final static double TOP_ANGLE = Math.PI / 2;
     private final static double BOTTOM_ANGLE = 3 * Math.PI / 2;
     private final static double RIGHT_ANGLE = 2 * Math.PI;

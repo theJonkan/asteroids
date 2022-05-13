@@ -18,8 +18,10 @@ public class TextObject implements DisplayableObject
 
 	final List<Matrix> letters = new ArrayList<>();
 	letters.add(fileHandler.get("char_" + text.charAt(0)));
+
 	for (int i = 1; i < text.length(); i++) {
 	    final char letter = text.charAt(i);
+
 	    if (letter == ' ') {
 		letters.add(fileHandler.get("char_space"));
 		continue;

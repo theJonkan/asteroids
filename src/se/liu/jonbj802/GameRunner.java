@@ -87,7 +87,6 @@ public class GameRunner extends KeyAdapter
         }
     }
 
-    @SuppressWarnings("CatchFallthrough") // A failed file logger just only prints to the terminal. Does not break the game.
     public static void main(final String[] args) {
         final Logger logger = Logger.getLogger("AsteroidsLog");
         try {
@@ -97,6 +96,8 @@ public class GameRunner extends KeyAdapter
         } catch (final IOException e) {
             logger.log(Level.WARNING, "Failed to set up file handler");
             e.printStackTrace();
+            // A failed file logger means that we only print to the terminal. Does not break the game.
+            // No return statement needs to be used.
         }
 
         final GameRunner game = new GameRunner();

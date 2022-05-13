@@ -9,6 +9,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.IllegalFormatWidthException;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * FileHandler allows loading Matrix graphics from json files inside the resources folder.
@@ -63,7 +65,14 @@ public class FileHandler
     }
 
     public Matrix get(final String name) {
-        return matrices.get(name + ".json");
+        final Matrix matrix = matrices.get(name + ".json");
+        if (matrix == null) {
+            final Logger logger = Logger.getLogger("AsteroidsLog");
+            logger.log(Level.WARNING, "Matrix \"" + name + "\" could not be found");
+            return new Matrix(new double[][]{});
+        }
+
+        return matrix;
     }
 
     public Matrix get(final String name, final int size, final int angle) {
