@@ -14,12 +14,14 @@ public class Asteroid extends AbstractEnemyObject
 {
     private double speed;
 
+    @SuppressWarnings("SequentialConstants") // TYPES=3 and SIZE_DECREASE=2 are purely by coincidence.
     private final static int TYPES = 3;
     private final static int SMALLEST_ASTEROID = 6;
     private final static int BIGGEST_ASTEROID = 15;
 
     private final static int POS_SEPARATION = 10;
     private final static double ANGLE_SEPARATION = 0.3;
+    @SuppressWarnings("SequentialConstants") // TYPES=3 and SIZE_DECREASE=2 are purely by coincidence.
     private final static int SIZE_DECREASE = 2;
 
     private boolean hasCollided;

@@ -118,6 +118,7 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
         return fileHandler.get("rocket_drifting").modify(SIZE, angle);
     }
 
+    @SuppressWarnings("ChainOfIfStatements") // These if-statements are not mutually exclusive.
     @Override public void update() {
         if (rotating){
             rotate();

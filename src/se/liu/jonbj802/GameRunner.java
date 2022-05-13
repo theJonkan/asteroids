@@ -87,6 +87,7 @@ public class GameRunner extends KeyAdapter
         }
     }
 
+    @SuppressWarnings("CatchFallthrough") // A failed file logger just only prints to the terminal. Does not break the game.
     public static void main(final String[] args) {
         final Logger logger = Logger.getLogger("AsteroidsLog");
         try {
@@ -99,6 +100,25 @@ public class GameRunner extends KeyAdapter
         }
 
         final GameRunner game = new GameRunner();
+
+        boolean tryAgain = false;
+        do {
+            try {
+                game.setUpAssets();
+            } catch (final IOException e) {
+                logger.log(Level.SEVERE, "Failed to load assets");
+                e.printStackTrace();
+                tryAgain = JOptionPane.showConfirmDialog(null,"Do you want to try again?", "Failed to load assets", JOptionPane.YES_NO_OPTION) == 0;
+                if (!tryAgain) {
+                    return;
+                }
+            } catch (final IllegalFormatWidthException e) {
+                logger.log(Level.SEVERE, "Incorrect matrix length: " + e.getWidth());
+                e.printStackTrace();
+                return; // We can not continue. One or more loaded assets are invalid.
+            }
+        } while (tryAgain);
+
         try {
             game.setUpAssets();
         } catch (final IOException e) {
@@ -108,7 +128,7 @@ public class GameRunner extends KeyAdapter
         } catch (final IllegalFormatWidthException e) {
             logger.log(Level.SEVERE, "Incorrect matrix length: " + e.getWidth());
             e.printStackTrace();
-            return;
+            return; // We can not continue. One or more loaded assets are invalid.
         }
 
         game.start();
