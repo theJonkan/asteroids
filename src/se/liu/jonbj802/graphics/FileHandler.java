@@ -83,8 +83,8 @@ public class FileHandler
      */
     private class CacheEntry
     {
-        final String name;
-        final int size, angle;
+        private final String name;
+        private final int size, angle;
 
         private CacheEntry(final String name, final int size, final int angle) {
             this.name = name;
