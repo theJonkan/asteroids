@@ -14,7 +14,7 @@ import java.util.Random;
 public abstract class AbstractPowerUp extends AbstractMoveableObject
 {
     private final static int FPS = 50;
-    private final static int DEFAULT_DESPAWN_DELAY = FPS * 5;
+    private final static int DEFAULT_DESPAWN_DELAY = FPS * 7;
 
     private final static Random RND = new Random();
     private int despawnDelay;
