@@ -11,12 +11,9 @@ import java.awt.*;
  */
 public class SpeedPowerUp extends AbstractPowerUp
 {
-    private final Matrix matrix;
-
     public SpeedPowerUp(final Dimension screenSize, final Rocket rocket, final FileHandler fileHandler)
     {
 	super(screenSize, rocket, fileHandler);
-	this.matrix = fileHandler.get("powerup_speed").modify(size, angle);
     }
 
     @Override public void collided() {
@@ -26,6 +23,6 @@ public class SpeedPowerUp extends AbstractPowerUp
     }
 
     @Override public Matrix getMatrix() {
-	return matrix;
+	return fileHandler.get("powerup_speed", size, 0);
     }
 }

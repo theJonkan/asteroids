@@ -20,21 +20,17 @@ public class Saucer extends AbstractEnemyObject
 
     private boolean hasCollided;
     private int shootingDelay;
-    private final Rocket rocketPointer;
+    private final Rocket rocket;
     private final SpawnListener spawner;
 
-    private final Matrix matrix;
-
-    public Saucer(final Dimension screenSize, final Rocket rocketPointer, final SpawnListener spawner, final FileHandler fileHandler) {
+    public Saucer(final Dimension screenSize, final Rocket rocket, final SpawnListener spawner, final FileHandler fileHandler) {
 	super(screenSize, SIZE, fileHandler);
-	this.matrix = fileHandler.get("saucer").modify(SIZE, 0);
-
-	this.rocketPointer = rocketPointer;
+	this.rocket = rocket;
 	this.spawner = spawner;
     }
 
     @Override public Matrix getMatrix() {
-	return matrix;
+	return fileHandler.get("saucer", SIZE, 0);
     }
 
     @Override public void update() {
@@ -58,8 +54,8 @@ public class Saucer extends AbstractEnemyObject
 	    return;
 	}
 
-	final double deltaX = (pos.x) - (rocketPointer.getPos().x);
-	final double deltaY =  (pos.y) - (rocketPointer.getPos().y) ;
+	final double deltaX = pos.x - rocket.getPos().x;
+	final double deltaY = pos.y - rocket.getPos().y;
 
 	double angleToRocket = Math.atan(deltaY/deltaX);
 

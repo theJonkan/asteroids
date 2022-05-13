@@ -16,10 +16,12 @@ import java.util.Map;
 public class FileHandler
 {
     private Map<String, Matrix> matrices;
+    private Map<CacheEntry, Matrix> cache;
     private final Gson gson;
 
     public FileHandler() {
         this.matrices = new HashMap<>();
+        this.cache = new HashMap<>();
         this.gson = new Gson();
     }
 
@@ -62,5 +64,17 @@ public class FileHandler
 
     public Matrix get(final String name) {
         return matrices.get(name + ".json");
+    }
+
+    public Matrix get(final String name, final int size, final int angle) {
+        final CacheEntry entry = new CacheEntry(name, size, angle);
+        final Matrix fromCache = cache.get(entry);
+        if (fromCache != null) {
+            return fromCache;
+        }
+
+        final Matrix modified = matrices.get(name + ".json").modify(size, angle);
+        cache.put(entry, modified);
+        return modified;
     }
 }

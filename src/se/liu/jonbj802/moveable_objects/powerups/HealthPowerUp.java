@@ -11,12 +11,9 @@ import java.awt.*;
  */
 public class HealthPowerUp extends AbstractPowerUp
 {
-    private final Matrix matrix;
-
     public HealthPowerUp(final Dimension screenSize, final Rocket rocket, final FileHandler fileHandler)
     {
 	super(screenSize, rocket, fileHandler);
-	this.matrix = fileHandler.get("powerup_health").modify(size, angle);
     }
 
     @Override public void collided() {
@@ -26,6 +23,6 @@ public class HealthPowerUp extends AbstractPowerUp
     }
 
     @Override public Matrix getMatrix() {
-	return matrix;
+	return fileHandler.get("powerup_health", size, 0);
     }
 }
