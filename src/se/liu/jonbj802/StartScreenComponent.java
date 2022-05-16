@@ -9,14 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * StartScreenHandler contains all the logic for setting up and drawing the start screen.
+ * StartScreenComponent handles all the drawing of the start screen.
  */
 public class StartScreenComponent extends AbstractRendererComponent
 {
     private static final int TITLE_SIZE = 8;
     private static final int WIDTH_OFFSET = 20;
     private static final int HEIGHT_OFFSET = 40;
-
 
     protected StartScreenComponent(final FileHandler fileHandler) {
 	super(fileHandler);

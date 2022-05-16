@@ -68,7 +68,7 @@ public class FileHandler
         final Matrix matrix = matrices.get(name + ".json");
         if (matrix == null) {
             final Logger logger = Logger.getLogger("AsteroidsLog");
-            logger.log(Level.WARNING, "Matrix \"" + name + "\" could not be found");
+            logger.log(Level.WARNING, "Matrix \"" + name + "\" could not be found. Falling back to empty matrix.");
             return new Matrix(new double[][]{});
         }
 

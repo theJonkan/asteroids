@@ -7,7 +7,7 @@ import se.liu.jonbj802.graphics.Matrix;
 import java.awt.*;
 
 /**
- * Bullets cause damage to enemies. It is spawned by the rocket and saucers.
+ * Bullet serve as a weapon that the rocket and enemies can use.
  */
 public class Bullet extends AbstractMoveableObject
 {

@@ -3,7 +3,7 @@ package se.liu.jonbj802;
 import se.liu.jonbj802.moveable_objects.MoveableObject;
 
 /**
- * SpawnListener allows for components to request new MoveableObjects to spawn.
+ * SpawnListener allows for requesting to spawn new MoveableObjects.
  */
 public interface SpawnListener
 {

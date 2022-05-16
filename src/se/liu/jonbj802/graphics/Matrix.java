@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 /**
  * Matrix contains rendering positions for graphics objects. It will always assume a height of 2.
+ * These methods are performance sensitive and mostly assumes to be called with valid inputs. Invalid inputs are logged accordingly.
 */
 public class Matrix
 {
@@ -53,6 +54,12 @@ public class Matrix
     }
 
     public Matrix append(final List<Matrix> matrices) {
+	if (matrices.isEmpty()) {
+	    final Logger logger = Logger.getLogger("AsteroidsLog");
+	    logger.log(Level.WARNING, "Matrix append with empty list. Falling back to existing information.");
+	    return new Matrix(positions);
+	}
+
 	int columns = positions[0].length;
 	for (Matrix matrix : matrices) {
 	    columns += matrix.positions[0].length;
@@ -81,7 +88,13 @@ public class Matrix
 	return new Matrix(result);
     }
 
-    public double get(int x, int y){
+    public double get(int x, int y) {
+	if (x >= positions[0].length || y >= positions.length) {
+	    final Logger logger = Logger.getLogger("AsteroidsLog");
+	    logger.log(Level.WARNING, "Matrix coordinates (" + x + ", " + y +") out of range.");
+	    return 0;
+	}
+
 	return positions[y][x];
     }
 
