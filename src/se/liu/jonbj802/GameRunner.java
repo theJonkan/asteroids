@@ -30,6 +30,7 @@ public class GameRunner extends KeyAdapter
     private void createWindow() {
         frame = new JFrame("Asteroids");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.addKeyListener(this);
 
         final URL iconPath = ClassLoader.getSystemResource("images/icon.png");
         if (iconPath == null) {
@@ -47,7 +48,6 @@ public class GameRunner extends KeyAdapter
         frame.add(startScreenComponent);
         frame.pack();
 
-        frame.addKeyListener(this);
         frame.setVisible(true);
     }
 
@@ -69,10 +69,7 @@ public class GameRunner extends KeyAdapter
     private void showStartScreen() {
         gameHandler.stop();
         frame.remove(gameHandler.getGameScreen());
-
-        startScreenComponent = new StartScreenComponent(fileHandler);
-        frame.add(startScreenComponent);
-        frame.pack();
+        start();
     }
 
     @Override public void keyPressed(final KeyEvent e) {
