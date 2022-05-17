@@ -3,6 +3,7 @@ package se.liu.jonbj802;
 import se.liu.jonbj802.graphics.FileHandler;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -31,8 +32,14 @@ public class GameRunner extends KeyAdapter
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         final URL iconPath = ClassLoader.getSystemResource("images/icon.png");
+        if (iconPath == null) {
+            final Logger logger = Logger.getLogger("AsteroidsLog");
+            logger.log(Level.WARNING, "Could not find the icon. Falling back to default icon.");
+            return;
+        }
 
-        frame.setIconImage(new ImageIcon(iconPath).getImage());
+        final Image icon = new ImageIcon(iconPath).getImage();
+        frame.setIconImage(icon);
     }
 
     private void start() {
