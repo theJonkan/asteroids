@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.net.URL;
 import java.util.IllegalFormatWidthException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,10 +26,16 @@ public class GameRunner extends KeyAdapter
 
     private boolean gameRunning = false;
 
-    private void start() {
+    private void createWindow() {
         frame = new JFrame("Asteroids");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+        final URL iconPath = ClassLoader.getSystemResource("images/icon.png");
+
+        frame.setIconImage(new ImageIcon(iconPath).getImage());
+    }
+
+    private void start() {
         startScreenComponent = new StartScreenComponent(fileHandler);
         frame.add(startScreenComponent);
         frame.pack();
@@ -101,6 +108,7 @@ public class GameRunner extends KeyAdapter
         }
 
         final GameRunner game = new GameRunner();
+        game.createWindow();
 
         boolean tryAgain = false;
         do {
