@@ -28,7 +28,7 @@ public abstract class AbstractPowerUp extends AbstractMoveableObject
 	generateRandomPosition(screenSize);
     }
 
-    private void generateRandomPosition(final Dimension screenSize){
+    private void generateRandomPosition(final Dimension screenSize) {
 	final int posX = RND.nextInt(screenSize.width);
 	final int posY = RND.nextInt(screenSize.height);
 	setPos(posX, posY);

@@ -5,5 +5,5 @@ package se.liu.jonbj802.moveable_objects;
  */
 public enum Direction
 {
-    LEFT,RIGHT
+    LEFT, RIGHT
 }

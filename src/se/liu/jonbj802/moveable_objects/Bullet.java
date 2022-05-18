@@ -24,7 +24,9 @@ public class Bullet extends AbstractMoveableObject
     private final static int DELETION_DELAY = 100;
     private int frameCalls;
 
-    public Bullet(final double angle, final int x, final int y, final double speed, final boolean fromEnemy, final FileHandler fileHandler) {
+    public Bullet(final double angle, final int x, final int y, final double speed, final boolean fromEnemy,
+		  final FileHandler fileHandler)
+    {
 	super(new Point(x, y), angle, SIZE, fileHandler);
 	this.matrix = fileHandler.get("bullet").modify(SIZE, angle);
 	this.speed = speed + DEFAULT_SPEED;

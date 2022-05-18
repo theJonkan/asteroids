@@ -28,7 +28,8 @@ public class GameHandler extends KeyAdapter implements SpawnListener
     private final List<MoveableObject> addQueue = new ArrayList<>();
 
     private final static Random RND = new Random();
-    private static final int FRAME_TIME = 20; /** 50 FPS => 20ms for each draw. */
+    /** 50 FPS => 20ms for each draw. */
+    private static final int FRAME_TIME = 20;
     private static final int OFFSET_WRAP = 20;
     private static final int OFFSET_DELETE = 100;
 
@@ -64,7 +65,7 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 
     private void setUpTimer() {
 	timer = new Timer(FRAME_TIME, e -> {
-	    if (rocketPointer.getHealth() <= 0){
+	    if (rocketPointer.getHealth() <= 0) {
 		stop();
 	    }
 
@@ -118,9 +119,9 @@ public class GameHandler extends KeyAdapter implements SpawnListener
     }
 
     private void spawnObjects() {
-	final double seconds = frameCalls/(1000.0/FRAME_TIME);
+	final double seconds = frameCalls / (1000.0 / FRAME_TIME);
 
-	if (seconds % ASTEROID_DELAY == 0){
+	if (seconds % ASTEROID_DELAY == 0) {
 	    final int toSpawn = 5;
 	    for (int i = 0; i < toSpawn; i++) {
 		objects.add(new Asteroid(screenSize, this, fileHandler));
@@ -128,16 +129,22 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 	}
 
 	// Has a 50/50 chance to spawn a saucer each 10 seconds.
-	if (seconds % SAUCER_DELAY == 0 && seconds != 0 && RND.nextBoolean()){
+	if (seconds % SAUCER_DELAY == 0 && seconds != 0 && RND.nextBoolean()) {
 	    objects.add(new Saucer(screenSize, rocketPointer, this, fileHandler));
 	}
 
 	if (seconds % POWERUP_DELAY == 0 && seconds != 0) {
 	    final int powerups = 3;
-	    switch(RND.nextInt(powerups)) {
-		case (0) -> {objects.add(new SpeedPowerUp(screenSize, rocketPointer, fileHandler));}
-		case (1) -> {objects.add(new HealthPowerUp(screenSize, rocketPointer, fileHandler));}
-		case (2) -> {objects.add(new BulletPowerUp(screenSize, rocketPointer, fileHandler));}
+	    switch (RND.nextInt(powerups)) {
+		case (0) -> {
+		    objects.add(new SpeedPowerUp(screenSize, rocketPointer, fileHandler));
+		}
+		case (1) -> {
+		    objects.add(new HealthPowerUp(screenSize, rocketPointer, fileHandler));
+		}
+		case (2) -> {
+		    objects.add(new BulletPowerUp(screenSize, rocketPointer, fileHandler));
+		}
 	    }
 	    frameCalls = 0; // Reset timer at longest duration.
 	}
@@ -145,7 +152,7 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 	frameCalls++;
     }
 
-    private void findCollisions(){
+    private void findCollisions() {
 
         /* Once we have checked one object against all others, we can increment start
         and stop checking that going forward. We also never need to check the last element

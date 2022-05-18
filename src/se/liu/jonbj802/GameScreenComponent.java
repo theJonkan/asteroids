@@ -49,10 +49,10 @@ public class GameScreenComponent extends AbstractRendererComponent
 
 	final Dimension size = getSize();
 
-	final Matrix rocketLifeMatrix = fileHandler.get("rocket_drifting").modify(LIVES_SIZE, Math.PI/2);
+	final Matrix rocketLifeMatrix = fileHandler.get("rocket_drifting").modify(LIVES_SIZE, Math.PI / 2);
 	final List<DisplayableObject> lives = new ArrayList<>();
 	for (int i = 0; i < rocket.getHealth(); i++) {
-	    final int horizontalOffset = LIVES_HORIZONTAL_OFFSET+ i * LIVES_SPACING;
+	    final int horizontalOffset = LIVES_HORIZONTAL_OFFSET + i * LIVES_SPACING;
 	    lives.add(new MatrixObject(new Point(horizontalOffset, size.height - LIVES_VERTICAL_OFFSET), rocketLifeMatrix));
 	}
 

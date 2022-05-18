@@ -5,9 +5,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Matrix contains rendering positions for graphics objects. It will always assume a height of 2.
- * These methods are performance sensitive and mostly assumes to be called with valid inputs. Invalid inputs are logged accordingly.
-*/
+ * Matrix contains rendering positions for graphics objects. It will always assume a height of 2. These methods are performance sensitive
+ * and mostly assumes to be called with valid inputs. Invalid inputs are logged accordingly.
+ */
 public class Matrix
 {
     private double[][] positions;
@@ -18,7 +18,7 @@ public class Matrix
 	this.positions = positions;
     }
 
-    public Matrix modify(int scale, double angle){
+    public Matrix modify(int scale, double angle) {
 	final double scaledSine = scale * Math.sin(angle);
 	final double scaledCosine = scale * Math.cos(angle);
 
@@ -31,11 +31,11 @@ public class Matrix
 	return new Matrix(multiply(scaler));
     }
 
-    private double[][] multiply(final double[][] matrix){
+    private double[][] multiply(final double[][] matrix) {
 	if (matrix == null) {
 	    final Logger logger = Logger.getLogger("AsteroidsLog");
 	    logger.log(Level.WARNING, "Matrix is null pointer");
-	    return new double[][]{};
+	    return new double[][] {};
 	}
 
 	final int columns = positions[0].length;
@@ -68,7 +68,7 @@ public class Matrix
 	final double[][] result = new double[HEIGHT][columns];
 
 	int indexOffset = positions[0].length;
-	for (int i = 0; i <indexOffset; i++) {
+	for (int i = 0; i < indexOffset; i++) {
 	    result[0][i] = positions[0][i];
 	    result[1][i] = positions[1][i];
 	}
@@ -91,14 +91,14 @@ public class Matrix
     public double get(int x, int y) {
 	if (x >= positions[0].length || y >= positions.length) {
 	    final Logger logger = Logger.getLogger("AsteroidsLog");
-	    logger.log(Level.WARNING, "Matrix coordinates (" + x + ", " + y +") out of range.");
+	    logger.log(Level.WARNING, "Matrix coordinates (" + x + ", " + y + ") out of range.");
 	    return 0;
 	}
 
 	return positions[y][x];
     }
 
-    public int getColumns(){
+    public int getColumns() {
 	return positions[0].length;
     }
 }

@@ -57,7 +57,7 @@ public class Saucer extends AbstractEnemyObject
 	final double deltaX = pos.x - rocket.getPos().x;
 	final double deltaY = pos.y - rocket.getPos().y;
 
-	double angleToRocket = Math.atan(deltaY/deltaX);
+	double angleToRocket = Math.atan(deltaY / deltaX);
 
 	if (deltaX > 0) {
 	    angleToRocket -= Math.PI;

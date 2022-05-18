@@ -3,14 +3,13 @@ package se.liu.jonbj802.graphics;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * TextObject allows rendering text on screen using vector graphics instead of raster fonts.
- * Allowed characters are: a, d, e, i, n, o, p, r, s, t and space.
+ * TextObject allows rendering text on screen using vector graphics instead of raster fonts. Allowed characters are: a, d, e, i, n, o, p, r,
+ * s, t and space.
  */
 public class TextObject implements DisplayableObject
 {
@@ -18,7 +17,7 @@ public class TextObject implements DisplayableObject
     private final Matrix matrix;
     private final FileHandler fileHandler;
 
-    private final static char[] ALLOWED_CHARACTERS = new char[]{' ', 'a', 'd', 'e', 'i', 'n', 'o', 'p', 'r', 's', 't'};
+    private final static char[] ALLOWED_CHARACTERS = new char[] { ' ', 'a', 'd', 'e', 'i', 'n', 'o', 'p', 'r', 's', 't' };
 
     public TextObject(final String text, final Point pos, final int size, final FileHandler fileHandler) {
 	this.pos = pos;
