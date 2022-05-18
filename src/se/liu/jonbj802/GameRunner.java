@@ -132,18 +132,6 @@ public class GameRunner extends KeyAdapter
             }
         } while (tryAgain);
 
-        try {
-            game.setUpAssets();
-        } catch (final IOException e) {
-            logger.log(Level.SEVERE, "Failed to load assets");
-            e.printStackTrace();
-            return;
-        } catch (final IllegalFormatWidthException e) {
-            logger.log(Level.SEVERE, "Incorrect matrix length: " + e.getWidth());
-            e.printStackTrace();
-            return; // We can not continue. One or more loaded assets are invalid.
-        }
-
         game.start();
     }
 }

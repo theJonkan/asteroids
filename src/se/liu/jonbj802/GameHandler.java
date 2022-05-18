@@ -42,7 +42,7 @@ public class GameHandler extends KeyAdapter implements SpawnListener
     private final JFrame frame;
     private Timer timer = null;
 
-    private CollisionHandler collisionHandler = new CollisionHandler();
+    private final CollisionHandler collisionHandler;
     private GameScreenComponent gameScreen = null;
     private final FileHandler fileHandler;
 
@@ -54,6 +54,7 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 	super();
 	this.frame = frame;
 	this.fileHandler = fileHandler;
+	this.collisionHandler = new CollisionHandler();
 	setUpTimer();
     }
 
@@ -205,9 +206,7 @@ public class GameHandler extends KeyAdapter implements SpawnListener
 	}
 
 	// Remove objects that were found outside of bounds.
-	for (final MoveableObject object: unwantedObjects) {
-	    objects.remove(object);
-	}
+	objects.removeAll(unwantedObjects);
     }
 
     @Override public void spawn(final MoveableObject... newObjects) {

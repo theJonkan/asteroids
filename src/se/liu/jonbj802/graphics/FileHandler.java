@@ -29,33 +29,43 @@ public class FileHandler
 
     public void load(final String name) throws IOException, IllegalFormatWidthException {
         final String path = "images" + File.separator + "matrices" + File.separator + name;
-        final InputStream fileStream = ClassLoader.getSystemResourceAsStream(path);
-        if (fileStream == null) {
-            throw new IOException("the file at " + path + " does not exist");
-        }
+        final Logger logger = Logger.getLogger("AsteroidsLog");
 
-        final byte[] contents = fileStream.readAllBytes();
-        if (contents.length == 0) {
-            throw new IOException("the file at " + path + " is empty");
-        }
+        try (final InputStream fileStream = ClassLoader.getSystemResourceAsStream(path)) {
+            if (fileStream == null) {
+                logger.log(Level.SEVERE, "Invalid input stream at: " + path);
+                throw new IOException("the file at " + path + " does not exist");
+            }
 
-        final Matrix matrix = gson.fromJson(new String(contents), Matrix.class);
-        if (matrix.getColumns() % 2 != 0) {
-            throw new IllegalFormatWidthException(matrix.getColumns());
-        }
+            final byte[] contents = fileStream.readAllBytes();
+            if (contents.length == 0) {
+                logger.log(Level.WARNING, "Empty file at: " + path);
+                throw new IOException("the file at " + path + " is empty");
+            }
 
-        matrices.put(name, matrix);
+            final Matrix matrix = gson.fromJson(new String(contents), Matrix.class);
+            if (matrix.getColumns() % 2 != 0) {
+                logger.log(Level.SEVERE, "Matrix length not even, length: " + matrix.getColumns());
+                throw new IllegalFormatWidthException(matrix.getColumns());
+            }
+
+            matrices.put(name, matrix);
+        }
     }
 
-    public void loadAll() throws IOException {
+    public void loadAll() throws IOException, IllegalFormatWidthException {
+        final Logger logger = Logger.getLogger("AsteroidsLog");
         final URL url = ClassLoader.getSystemResource("images/matrices");
+
         if (url == null) {
+            logger.log(Level.SEVERE, "Could not find the directory");
             throw new IOException("could not find matrices directory");
         }
 
         final File directory = new File(url.getPath());
         final String[] files = directory.list();
         if (files == null) {
+            logger.log(Level.SEVERE, "Path: " + directory.getPath() + " is either empty or does not exist");
             throw new IOException("the directory " + directory.getPath() + " does not exist or is empty");
         }
 
