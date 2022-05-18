@@ -7,8 +7,8 @@ import java.awt.*;
 import java.util.Random;
 
 /**
- * AbstractEnemyObject is an abstraction for common code related to enemies.
- * The position and rotation are randomly generated to spawn at the edge and move inwards.
+ * AbstractEnemyObject is an abstraction for common code related to enemies. The position and rotation are randomly generated to spawn at
+ * the edge and move inwards.
  */
 public abstract class AbstractEnemyObject extends AbstractMoveableObject
 {
@@ -22,40 +22,41 @@ public abstract class AbstractEnemyObject extends AbstractMoveableObject
     private final static double LEFT_ANGLE = Math.PI;
 
     protected AbstractEnemyObject(final Dimension screenSize, final int size, final FileHandler fileHandler) {
-        super(null, 0, size, fileHandler); // Angle and position are generated after.
-        generateRandomPosition(screenSize);
+	super(null, 0, size, fileHandler); // Angle and position are generated after.
+	generateRandomPosition(screenSize);
     }
+
     protected AbstractEnemyObject(final Point pos, final int size, final double angle, final FileHandler fileHandler) {
-        super(pos, angle, size, fileHandler); // Angle and position are generated after.
+	super(pos, angle, size, fileHandler); // Angle and position are generated after.
     }
 
     @Override public boolean shouldDespawn(final Dimension screenSize, final int offset) {
-        return pos.x > screenSize.width + offset || pos.y > screenSize.height + offset || pos.x < -offset || pos.y < -offset;
+	return pos.x > screenSize.width + offset || pos.y > screenSize.height + offset || pos.x < -offset || pos.y < -offset;
     }
 
     @Override public boolean shouldWrap(final Dimension screenSize, final int offset) {
-        return false;
+	return false;
     }
 
     protected void generateRandomPosition(final Dimension screenSize) {
-        final Edge sector = Edge.get(RND.nextInt(Edge.size()));
-        switch (sector) {
-            case LEFT -> {
-                pos = new Point(0, RND.nextInt(screenSize.height));
-                angle = RND.nextDouble(-TOP_ANGLE, TOP_ANGLE);
-            }
-            case  RIGHT -> {
-                pos = new Point(screenSize.width, RND.nextInt(screenSize.height));
-                angle = RND.nextDouble(TOP_ANGLE, BOTTOM_ANGLE);
-            }
-            case BOTTOM -> {
-                pos = new Point(RND.nextInt(screenSize.width),0);
-                angle = RND.nextDouble(LEFT_ANGLE);
-            }
-            case TOP -> {
-                pos = new Point(RND.nextInt(screenSize.width), screenSize.height);
-                angle = RND.nextDouble(LEFT_ANGLE, RIGHT_ANGLE);
-            }
-        }
+	final Edge sector = Edge.get(RND.nextInt(Edge.size()));
+	switch (sector) {
+	    case LEFT -> {
+		pos = new Point(0, RND.nextInt(screenSize.height));
+		angle = RND.nextDouble(-TOP_ANGLE, TOP_ANGLE);
+	    }
+	    case RIGHT -> {
+		pos = new Point(screenSize.width, RND.nextInt(screenSize.height));
+		angle = RND.nextDouble(TOP_ANGLE, BOTTOM_ANGLE);
+	    }
+	    case BOTTOM -> {
+		pos = new Point(RND.nextInt(screenSize.width), 0);
+		angle = RND.nextDouble(LEFT_ANGLE);
+	    }
+	    case TOP -> {
+		pos = new Point(RND.nextInt(screenSize.width), screenSize.height);
+		angle = RND.nextDouble(LEFT_ANGLE, RIGHT_ANGLE);
+	    }
+	}
     }
 }

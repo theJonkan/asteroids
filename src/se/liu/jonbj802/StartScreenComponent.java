@@ -30,12 +30,12 @@ public class StartScreenComponent extends AbstractRendererComponent
 	final List<TextObject> textObjects = new ArrayList<>();
 
 	final String titleText = "asteroids";
-	final Point titlePos = new Point(size.width/2 - titleText.length() * WIDTH_OFFSET, size.height/2 + HEIGHT_OFFSET);
+	final Point titlePos = new Point(size.width / 2 - titleText.length() * WIDTH_OFFSET, size.height / 2 + HEIGHT_OFFSET);
 	final TextObject title = new TextObject(titleText, titlePos, TITLE_SIZE, fileHandler);
 	textObjects.add(title);
 
 	final String descriptionText = "press enter to start";
-	final Point descriptionPos = new Point(size.width/2 - descriptionText.length() * WIDTH_OFFSET, size.height/2 - HEIGHT_OFFSET);
+	final Point descriptionPos = new Point(size.width / 2 - descriptionText.length() * WIDTH_OFFSET, size.height / 2 - HEIGHT_OFFSET);
 	final TextObject description = new TextObject(descriptionText, descriptionPos, TITLE_SIZE, fileHandler);
 	textObjects.add(description);
 

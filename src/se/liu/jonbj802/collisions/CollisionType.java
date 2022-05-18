@@ -1,8 +1,8 @@
 package se.liu.jonbj802.collisions;
 
 /**
- * CollisionType defines set types of collisions. These are used to
- * by MoveableObjects and can then be registered with the CollisionHandler.
+ * CollisionType defines set types of collisions. These are used to by MoveableObjects and can then be registered with the
+ * CollisionHandler.
  */
 public enum CollisionType
 {
