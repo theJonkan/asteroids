@@ -31,10 +31,10 @@ public abstract class AbstractRendererComponent extends JComponent
     }
 
     @Override public Dimension getPreferredSize() {
-	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-	double preferredHeight = screenSize.getHeight();
-	double preferredWidth = screenSize.getWidth();
+	final double preferredHeight = screenSize.getHeight();
+	final double preferredWidth = screenSize.getWidth();
 
 	return new Dimension((int) preferredWidth, (int) preferredHeight);
 
