@@ -6,9 +6,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.IllegalFormatWidthException;
+import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,15 +51,17 @@ public class FileHandler
     }
 
     public void loadAll() throws IOException {
-        final URL url = ClassLoader.getSystemResource("images/matrices");
+        final URL url = ClassLoader.getSystemResource("images/matrices/matrix_index.txt");
         if (url == null) {
             throw new IOException("could not find matrices directory");
         }
 
-        final File directory = new File(url.getPath());
-        final String[] files = directory.list();
-        if (files == null) {
-            throw new IOException("the directory " + directory.getPath() + " does not exist or is empty");
+        final List<String> files = new ArrayList<>();
+        try (final InputStream stream = url.openStream()) {
+            final Scanner scanner = new Scanner(stream);
+            while (scanner.hasNextLine()) {
+                files.add(scanner.nextLine());
+            }
         }
 
         for (final String name : files) {
