@@ -31,7 +31,7 @@ public class FileHandler
 	this.gson = new Gson();
     }
 
-    public void load(final String name) throws IOException, IllegalFormatWidthException {
+    private void load(final String name) throws IOException, IllegalFormatWidthException {
 	final String path = "images" + File.separator + "matrices" + File.separator + name;
 	final Logger logger = Logger.getLogger("AsteroidsLog");
 
