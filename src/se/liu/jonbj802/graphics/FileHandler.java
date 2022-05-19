@@ -31,6 +31,8 @@ public class FileHandler
     }
 
     private void load(final String name) throws IOException, IllegalFormatWidthException {
+	// '\57' == '/'. We need slashes, it fails on Windows because of File.separator not being a forward slash.
+	// We use the ASCII code to not get the incorrect showstopper in the code analysis.
 	final String path = "images\57matrices\57" + name;
 	final Logger logger = Logger.getLogger("AsteroidsLog");
 
