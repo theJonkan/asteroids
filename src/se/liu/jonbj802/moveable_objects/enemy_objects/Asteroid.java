@@ -24,21 +24,19 @@ public class Asteroid extends AbstractEnemyObject
     private final static double ANGLE_SEPARATION = 0.3;
     private final static int SIZE_DECREASE = 2;
 
-    private boolean hasCollided;
-
     private Matrix matrix;
 
     public Asteroid(final Dimension screenSize, final SpawnListener spawner, final FileHandler fileHandler) {
 	super(screenSize, RND.nextInt(SMALLEST_ASTEROID, BIGGEST_ASTEROID), spawner, fileHandler);
-	init(spawner);
+	init();
     }
 
     private Asteroid(final Point pos, final int size, final double angle, final SpawnListener spawner, final FileHandler fileHandler) {
 	super(pos, size, angle, spawner, fileHandler);
-	init(spawner);
+	init();
     }
 
-    private void init(final SpawnListener spawner) {
+    private void init() {
 	this.speed = 45.0 / size;
 	final int type = RND.nextInt(TYPES);
 	this.matrix = fileHandler.get("asteroid_type_" + type).modify(size, angle);

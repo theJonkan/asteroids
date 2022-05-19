@@ -18,7 +18,6 @@ public class Saucer extends AbstractEnemyObject
     private final static int SIZE = 4;
     private final static int DEFAULT_SHOOTING_DELAY = 20;
 
-    private boolean hasCollided;
     private int shootingDelay;
     private final Rocket rocket;
 
