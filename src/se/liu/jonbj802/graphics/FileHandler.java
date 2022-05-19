@@ -20,8 +20,11 @@ import java.util.logging.Logger;
  */
 public class FileHandler
 {
-    private Map<String, Matrix> matrices;
-    private Map<CacheEntry, Matrix> cache;
+    /** The code analysis incorrectly complains about hardcoded separator. This breaks on Windows if we use Path.Separator. */
+    private final static String SEPARATOR = "/";
+
+    private final Map<String, Matrix> matrices;
+    private final Map<CacheEntry, Matrix> cache;
     private final Gson gson;
 
     public FileHandler() {
@@ -31,7 +34,7 @@ public class FileHandler
     }
 
     private void load(final String name) throws IOException, IllegalFormatWidthException {
-	String path = "images/matrices/" + name;
+	final String path = "images" + SEPARATOR + "matrices" + SEPARATOR + name;
 	final Logger logger = Logger.getLogger("AsteroidsLog");
 
 	try (final InputStream stream = ClassLoader.getSystemResourceAsStream(path)) {
