@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Asteroids">
+    <output-path>$PROJECT_DIR$/out/artifacts/Asteroids</output-path>
+    <root id="archive" name="JavaOO.jar">
+      <element id="module-output" name="JavaOO" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/gson/gson-2.8.9.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
