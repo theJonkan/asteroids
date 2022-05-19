@@ -2,7 +2,6 @@ package se.liu.jonbj802.graphics;
 
 import com.google.gson.Gson;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -32,7 +31,7 @@ public class FileHandler
     }
 
     private void load(final String name) throws IOException, IllegalFormatWidthException {
-	final String path = "images" + File.separator + "matrices" + File.separator + name;
+	String path = "images/matrices/" + name;
 	final Logger logger = Logger.getLogger("AsteroidsLog");
 
 	try (final InputStream stream = ClassLoader.getSystemResourceAsStream(path)) {
