@@ -79,7 +79,7 @@ public class GameRunner extends KeyAdapter
 		return;
 	    }
 
-	    if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+	    if (e.getKeyCode() == KeyEvent.VK_ESCAPE && !gameHandler.hasFinished()) {
 		gameHandler.setPaused(gameHandler.isPaused());
 		return;
 	    }
