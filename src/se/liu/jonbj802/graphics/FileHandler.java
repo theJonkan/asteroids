@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,19 +35,13 @@ public class FileHandler
 	final String path = "images" + File.separator + "matrices" + File.separator + name;
 	final Logger logger = Logger.getLogger("AsteroidsLog");
 
-	try (final InputStream fileStream = ClassLoader.getSystemResourceAsStream(path)) {
-	    if (fileStream == null) {
+	try (final InputStream stream = ClassLoader.getSystemResourceAsStream(path)) {
+	    if (stream == null) {
 		logger.log(Level.SEVERE, "Invalid input stream at: " + path);
 		throw new IOException("the file at " + path + " does not exist");
 	    }
 
-	    final byte[] contents = fileStream.readAllBytes();
-	    if (contents == null || contents.length == 0) {
-		logger.log(Level.WARNING, "Empty file at: " + path);
-		throw new IOException("the file at " + path + " is empty");
-	    }
-
-	    final Matrix matrix = gson.fromJson(new String(contents), Matrix.class);
+	    final Matrix matrix = gson.fromJson(new InputStreamReader(stream), Matrix.class);
 	    if (matrix.getColumns() % 2 != 0) {
 		logger.log(Level.SEVERE, "Matrix length not even, length: " + matrix.getColumns());
 		throw new IllegalFormatWidthException(matrix.getColumns());

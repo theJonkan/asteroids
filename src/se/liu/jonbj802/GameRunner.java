@@ -2,12 +2,12 @@ package se.liu.jonbj802;
 
 import se.liu.jonbj802.graphics.FileHandler;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
 import java.util.IllegalFormatWidthException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,20 +26,20 @@ public class GameRunner extends KeyAdapter
 
     private boolean gameRunning = false;
 
-    private void createWindow() {
+    private void createWindow() throws IOException {
 	frame = new JFrame("Asteroids");
 	frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	frame.addKeyListener(this);
 
-	final URL iconPath = ClassLoader.getSystemResource("images/icon.png");
-	if (iconPath == null) {
-	    final Logger logger = Logger.getLogger("AsteroidsLog");
-	    logger.log(Level.WARNING, "Could not find the icon. Falling back to default icon.");
-	    return;
-	}
+	final Logger logger = Logger.getLogger("AsteroidsLog");
+	try (final InputStream stream = ClassLoader.getSystemResourceAsStream("images/icon.png")) {
+	    if (stream == null) {
+		logger.log(Level.SEVERE, "Invalid input stream from icon image");
+		throw new IOException("the image icon does not exist");
+	    }
 
-	final Image icon = new ImageIcon(iconPath).getImage();
-	frame.setIconImage(icon);
+	    frame.setIconImage(ImageIO.read(stream));
+	}
     }
 
     private void start() {
@@ -111,7 +111,14 @@ public class GameRunner extends KeyAdapter
 	}
 
 	final GameRunner game = new GameRunner();
-	game.createWindow();
+
+	try {
+	    game.createWindow();
+	} catch (final IOException e) {
+	    logger.log(Level.WARNING, "Failed to load custom window icon. Falling back to default.");
+	    e.printStackTrace();
+	    // We don't need to return here. The game can continue without the custom icon.
+	}
 
 	boolean tryAgain = false;
 	do {
