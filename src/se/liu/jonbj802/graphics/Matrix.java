@@ -60,6 +60,7 @@ public class Matrix
 	    return new Matrix(positions);
 	}
 
+	// Sum up all the columns in all the matricies.
 	int columns = positions[0].length;
 	for (Matrix matrix : matrices) {
 	    columns += matrix.positions[0].length;
@@ -67,12 +68,14 @@ public class Matrix
 
 	final double[][] result = new double[HEIGHT][columns];
 
+	// Add the first lettter to the matrix.
 	int indexOffset = positions[0].length;
 	for (int i = 0; i < indexOffset; i++) {
 	    result[0][i] = positions[0][i];
 	    result[1][i] = positions[1][i];
 	}
 
+	// Add all the remaining letters with spacing between.
 	final int letterOffset = 5;
 	for (int i = 0; i < matrices.size(); i++) {
 	    final Matrix matrix = matrices.get(i);

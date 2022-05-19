@@ -41,7 +41,7 @@ public class FileHandler
 	    }
 
 	    final byte[] contents = fileStream.readAllBytes();
-	    if (contents.length == 0) {
+	    if (contents == null || contents.length == 0) {
 		logger.log(Level.WARNING, "Empty file at: " + path);
 		throw new IOException("the file at " + path + " is empty");
 	    }
@@ -59,18 +59,22 @@ public class FileHandler
     public void loadAll() throws IOException {
         final Logger logger = Logger.getLogger("AsteroidsLog");
 
+	// We load in an index of all the matrix files that exist in the resources folder.
+	// This is because the regular file handling for directories doesn't work with resources in JAR files.
         final URL url = ClassLoader.getSystemResource("images/matrices/matrix_index.txt");
         if (url == null) {
             logger.log(Level.SEVERE, "Could not find the directory");
             throw new IOException("could not find matrices directory");
         }
 
-        final List<String> files = new ArrayList<>();
+	// Pre-allocate the slice with 21 entries to avoid more heap allocations as it grows.
+        final List<String> files = new ArrayList<>(21);
         try (final InputStream stream = url.openStream()) {
-            final Scanner scanner = new Scanner(stream);
-            while (scanner.hasNextLine()) {
-                files.add(scanner.nextLine());
-            }
+            try (final Scanner scanner = new Scanner(stream)) {
+		while (scanner.hasNextLine()) {
+		    files.add(scanner.nextLine());
+		}
+	    }
         }
 
 	for (final String name : files) {

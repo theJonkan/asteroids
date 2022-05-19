@@ -37,7 +37,6 @@ public abstract class AbstractRendererComponent extends JComponent
 	final double preferredWidth = screenSize.getWidth();
 
 	return new Dimension((int) preferredWidth, (int) preferredHeight);
-
     }
 
     @Override protected void paintComponent(final Graphics g) {

@@ -184,7 +184,7 @@ public class GameHandler extends KeyAdapter implements SpawnListener
     private void updateObjects() {
 	final List<MoveableObject> unwantedObjects = new ArrayList<>();
 
-	// Avoids concurrent modification
+	// Avoids concurrent modification error.
 	objects.addAll(addQueue);
 	addQueue.clear();
 

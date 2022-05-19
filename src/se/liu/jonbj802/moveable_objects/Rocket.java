@@ -169,6 +169,7 @@ public class Rocket extends AbstractMoveableObject implements KeyListener
 
 	setPos(screenSize.width / 2, screenSize.height / 2);
 
+	// Reset fields to their starting values.
 	respawnDelay = DEFAULT_RESPAWN_DELAY;
 	movementAngle = DEFAULT_ANGLE;
 	angle = DEFAULT_ANGLE;

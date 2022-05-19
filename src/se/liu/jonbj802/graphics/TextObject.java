@@ -31,7 +31,8 @@ public class TextObject implements DisplayableObject
 	    return;
 	}
 
-	final List<Matrix> letters = new ArrayList<>();
+	// Pre-allocate the list of letters to avoid more heap allocations as it grows.
+	final List<Matrix> letters = new ArrayList<>(text.length());
 	letters.add(getMatrixFromChar(text.charAt(0)));
 
 	for (int i = 1; i < text.length(); i++) {

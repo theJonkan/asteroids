@@ -2,6 +2,7 @@ package se.liu.jonbj802.moveable_objects.powerups;
 
 import se.liu.jonbj802.collisions.CollisionType;
 import se.liu.jonbj802.graphics.FileHandler;
+import se.liu.jonbj802.graphics.Matrix;
 import se.liu.jonbj802.moveable_objects.AbstractMoveableObject;
 import se.liu.jonbj802.moveable_objects.Rocket;
 
@@ -19,12 +20,14 @@ public abstract class AbstractPowerUp extends AbstractMoveableObject
     private final static Random RND = new Random();
     private int despawnDelay;
     protected final Rocket rocket;
+    private final String matrixName;
     private boolean hasCollided = false;
 
-    protected AbstractPowerUp(final Dimension screenSize, final Rocket rocket, final FileHandler fileHandler)
+    protected AbstractPowerUp(final Dimension screenSize, final Rocket rocket, final String matrixName, final FileHandler fileHandler)
     {
 	super(new Point(), 0, 4, fileHandler);
 	this.rocket = rocket;
+	this.matrixName = matrixName;
 	generateRandomPosition(screenSize);
     }
 
@@ -43,10 +46,15 @@ public abstract class AbstractPowerUp extends AbstractMoveableObject
     }
 
     @Override public void collided() {
+	rocket.addPowerUp();
 	hasCollided = true;
     }
 
     @Override public CollisionType getCollisionType() {
 	return CollisionType.POWERUP;
+    }
+
+    @Override public Matrix getMatrix() {
+	return fileHandler.get(matrixName, size, 0);
     }
 }

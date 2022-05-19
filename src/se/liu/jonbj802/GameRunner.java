@@ -123,7 +123,7 @@ public class GameRunner extends KeyAdapter
 		tryAgain = JOptionPane.showConfirmDialog(null, "Do you want to try again?", "Failed to load assets",
 							 JOptionPane.YES_NO_OPTION) == 0;
 		if (!tryAgain) {
-		    return;
+		    return; // This is not a Catch Fallthrough. We give the user the option to try again.
 		}
 	    } catch (final IllegalFormatWidthException e) {
 		logger.log(Level.SEVERE, "Incorrect matrix length: " + e.getWidth());
