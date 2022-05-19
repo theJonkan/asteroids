@@ -21,12 +21,10 @@ public class Saucer extends AbstractEnemyObject
     private boolean hasCollided;
     private int shootingDelay;
     private final Rocket rocket;
-    private final SpawnListener spawner;
 
     public Saucer(final Dimension screenSize, final Rocket rocket, final SpawnListener spawner, final FileHandler fileHandler) {
-	super(screenSize, SIZE, fileHandler);
+	super(screenSize, SIZE, spawner, fileHandler);
 	this.rocket = rocket;
-	this.spawner = spawner;
     }
 
     @Override public Matrix getMatrix() {
@@ -39,14 +37,6 @@ public class Saucer extends AbstractEnemyObject
 	shoot();
 
 	shootingDelay--;
-    }
-
-    @Override public void collided() {
-	hasCollided = true;
-    }
-
-    @Override public boolean shouldDespawn(final Dimension screenSize, final int offset) {
-	return hasCollided || super.shouldDespawn(screenSize, offset);
     }
 
     public void shoot() {

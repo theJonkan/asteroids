@@ -25,17 +25,16 @@ public class Asteroid extends AbstractEnemyObject
     private final static int SIZE_DECREASE = 2;
 
     private boolean hasCollided;
-    private SpawnListener spawner = null;
 
     private Matrix matrix;
 
     public Asteroid(final Dimension screenSize, final SpawnListener spawner, final FileHandler fileHandler) {
-	super(screenSize, RND.nextInt(SMALLEST_ASTEROID, BIGGEST_ASTEROID), fileHandler);
+	super(screenSize, RND.nextInt(SMALLEST_ASTEROID, BIGGEST_ASTEROID), spawner, fileHandler);
 	init(spawner);
     }
 
     private Asteroid(final Point pos, final int size, final double angle, final SpawnListener spawner, final FileHandler fileHandler) {
-	super(pos, size, angle, fileHandler);
+	super(pos, size, angle, spawner, fileHandler);
 	init(spawner);
     }
 
@@ -43,7 +42,6 @@ public class Asteroid extends AbstractEnemyObject
 	this.speed = 45.0 / size;
 	final int type = RND.nextInt(TYPES);
 	this.matrix = fileHandler.get("asteroid_type_" + type).modify(size, angle);
-	this.spawner = spawner;
     }
 
     @Override public Matrix getMatrix() {
@@ -55,7 +53,7 @@ public class Asteroid extends AbstractEnemyObject
     }
 
     @Override public void collided() {
-	hasCollided = true;
+	super.collided();
 
 	final int nextSize = size - SIZE_DECREASE;
 	if (size - SMALLEST_ASTEROID <= 0 || nextSize < 0) {
@@ -69,10 +67,6 @@ public class Asteroid extends AbstractEnemyObject
 	final Asteroid asteroid2 = new Asteroid(pos2, size - SIZE_DECREASE, angle + ANGLE_SEPARATION, spawner, fileHandler);
 
 	spawner.spawn(asteroid1, asteroid2);
-    }
-
-    @Override public boolean shouldDespawn(final Dimension screenSize, final int offset) {
-	return hasCollided || super.shouldDespawn(screenSize, offset);
     }
 
     @Override public CollisionType getCollisionType() {

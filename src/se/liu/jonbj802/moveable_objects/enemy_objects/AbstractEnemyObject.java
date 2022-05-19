@@ -1,5 +1,6 @@
 package se.liu.jonbj802.moveable_objects.enemy_objects;
 
+import se.liu.jonbj802.SpawnListener;
 import se.liu.jonbj802.graphics.FileHandler;
 import se.liu.jonbj802.moveable_objects.AbstractMoveableObject;
 
@@ -21,17 +22,26 @@ public abstract class AbstractEnemyObject extends AbstractMoveableObject
     private final static double RIGHT_ANGLE = 2 * Math.PI;
     private final static double LEFT_ANGLE = Math.PI;
 
-    protected AbstractEnemyObject(final Dimension screenSize, final int size, final FileHandler fileHandler) {
+    protected final SpawnListener spawner;
+    private boolean hasCollided;
+
+    protected AbstractEnemyObject(final Dimension screenSize, final int size, final SpawnListener spawner, final FileHandler fileHandler) {
 	super(null, 0, size, fileHandler); // Angle and position are generated after.
+	this.spawner = spawner;
 	generateRandomPosition(screenSize);
     }
 
-    protected AbstractEnemyObject(final Point pos, final int size, final double angle, final FileHandler fileHandler) {
+    protected AbstractEnemyObject(final Point pos, final int size, final double angle, final SpawnListener spawner, final FileHandler fileHandler) {
 	super(pos, angle, size, fileHandler); // Angle and position are generated after.
+	this.spawner = spawner;
+    }
+
+    @Override public void collided() {
+	hasCollided = true;
     }
 
     @Override public boolean shouldDespawn(final Dimension screenSize, final int offset) {
-	return pos.x > screenSize.width + offset || pos.y > screenSize.height + offset || pos.x < -offset || pos.y < -offset;
+	return hasCollided || pos.x > screenSize.width + offset || pos.y > screenSize.height + offset || pos.x < -offset || pos.y < -offset;
     }
 
     @Override public boolean shouldWrap(final Dimension screenSize, final int offset) {
