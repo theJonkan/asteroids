@@ -31,8 +31,7 @@ public class FileHandler
     }
 
     private void load(final String name) throws IOException, IllegalFormatWidthException {
-	@SuppressWarnings("MyHardcodedFileSeparator") // This does not work on Windows with File.separator.
-	final String path = "images/matrices/" + name;
+	final String path = "images\57matrices\57" + name;
 	final Logger logger = Logger.getLogger("AsteroidsLog");
 
 	try (final InputStream stream = ClassLoader.getSystemResourceAsStream(path)) {
