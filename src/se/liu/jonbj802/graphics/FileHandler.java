@@ -64,7 +64,8 @@ public class FileHandler
         }
 
 	// Pre-allocate the slice with 21 entries to avoid more heap allocations as it grows.
-        final List<String> files = new ArrayList<>(21);
+	final int filesInIndex = 21;
+        final List<String> files = new ArrayList<>(filesInIndex);
         try (final InputStream stream = url.openStream()) {
             try (final Scanner scanner = new Scanner(stream)) {
 		while (scanner.hasNextLine()) {
